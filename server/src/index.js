@@ -1,5 +1,6 @@
 import express from "express";
 import "dotenv/config";
+import "../config/passport_setup.js";
 import connectDB from "../config/db.js";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js";
