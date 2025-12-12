@@ -9,10 +9,28 @@
 ```json
 {
   "formData": {
-    "bankAccountNumber": "1234567890",
-    "FAN": "12345678",
-    "applicantFullName": "...",
-    "email": "..."
+    "personal":{
+        "firstName": "John",
+        "middleName": "Micheal", //Optional
+        "lastName": "Doe",
+        "dateOfBirth": "05/15/1990",
+        "gender": "Male/Female",
+        "bankAccountNumber": "1234567890",
+        "FAN": "12345678",
+        "email": "johnMicheal@email.com"
+    },
+    "employmentDetails":{
+        "occupation": "Software Engineer",
+        "employerName": "Acme Corp", //Optional
+        "employerAddress":"Addis Ababa" //Optional
+    },
+    "addressDetails":{
+        "streetAddress": "Bole road, Meskel Square",
+        "city": "Addis Ababa",
+        "region": "Addis Ababa",
+        "postalCode": 1000 //Optional
+    }
+    
   }
 }
 ````
