@@ -1,9 +1,11 @@
 import Application from "../models/Application.js";
+import Officer from "../models/Officer.js";
 import { getVitalSchema } from "../validators/vitalApplicationValidator.js";
 
 export const submitVitalApplication = async (req, res, next) => {
   try {
     const userId = req.user.id;
+    const assignedOfficerId = req.assignedOfficer;
     const { type } = req.params;
     const { formData } = req.body;
 
@@ -56,7 +58,14 @@ export const submitVitalApplication = async (req, res, next) => {
       type: type,
       formData: value.formData,
       requiredIDs: req.uploadedIds || { kebele: false, fayda: false },
+      assignedOfficer: assignedOfficerId,
     });
+
+    // Increment the workload of the assigned officer
+    await Officer.findByIdAndUpdate(assignedOfficerId, {
+      $inc: { workLoad: 1 },
+    });
+
 
     res.status(201).json({
       applicationId: newApplication._id,

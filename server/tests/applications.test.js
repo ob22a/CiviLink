@@ -14,6 +14,7 @@ import {
 import mongoose from "mongoose";
 import app from "../src/index.js";
 import User from "../src/models/User.js";
+import Officer from '../src/models/Officer.js'
 import Application from "../src/models/Application.js";
 import UploadedID from "../src/models/UploadedID.js";
 import bcrypt from "bcryptjs";
@@ -169,6 +170,10 @@ beforeAll(async () => {
 
     citizenId = citizen._id;
     console.log("Test user created:", citizenId);
+
+    // Officer creation moved to beforeEach
+
+
   } catch (error) {
     console.error("beforeAll setup error:", error);
     throw error;
@@ -200,17 +205,33 @@ const createTestIDs = async (userId) => {
 beforeEach(async () => {
   // Clear applications before each test
   await Application.deleteMany({});
+  await Officer.deleteMany({});
+
+
+  // Create an officer to handle requests for each test
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash("Test@1234", salt);
+
+  const officer = await Officer.create({
+    fullName: "Test Officer",
+    email: "officer@example.com",
+    password: hashedPassword,
+    role: "officer",
+    department: "approver"
+  });
+  console.log("Test officer created:", officer._id);
 
   // Create fresh IDs for each test
   await createTestIDs(citizenId);
 
-  console.log("🧹 Cleared applications, created fresh IDs");
+  console.log("🧹 Cleared applications, recreated officer, created fresh IDs");
 });
 
 afterAll(async () => {
   try {
     await User.deleteMany({});
     await Application.deleteMany({});
+    await Officer.deleteMany({});
     await UploadedID.deleteMany({});
     await mongoose.connection.close();
     console.log("✅ Database cleaned up");

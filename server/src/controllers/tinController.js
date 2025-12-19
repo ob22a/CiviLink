@@ -1,9 +1,11 @@
 import Application from "../models/Application.js";
+import Officer from "../models/Officer.js";
 import { tinApplicationSchema } from "../validators/tinApplicationValidator.js";
 
 export const submitTinApplication = async (req, res, next) => {
   try {
     const userId = req.user.id;
+    const assignedOfficerId = req.assignedOfficer;
     const { error, value } = tinApplicationSchema.validate(req.body, {
       abortEarly: false,
       stripUnknown: true,
@@ -41,6 +43,12 @@ export const submitTinApplication = async (req, res, next) => {
       category: "TIN",
       formData,
       requiredIDs: req.uploadedIds || { kebele: false, fayda: false },
+      assignedOfficer: assignedOfficerId,
+    });
+
+    // Increment the workload of the assigned officer
+    await Officer.findByIdAndUpdate(assignedOfficerId, {
+      $inc: { workLoad: 1 },
     });
 
     res.status(201).json({

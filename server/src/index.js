@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js";
 import tinRoutes from "./routes/tin.js";
 import vitalRoutes from "./routes/vital.js";
+import officerRoutes from "./routes/officer.js";
 
 const app = express();
 
@@ -23,6 +24,7 @@ if (process.env.NODE_ENV !== "test") {
 app.use("/api/v1/tin", tinRoutes);
 app.use("/api/v1/vital", vitalRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/officer", officerRoutes);
 
 // 404 handler
 app.use((req, res) => {

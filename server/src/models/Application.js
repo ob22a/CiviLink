@@ -45,6 +45,14 @@ const applicationSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+
+    // We can add assigned officer to track which officer is handling the application and there is no need for a separate Task model
+    assignedOfficer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Officer",
+      default: null,
+      index: true,
+    },
   },
   { timestamps: true }
 );
