@@ -3,7 +3,7 @@ import User from "../models/User.js";
 
 const isProduction = process.env.NODE_ENV === "production";
 
-export const verifyToken = async (req, res, next) => {
+const verifyToken = async (req, res, next) => {
   try {
     const token =
       req.cookies?.accessToken ||
@@ -38,3 +38,17 @@ export const verifyToken = async (req, res, next) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
+const authorizeRoles = (...allowedRoles) => {
+  return (req, res, next) => {
+    if (!req.user || !allowedRoles.includes(req.user.role)) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to access this resource",
+      });
+    }
+    next();
+  };
+};
+
+export { verifyToken, authorizeRoles };

@@ -3,7 +3,11 @@ import "dotenv/config";
 import "../config/passport_setup.js";
 import connectDB from "../config/db.js";
 import cookieParser from "cookie-parser";
+
+//Routes
 import authRoutes from "./routes/auth.js";
+import tinRoutes from "./routes/tin.js";
+import vitalRoutes from "./routes/vital.js";
 
 const app = express();
 
@@ -15,6 +19,9 @@ if (process.env.NODE_ENV !== "test") {
   connectDB();
 }
 
+//Routes middleware
+app.use("/api/v1/tin", tinRoutes);
+app.use("/api/v1/vital", vitalRoutes);
 app.use("/api/v1/auth", authRoutes);
 
 // 404 handler
