@@ -6,7 +6,7 @@
 **Purpose:** Search and filter officers.
 
 #### Query Parameters
-`?name=&email=&department=&subCity=&status=&page=&limit=`
+`?name=&email=&department=&subcity=&status=&page=&limit=`
 
 #### Response
 - Paginated officers list with workload statistics
@@ -31,14 +31,14 @@
 ![POST](https://img.shields.io/badge/POST-4CAF50?style=flat&labelColor=000)
 
 **Auth:** admin  
-**Purpose:** Convert a user to officer and assign department/subCity.
+**Purpose:** Convert a user to officer and assign department/subcity.
 
 #### Request Body
 ```json
 {
   "userId": "",
   "department": "approval | support | news",
-  "subCity": "Bole"
+  "subcity": "Bole"
 }
 ````
 
@@ -55,7 +55,7 @@
 ![PUT](https://img.shields.io/badge/PUT-FFC107?style=flat\&labelColor=000)
 
 **Auth:** admin
-**Purpose:** Update officer metadata (status, subCity, onLeave)
+**Purpose:** Update officer metadata (status, subcity, onLeave)
 
 ---
 
@@ -69,7 +69,7 @@
 
 #### Query Parameters
 
-`?from=YYYY-MM-DD&to=YYYY-MM-DD&officerId=&department=&subCity=&page=&limit=`
+`?from=YYYY-MM-DD&to=YYYY-MM-DD&officerId=&department=&subcity=&page=&limit=`
 
 #### Response
 
@@ -103,7 +103,7 @@
 
 #### Query Parameters
 
-`?from=YYYY-MM-DD&to=YYYY-MM-DD&officerId=&department=&subCity=`
+`?from=YYYY-MM-DD&to=YYYY-MM-DD&officerId=&department=&subcity=`
 
 #### Response
 

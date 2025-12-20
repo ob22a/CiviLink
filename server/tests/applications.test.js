@@ -48,7 +48,7 @@ const tinFormData = {
     region: "Addis Ababa",
     postalCode: 1000, // optional
   },
-  subCity:"Bole",
+  subcity:"Bole",
 };
 
 // BIRTH APPLICATION TEST DATA (Matches API spec exactly)
@@ -83,7 +83,7 @@ const birthFormData = {
       address: "Bole Road, Addis Ababa",
     },
   },
-  subCity:"Bole",
+  subcity:"Bole",
 };
 
 //MARRIAGE APPLICATION TEST DATA (Matches API spec exactly)
@@ -146,7 +146,7 @@ const marriageFormData = {
       officiant: "Reverend Abraham Tesfaye",
     },
   },
-  subCity:"Bole",
+  subcity:"Bole",
 };
 
 beforeAll(async () => {
@@ -245,7 +245,7 @@ beforeEach(async () => {
     password: hashedPassword,
     role: "officer",
     department: "approver",
-    subCity: "Bole",
+    subcity: "Bole",
   });
   console.log("Test officer created:", officer._id);
 
@@ -355,7 +355,7 @@ describe("Sprint 2 - TIN Applications", () => {
         // Missing: lastName, dateOfBirth, gender, bankAccountNumber, FAN, email
       },
       // Missing: employmentDetails, addressDetails
-      subCity:"Bole",
+      subcity:"Bole",
     };
 
     const res = await agent
@@ -529,7 +529,7 @@ describe("Sprint 2 - Birth Applications", () => {
         father: birthFormData.birth.father,
         medicalFacility: birthFormData.birth.medicalFacility,
       },
-      subCity:"Bole",
+      subcity:"Bole",
     };
 
     const res = await agent
@@ -613,7 +613,7 @@ describe("Sprint 2 - Birth Applications", () => {
           address: "Address",
         },
       },
-      subCity:"Bole",
+      subcity:"Bole",
     };
 
     const res = await agent
@@ -702,7 +702,7 @@ describe("Sprint 2 - Marriage Applications", () => {
         wife: marriageFormData.marriage.wife,
         ceremonyDetails: marriageFormData.marriage.ceremonyDetails,
       },
-      subCity:"Bole",
+      subcity:"Bole",
     };
 
     const res = await agent
@@ -738,7 +738,7 @@ describe("Sprint 2 - Marriage Applications", () => {
         },
         ceremonyDetails: marriageFormData.marriage.ceremonyDetails,
       },
-      subCity:"Bole",
+      subcity:"Bole",
     };
 
     const res = await agent
@@ -820,7 +820,7 @@ describe("Sprint 2 - Marriage Applications", () => {
         },
         ceremonyDetails: marriageFormData.marriage.ceremonyDetails,
       },
-      subCity:"Bole",
+      subcity:"Bole",
     };
 
     const res = await agent

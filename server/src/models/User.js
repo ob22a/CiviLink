@@ -33,7 +33,8 @@ const userSchema = new mongoose.Schema(
 
     refreshToken: String,
   },
-  { timestamps: true }
+  { timestamps: true },
+  { discriminatorKey: "role" }
 );
 
 const User = mongoose.model("User", userSchema);

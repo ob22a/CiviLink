@@ -92,7 +92,7 @@
         "address": ""
       }
     },
-    "subCity":"Bole",
+    "subcity":"Bole",
   }
 }
 ````
