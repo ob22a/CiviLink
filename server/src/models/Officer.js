@@ -21,6 +21,10 @@ const Officer = User.discriminator(
       type: Boolean,
       default: false,
     },
+    subCity: {
+      type: String,
+      default: "unknown"
+    }
   })
 );
 

@@ -90,5 +90,14 @@ export const tinApplicationSchema = Joi.object({
           "number.max": "Postal code cannot exceed 5 digits",
         }),
     }).required(),
+    subCity: Joi.string()
+      .min(2)
+      .max(100)
+      .required()
+      .messages({
+        "any.required": "Subcity is required",
+        "string.min": "Subcity must be at least 2 characters long",
+        "string.max": "Subcity cannot exceed 100 characters",
+      }),
   }).required(),
 });

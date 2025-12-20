@@ -59,6 +59,7 @@ describe("Officer Routes 👮 (Cookie-Based Auth)", () => {
       region: "Addis Ababa",
       postalCode: 1000,
     },
+    subCity: "Bole",
   };
 
   beforeAll(async () => {
@@ -96,6 +97,7 @@ describe("Officer Routes 👮 (Cookie-Based Auth)", () => {
       password: hashedPassword,
       role: "officer",
       department: "approver",
+      subCity: "Bole",
     });
     await officer.save();
     officerId = officer._id;
@@ -106,6 +108,7 @@ describe("Officer Routes 👮 (Cookie-Based Auth)", () => {
       password: hashedPassword,
       role: "officer",
       department: "customer_support",
+      subCity: "Bole",
     });
     await otherOfficer.save();
     otherOfficerId = otherOfficer._id;
