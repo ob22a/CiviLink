@@ -1,7 +1,8 @@
-import User from "../models/User";
+import User from "../models/User.js"; //added missing import extension 
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 import { promoteToOfficer } from "../services/assign_officer/assignOfficer.js";
+import { isValidPassword, isValidFullName, isValidEmail } from "../utils/validators.js";
 
 const searchUser = async (req, res) => {
     try {
@@ -133,4 +134,69 @@ const assignOfficer = async (req, res) => {
     }
 }
 
-export { searchUser, assignOfficer };
+const createAdmin = async (req, res) => {
+    try {
+        const existingAdmin = await User.findOne({ role: "admin" });
+        if (existingAdmin) {
+            return res.status(400).json({
+                success: false,
+                message: "Admin already exists",
+            });
+        };
+
+        const { fullName, email, password, confirmPassword, acceptTerms } = req.body;
+
+        if (!acceptTerms)
+            return res
+            .status(400)
+            .json({ success: false, message: "Terms must be accepted" });
+    
+        if (password !== confirmPassword)
+            return res
+            .status(400)
+            .json({ success: false, message: "Passwords do not match" });
+    
+        if (!isValidFullName(fullName)) {
+            return res.status(400).json({
+            success: false,
+            message: "Full name is required and must be at least 2 characters",
+            });
+        }
+    
+        if (!isValidEmail(email)) {
+            return res
+            .status(400)
+            .json({ success: false, message: "Invalid email format" });
+        }
+    
+        if (!isValidPassword(password))
+            return res.status(400).json({
+            success: false,
+            message:
+                "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character",
+            });
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const admin = await User.create({
+            fullName,
+            email,
+            password: hashedPassword,
+            role: "admin"
+        });
+
+        return res.status(201).json({
+            success: true,
+            message: "Admin created successfully",
+            data: admin
+        });
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+}
+
+export { searchUser, assignOfficer, createAdmin };
