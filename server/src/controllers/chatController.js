@@ -1,5 +1,6 @@
 import Conversation from "../models/Conversation.js";
 import { citizenMessageSchema, officerMessageSchema } from "../validators/conversationValidator.js";
+import { makeNotification } from "../utils/makeNotification.js";
 
 export const createConversation = async (req, res) => {
     try {
@@ -106,6 +107,8 @@ export const postMessageToConversation = async (req, res) => {
         conversation.officerMessage = messageContent;
         conversation.status = 'closed';
         await conversation.save();
+
+        makeNotification(conversation.citizenId,"Officer Response","Officers have responded to your message! Check your messages")
 
         res.status(200).json({
             success: true,

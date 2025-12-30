@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 import { promoteToOfficer } from "../services/assign_officer/assignOfficer.js";
 import { isValidPassword, isValidFullName, isValidEmail } from "../utils/validators.js";
+import { makeNotification } from "../utils/makeNotification.js";
 
 const searchUser = async (req, res) => {
     try {
@@ -119,6 +120,8 @@ const assignOfficer = async (req, res) => {
             },
             req.user.id
         );
+
+        makeNotification(user._id,"Officer Assignment","You have been promoted to officer role!")
         
         return res.status(200).json({
             success: true,
