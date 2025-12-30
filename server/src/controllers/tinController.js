@@ -158,7 +158,13 @@ const approveTinApplicatin = async (req, res) => {
       issuedBy: officer._id,
     });
 
-    const pdfPath = await generateTinCertificatePdf(certificate._id, application.formData);
+    const createdAt = certificate.createdAt;
+    const dateOnly = createdAt.toISOString().split("T")[0];
+
+    console.log(dateOnly);
+
+
+    const pdfPath = await generateTinCertificatePdf(certificate._id, application.formData, officer.fullName, dateOnly);
 
     certificate.filePath = pdfPath;
     await certificate.save();

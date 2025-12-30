@@ -2,7 +2,7 @@ import PDFDocument from "pdfkit";
 import fs from "fs";
 import path from "path";
 
-export const generateTinCertificatePdf = async (certificateId, formData) => {
+export const generateTinCertificatePdf = async (certificateId, formData, issuedBy, issuedDate) => {
   if (process.env.NODE_ENV === "test") {
     return "/fake/path/tin.pdf";
   } else {
@@ -24,122 +24,87 @@ export const generateTinCertificatePdf = async (certificateId, formData) => {
 
     doc.pipe(stream);
 
-    // ---- PDF CONTENT ----
+    // ---- PDF CONTENT ---- //
 
-    /* ========= Helpers ========== */
-    const LABEL_X = 50;
-    const VALUE_X = 160;
-    const RIGHT_LABEL_X = 330;
-    const RIGHT_VALUE_X = 420;
-    const ROW_HEIGHT = 20;
+/* ================= HEADER ================= */
+    doc
+      .fontSize(12)
+      .text("Addis Ababa City Administration", {
+        align: "center",
+      });
 
-    let currentY = doc.y;
+    doc.moveDown(0.5);
+    doc.moveTo(40, doc.y).lineTo(555, doc.y).stroke();
+    doc.moveDown(1);
 
-    function drawField(label, value, xLabel, xValue, y) {
-      doc
-        .font("Helvetica-Bold")
-        .fontSize(11)
-        .text(label, xLabel, y, { width: 100 });
-
-      doc
-        .font("Helvetica")
-        .fontSize(11)
-        .text(value ?? "—", xValue, y, { width: 140 });
-    }
-
-    function nextRow() {
-      currentY += ROW_HEIGHT;
-    }
-
-
-  /* ========== SECTION TITLE =========== */
-
-    function section(title) {
-      doc
-        .font("Helvetica-Bold")
-        .fontSize(13)
-        .text(title, LABEL_X, currentY);
-
-      currentY += 25;
-
-      doc
-        .moveTo(LABEL_X, currentY)
-        .lineTo(545, currentY)
-        .stroke();
-
-      currentY += 15;
-    }
-
-    /* ========== Personal Information =========== */
-
-    section("Personal Information");
-
-    drawField("First Name", formData.personal.firstName, LABEL_X, VALUE_X, currentY);
-    drawField("Last Name", formData.personal.lastName, RIGHT_LABEL_X, RIGHT_VALUE_X, currentY);
-    nextRow();
-
-    drawField("Middle Name", formData.personal.middleName, LABEL_X, VALUE_X, currentY);
-    drawField("Gender", formData.personal.gender, RIGHT_LABEL_X, RIGHT_VALUE_X, currentY);
-    nextRow();
-
-    drawField("Date of Birth", formData.personal.dateOfBirth, LABEL_X, VALUE_X, currentY);
-    drawField("Email", formData.personal.email, RIGHT_LABEL_X, RIGHT_VALUE_X, currentY);
-    nextRow();
-
-    drawField("Bank Account No.", formData.personal.bankAccountNumber, LABEL_X, VALUE_X, currentY);
-    drawField("FAN", formData.personal.FAN, RIGHT_LABEL_X, RIGHT_VALUE_X, currentY);
-    nextRow();
-
-
-    /* ========= Employment Details ======== */
-
-    section("Employment Details");
-
-    drawField("Occupation", formData.employmentDetails.occupation, LABEL_X, VALUE_X, currentY);
-    drawField("Employer Name", formData.employmentDetails.employerName, RIGHT_LABEL_X, RIGHT_VALUE_X, currentY);
-    nextRow();
-
-    drawField("Employer Address", formData.employmentDetails.employerAddress, LABEL_X, VALUE_X, currentY);
-    nextRow();
-
-
-    /* ======== Address Details ========= */
-
-    section("Address Details");
-
-    drawField("Street Address", formData.addressDetails.streetAddress, LABEL_X, VALUE_X, currentY);
-    drawField("City", formData.addressDetails.city, RIGHT_LABEL_X, RIGHT_VALUE_X, currentY);
-    nextRow();
-
-    drawField("Region", formData.addressDetails.region, LABEL_X, VALUE_X, currentY);
-    drawField("Subcity", formData.subcity, RIGHT_LABEL_X, RIGHT_VALUE_X, currentY);
-    nextRow();
-
-    drawField("Postal Code", formData.addressDetails.postalCode, LABEL_X, VALUE_X, currentY);
-    nextRow();
-
-
-    /* ======== TIN Section ========= */
-
-    currentY += 30;
+    /* ================= TOP RIGHT INFO ================= */
+    const topY = doc.y;
 
     doc
-      .font("Helvetica-Bold")
+      .fontSize(9)
+      .text("TIN:", 350, topY)
+      .text(formData.tin, 450, topY);
+
+    doc.text("Date of Issuance:", 350, topY + 15)
+      .text(issuedDate, 450, topY + 15);
+
+    /* ================= PHOTO BOX ================= */
+    doc.rect(40, topY, 100, 120).stroke();
+    doc.fontSize(8).text("Photo", 70, topY + 50);
+
+    doc.moveDown(7);
+
+    /* ================= TITLE ================= */
+    doc
       .fontSize(14)
-      .text("Issued Tax Identification Number (TIN)", LABEL_X, currentY, {
-        align: "center",
-        width: 500,
-      });
+      .text("Business License", { align: "center", underline: true })
+      .moveDown(1);
 
-    currentY += 20;
+    doc.fontSize(10)
+      .text("This an official certificate for:");
+
+    doc.moveDown(1.5);
+
+    /* ================= TWO COLUMN BODY ================= */
+    const leftX = 40;
+    const rightX = 300;
+    let y = doc.y;
+
+    function field(label, value, x, y) {
+      doc.fontSize(9).text(label, x, y);
+      doc.fontSize(9).text(value, x + 80, y);
+    }
+
+    field("1. Name:", formData.personal.firstName + " " + formData.personal.middleName + " " + formData
+      .personal.lastName, leftX, y);
+    field("2. Nationality:", "Ethiopian", rightX, y);
+
+    y += 20;
+    field("3. Address:", formData.addressDetails.city + ", " + formData.addressDetails.streetAddress, leftX, y);
+    field("4. Email:", formData.personal.email, rightX, y);
+
+    y += 20;
+    field("5. Occupation:", formData.employmentDetails.occupation, leftX, y);
+    field("6. Issued Place:", formData.addressDetails.city, rightX, y);
+
+
+    /* ================= SIGNATURE & STAMP ================= */
+    y += 40;
+    doc.text(`Issued by: ${issuedBy}`, leftX, y);
 
     doc
-      .font("Helvetica-Bold")
-      .fontSize(20)
-      .text(formData.tin, LABEL_X, currentY, {
-        align: "center",
-        width: 500,
-      });
+      .rect(350, y - 10, 150, 80)
+      .stroke()
+      .fontSize(8)
+      .text("Official Stamp", 390, y + 20);
+
+    /* ================= FOOTER ================= */
+    doc.fontSize(8)
+      .text(
+        "N.B. This license shall be renewed in accordance with Proclamation No. 980/2008 as per the fiscal year.",
+        40,
+        750
+     );
 
     // ---- END CONTENT ----
 
