@@ -21,6 +21,7 @@ import paymentRoutes from "./routes/payment.js";
 import adminRoutes from "./routes/admin.js"
 import applicationRoutes from "./routes/applications.js";
 import healthRoutes from './routes/health.route.js';
+import notificationRoutes from './routes/notification.route.js'
 
 // Cron Jobs
 import { startAnalyticsJob } from "./jobs/refreshOfficerAnalytics.job.js";
@@ -46,6 +47,7 @@ app.use("/api/v1/payments", paymentRoutes);
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/applications", applicationRoutes);
 app.use("/api/v1/health", healthRoutes)
+app.use("/api/v1/notifications", notificationRoutes);
 
 // 404 handler
 app.use((req, res) => {

@@ -7,6 +7,8 @@ import {
   isValidFullName,
   isValidEmail,
 } from "../utils/validators.js";
+import { makeNotification } from "../utils/makeNotification.js";
+
 
 const accessTokenMaxAge = ms(process.env.ACCESS_TOKEN_EXPIRES);
 const refreshTokenMaxAge = ms(process.env.REFRESH_TOKEN_EXPIRES);
@@ -206,6 +208,21 @@ const login = async (req, res) => {
       sameSite: "Strict",
       maxAge: accessTokenMaxAge,
     });
+
+    const time = new Date();
+    // Options to make it look cleaner (e.g., "Dec 30, 5:45 PM")
+    const readableTime = time.toLocaleString('en-US', { 
+        month: 'short', 
+        day: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit' 
+    });
+
+    await makeNotification(
+        user._id, 
+        "New Login", 
+        `New login detected on ${readableTime}. If this wasn't you, please change your password.`
+    );
 
     // ✅ Add accessToken in response body for tests
     res.status(200).json({

@@ -2,6 +2,7 @@ import Payment from "../models/Payment.js";
 import PDFDocument from "pdfkit";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
+import { makeNotification } from "../utils/makeNotification.js";
 
 // Initialize payment (pending + Chapa checkout)
 const processPayment = async (req, res, next) => {
@@ -60,6 +61,8 @@ const processPayment = async (req, res, next) => {
 
     const checkoutUrl = response?.data?.data?.checkout_url;
 
+    makeNotification(userId, "Payment Status", `Payment for ${serviceType}} has been initiated`);
+
     return res.status(201).json({
       success: true,
       data: {
@@ -99,6 +102,9 @@ const verifyPayment = async (req, res, next) => {
       payment.status = chapaStatus;
       await payment.save();
     }
+
+    const msg = chapaStatus === "success" ? "Payment successful" : "Payment failed";
+    makeNotification(payment.userId, "Payment Status", msg);
 
     return res.status(200).json({
       success: true,

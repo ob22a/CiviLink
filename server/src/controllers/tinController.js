@@ -5,7 +5,8 @@ import { tinApplicationSchema } from "../validators/tinApplicationValidator.js";
 import { generateTIN } from "../utils/generateUniqueTin.js";
 import { generateTinCertificatePdf } from "../services/certificates/generateTinCertificatePdf.js"
 
-const submitTinApplication = async (req, res, next) => {
+
+export const submitTinApplication = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const assignedOfficerId = req.assignedOfficer;
