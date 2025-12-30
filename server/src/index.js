@@ -25,6 +25,7 @@ import notificationRoutes from './routes/notification.route.js'
 
 // Cron Jobs
 import { startAnalyticsJob } from "./jobs/refreshOfficerAnalytics.job.js";
+import initNewsCron from "./jobs/assignNewsOfficer.js";
 
 const app = express();
 
@@ -60,6 +61,7 @@ export default app;
 const PORT = process.env.PORT || 5000;
 
 if (process.env.NODE_ENV !== "test") {
+  initNewsCron();
   startAnalyticsJob(); // start cron job only when NOT running tests
   app.listen(PORT);
 }
