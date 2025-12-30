@@ -9,7 +9,8 @@
 ```json
 {
   "subject": "Billing issue",
-  "message": "I can't submit"
+  "message": "I can't submit",
+  "subcity": "Bole",
 }
 ````
 
@@ -18,7 +19,7 @@
 ```json
 {
   "conversationId": "...",
-  "messageId": "..."
+  "message":"...",
 }
 ```
 
@@ -31,11 +32,11 @@
 
 ### **2. List Conversations (Officer)**
 
-`GET /api/v1/chats`
+`GET /api/v1/chats/`
 ![GET](https://img.shields.io/badge/GET-2196F3?style=flat\&labelColor=000)
 
 **Auth:** officer
-**Purpose:** List conversations for the current user.
+**Purpose:** List conversations for the current officer.
 
 #### Query Parameters
 
@@ -48,9 +49,28 @@
 
 ---
 
-### **3. Send Message in Conversation**
+### **3. Get Conversation Details**
 
-`POST /api/v1/chats/:conversationId/messages`
+`GET /api/v1/chats/:conversationId`
+![GET](https:://img.shields.io/badge/GET-2196F3?style=flat\&labelColor=000)
+
+**Auth:** officer
+**Purpose:** List details of conversation from a citizen
+
+#### Query Parameters
+
+`conversationId`
+
+#### Response
+
+* Detail of that conversation
+
+---
+
+
+### **4. Send Message in Conversation**
+
+`POST /api/v1/chats/:conversationId/`
 ![POST](https://img.shields.io/badge/POST-4CAF50?style=flat\&labelColor=000)
 
 **Auth:** participant (officer)
@@ -72,7 +92,7 @@
 
 ---
 
-### **4. Mark Conversation as Read**
+### **5. Mark Conversation as Read**
 
 `PUT /api/v1/chats/:conversationId/read`
 ![PUT](https://img.shields.io/badge/PUT-FFC107?style=flat\&labelColor=000)

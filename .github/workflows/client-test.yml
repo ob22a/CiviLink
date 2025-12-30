@@ -13,6 +13,9 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
 
+    env:
+      REACT_APP_API_URL: ${{ vars.REACT_APP_API_URL }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -28,6 +31,4 @@ jobs:
 
       - name: Run frontend tests
         run: npm test
-        env:
-          REACT_APP_API_URL: ${{ vars.REACT_APP_API_URL }}
         working-directory: ./client

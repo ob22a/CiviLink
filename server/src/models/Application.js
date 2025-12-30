@@ -59,4 +59,7 @@ const applicationSchema = new mongoose.Schema(
 
 const Application = mongoose.model("Application", applicationSchema);
 
+// Indexes to improve query performance
+applicationSchema.index({ applicant: 1, category: 1, status: 1 });
+
 export default Application;

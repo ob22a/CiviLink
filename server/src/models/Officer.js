@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import User from "./User.js";
 
 const Officer = User.discriminator(
-  "Officer",
+  "officer",
   new mongoose.Schema({
     department: {
       type: String,
@@ -21,9 +21,12 @@ const Officer = User.discriminator(
       type: Boolean,
       default: false,
     },
-    subCity: {
+    subcity: {
       type: String,
       default: "unknown"
+    },
+    assignedBy: {
+      type: mongoose.Schema.Types.ObjectId
     }
   })
 );
