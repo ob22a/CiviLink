@@ -39,7 +39,11 @@
 
 ```json
 {
-  "newsId": "..."
+    "success": true,
+    "data": {
+        "newsId": "69542c59c69d7abded07e5e1"
+    },
+    "error": null
 }
 ```
 
@@ -47,11 +51,26 @@
 
 ### **4. Edit News**
 
-`PUT /api/v1/officer/news/:id`
-![PUT](https://img.shields.io/badge/PUT-FFC107?style=flat\&labelColor=000)
+`PATCH /api/v1/officer/news/:id`
+![PATCH](https://img.shields.io/badge/PATCH-FFC107?style=flat\&labelColor=000)
 
 **Auth:** authoring officer + currently assigned
 **Purpose:** Edit own news while assignment is active
+
+```json
+{
+    "success": true,
+    "data": {
+        "_id": "69542c59c69d7abded07e5e1",
+        "title": "Corruption",
+        "content": "Corruption has been reduced by 100%",
+        "author": "695428711cecac7b52621ba0",
+        "headerImageUrl": null,
+        "createdAt": "2025-12-30T19:47:37.562Z"
+    },
+    "error": null
+}
+```
 
 ---
 
@@ -63,10 +82,19 @@
 **Auth:** authoring officer only (within assignment window)
 **Purpose:** Remove news post
 
+```json
+{
+    "success": true,
+    "data": {
+        "message": "News deleted successfully"
+    }
+}
+```
+
 ---
 
 ### **6. Get Latest News**  
-`GET /api/v1/news/latest`  
+`GET /api/v1/officer/news/latest`  
 ![GET](https://img.shields.io/badge/GET-2196F3?style=flat&labelColor=000)
 
 **Auth:** optional (signed-in by default)  
@@ -75,13 +103,22 @@
 #### Response
 - Returns the **latest 5 non-archived news** items
 ```
-[
-  {
-    "newsId": "...",
-    "title": "...",
-    "content": "...",
-    "headerImageUrl": "...",
-    "createdAt": "..."
-  }
-]
+{
+    "success": true,
+    "data": [
+        {
+            "_id": "695428731cecac7b52623516",
+            "title": "Alius doloribus suus cupio caecus.",
+            "content": "Subiungo adduco demulceo curtus vitium. Curso capto alienus nemo dicta explicabo sum antepono. Bardus repellat inventore stipes acceptus cruentus.\nCarcer aspernatur tamdiu ambulo molestiae desino delinquo qui. Venio acsi tendo tonsor vesco non tardus casus. Spes incidunt pel.",
+            "author": {
+                "_id": "695428711cecac7b52621ba0",
+                "fullName": "Grady Rippin MD"
+            },
+            "headerImageUrl": null,
+            "createdAt": "2025-12-30T19:30:59.183Z",
+            "updatedAt": "2025-12-30T19:30:59.183Z"
+        }, ...
+    ],
+    "error": null
+}
 ```

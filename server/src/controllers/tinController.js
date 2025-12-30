@@ -6,7 +6,7 @@ import { generateTIN } from "../utils/generateUniqueTin.js";
 import { generateTinCertificatePdf } from "../services/certificates/generateTinCertificatePdf.js"
 
 
-export const submitTinApplication = async (req, res, next) => {
+const submitTinApplication = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const assignedOfficerId = req.assignedOfficer;
