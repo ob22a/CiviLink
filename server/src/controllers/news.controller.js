@@ -1,4 +1,17 @@
 import News from '../models/News.js';
+import { getSignedUploadUrl } from '../services/storage.service.js';
+
+export const requestUploadUrl = async (req, res) => {
+  try {
+    const { fileName } = req.body;
+    if (!fileName) return res.status(400).json({ message: "File name is required" });
+    const uploadData = await getSignedUploadUrl(fileName);
+    
+    res.status(200).json(uploadData);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 export const createNews = async (req, res) => {
     const { title, content, headerImageUrl } = req.body;
@@ -23,8 +36,7 @@ export const getNews = async (req, res) => {
             .sort({ createdAt: -1 })
             .limit(5)
             .populate("author", "fullName") 
-            .select("-__v -updatedAt") 
-            .lean();
+            .select("-__v -updatedAt");
 
         return res.status(200).json({ success: true, data: news, error:null });
     } catch (error) {

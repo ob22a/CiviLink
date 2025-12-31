@@ -38,7 +38,7 @@ export async function seedNews(count = 5) {
       title: faker.lorem.sentence(5),
       content: faker.lorem.paragraphs(2),
       author: officer._id,
-      headerImageUrl: null,
+      headerImageUrl: faker.datatype.boolean({ probability: 0.8 })?`${Date.now()}-${faker.system.commonFileName('png')}`:null,
     });
   }
 
