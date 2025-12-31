@@ -5,6 +5,10 @@ import "../config/passport_setup.js";
 import connectDB from "../config/db.js";
 import cookieParser from "cookie-parser";
 
+// CORS
+import cors from 'cors';
+import { corsOptions } from "../config/cors.js";
+
 // Ensure discriminators are registered early
 import "./models/Citizen.js";
 import "./models/Admin.js";
@@ -31,6 +35,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors(corsOptions));
 
 // connect to database only when NOT running tests
 if (process.env.NODE_ENV !== "test") {
