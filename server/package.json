@@ -26,6 +26,7 @@
     "dotenv": "^17.2.3",
     "exceljs": "^4.4.0",
     "express": "^5.2.1",
+    "fs": "^0.0.1-security",
     "joi": "^18.0.2",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.0.1",
@@ -35,6 +36,7 @@
     "node-cron": "^4.2.1",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
+    "path": "^0.12.7",
     "pdfkit": "^0.17.2",
     "uuid": "^13.0.0"
   },

@@ -6,7 +6,7 @@ import connectDB from "../config/db.js";
 import cookieParser from "cookie-parser";
 
 // CORS
-import cors from 'cors';
+import cors from "cors";
 import { corsOptions } from "../config/cors.js";
 
 // Ensure discriminators are registered early
@@ -22,10 +22,11 @@ import officerRoutes from "./routes/officer.js";
 import idUploadRoutes from "./routes/idUpload.route.js";
 import chatRoutes from "./routes/chat.js";
 import paymentRoutes from "./routes/payment.js";
-import adminRoutes from "./routes/admin.js"
+import adminRoutes from "./routes/admin.js";
 import applicationRoutes from "./routes/applications.js";
-import healthRoutes from './routes/health.route.js';
-import notificationRoutes from './routes/notification.route.js'
+import healthRoutes from "./routes/health.route.js";
+import notificationRoutes from "./routes/notification.route.js";
+import securityRoutes from "./routes/metricsRoutes.js";
 
 // Cron Jobs
 import { startAnalyticsJob } from "./jobs/refreshOfficerAnalytics.job.js";
@@ -51,8 +52,9 @@ app.use("/api/v1/user/id", idUploadRoutes);
 app.use("/api/v1/chats", chatRoutes);
 app.use("/api/v1/payments", paymentRoutes);
 app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1/admin", securityRoutes);
 app.use("/api/v1/applications", applicationRoutes);
-app.use("/api/v1/health", healthRoutes)
+app.use("/api/v1/health", healthRoutes);
 app.use("/api/v1/notifications", notificationRoutes);
 
 // 404 handler
