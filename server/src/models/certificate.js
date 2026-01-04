@@ -34,6 +34,13 @@ const certificateSchema = new mongoose.Schema(
       },
     },
 
+    appointment: {
+      type: mongoose.Schema.Types.Mixed,
+      required: function () {
+        return this.category === "VITAL";
+      },
+    },
+
     // Where the generated PDF is stored
     fileUrl: {
       type: String,
