@@ -5,7 +5,7 @@ import { supabase } from "../../config/supabase.js";
 const getAllApplications = async (req, res) => {
     try {
         const applications = await Application.find({ applicant: req.user.id })
-            .select("_id category type status rejectionReason createdAt")
+            .select("_id category type status rejectionReason createdAt formData")
             .sort({ createdAt: -1 })
             .lean();
 

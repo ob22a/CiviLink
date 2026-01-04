@@ -179,8 +179,8 @@ Access token stores the **User ID**, which is used to query the database for the
 
 ### **8. Change Password**
 
-`PUT /api/v1/user/change-password`
-![PUT](https://img.shields.io/badge/PUT-FFC107?style=flat\&labelColor=000)
+`PATCH /api/v1/user/change-password`
+![PATCH](https://img.shields.io/badge/PATCH-FFC107?style=flat\&labelColor=000)
 
 **Auth:** Required
 **Purpose:** Update password.
@@ -199,11 +199,12 @@ Access token stores the **User ID**, which is used to query the database for the
 
 ### **9. Delete User ID Information**
 
-`DELETE /api/v1/user/id/`
+`DELETE /api/v1/user/id/:idType`
 ![DELETE](https://img.shields.io/badge/DELETE-F44336?style=flat\&labelColor=000)
 
 **Auth:** User only
 **Purpose:** Delete both Fayda and Kebele ID info.
+**Route Param**: idType='fayda'|'kebele'|'both'
 Also purges:
 
 * `id_verifications` document
