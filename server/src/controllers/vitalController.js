@@ -192,11 +192,6 @@ const approveVitalApplication = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Vital application approved and appointment scheduled",
-      data: {
-        application,
-        certificate,
-        appointment
-      }
     });
   } catch (err) {
     console.error(err);
@@ -207,4 +202,104 @@ const approveVitalApplication = async (req, res) => {
   }
 };
 
-export { submitVitalApplication, approveVitalApplication }
+const rejectVitalApplication = async (req, res) => {
+  try {
+    const { reason } = req.body;
+    const applicationId = req.params.id;
+    const applicationType = req.params.type;
+    const officerId = req.user.id;
+
+    if ((reason?.trim().length ?? 0) < 5) {
+      return res.status(400).json({
+        success: false,
+        message: "Rejection reason must be at least 5 characters long."
+      });
+    }
+
+    const application = await Application.findById( applicationId );
+    
+    if (!application) {
+      return res.status(404).json({
+        success: false,
+        message: "Application not found"
+      });
+    }
+
+    const officer = await Officer.findById(officerId);
+    if (!officer) {
+      return res.status(403).json({
+        success: false,
+        message: "Officer not found"
+      });
+    } 
+
+    if (
+      !application.assignedOfficer ||
+      application.assignedOfficer.toString() !== officerId
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Officer not assigned to this application"
+      });
+    }
+
+    if (application.category !== "VITAL") {
+      return res.status(400).json({
+        success: false,
+        message: "Not a vital application"
+      });
+    }
+
+    if (application.type.toLowerCase() !== applicationType.toLowerCase()) {
+      return res.status(400).json({
+        success: false,
+        message: "Application type mismatch"
+      });
+    }
+
+    if (application.status !== "pending") {
+      return res.status(409).json({
+        success: false,
+        message: "Application already processed"
+      });
+    }
+
+        // RBAC checks
+    if (officer.department !== "approver") {
+      return res.status(403).json({
+        success: false,
+        message: "Officer not authorized to reject"
+      });
+    }
+
+    if (
+      application.formData?.subcity &&
+      officer.subcity !== application.formData.subcity
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Subcity mismatch"
+      });
+    }
+    
+    application.status = "rejected";
+    application.rejectionReason = reason;
+    await application.save();
+
+    await Officer.findOneAndUpdate({ _id: officerId, workLoad: { $gt: 0 } }, { $inc: { workLoad: -1 } });
+
+    return res.status(200).json({
+      success: true,
+      message: "Vital application has been rejected"
+    });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      success: false, 
+      message: err.message
+    });
+  }
+}
+
+export { submitVitalApplication, approveVitalApplication, rejectVitalApplication }

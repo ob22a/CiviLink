@@ -183,4 +183,98 @@ const approveTinApplicatin = async (req, res) => {
   };
 }
 
-export { submitTinApplication, approveTinApplicatin }
+const rejectTinApplication = async (req, res) => {
+  try {
+    const { reason } = req.body;
+    const applicationId = req.params.id;
+    const officerId = req.user.id;
+
+    if ((reason?.trim().length ?? 0) < 5) {
+      return res.status(400).json({
+        success: false,
+        message: "Rejection reason must be at least 5 characters long."
+      });
+    }
+
+    const application = await Application.findById( applicationId );
+
+    if (!application) {
+      return res.status(404).json({
+        success: false,
+        message: "Application not found"
+      });
+    }
+
+    // Validate application
+    if (application.category !== "TIN") {
+      return res.status(400).json({
+        success: false,
+        message: "Not a TIN application"
+      });
+    }
+
+    if (application.status !== "pending") {
+      return res.status(409).json({
+        success: false,
+        message: "Application already processed"
+      });
+    }
+
+    const officer = await Officer.findById(officerId);
+    if (!officer) {
+      return res.status(403).json({
+        success: false,
+        message: "Officer not found"
+      });
+    }
+
+        // RBAC checks
+    if (officer.department !== "approver") {
+      return res.status(403).json({
+        success: false,
+        message: "Officer not authorized to reject"
+      });
+    }
+
+    if (
+      !application.assignedOfficer ||
+      application.assignedOfficer.toString() !== officerId
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Officer not assigned to this application"
+      });
+    }
+
+    if (
+      application.formData?.subcity &&
+      officer.subcity !== application.formData.subcity
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Subcity mismatch"
+      });
+    }
+
+    application.status = "rejected";
+    application.rejectionReason = reason;
+    await application.save();
+
+    await Officer.findOneAndUpdate({ _id: officerId, workLoad: { $gt: 0 } }, { $inc: { workLoad: -1 } });
+
+
+    return res.status(200).json({
+      success: true,
+      message: "TIN application has been rejected"
+    });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      success: false, 
+      message: err.message
+    });
+  }
+}
+
+export { submitTinApplication, approveTinApplicatin, rejectTinApplication }

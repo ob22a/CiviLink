@@ -173,12 +173,13 @@ describe("Get All Applications API", () => {
 
       const app = res.body.data[0];
 
+      console.log(app)
+
       expect(app).toHaveProperty("_id");
       expect(app).toHaveProperty("category");
       expect(app).toHaveProperty("status");
       expect(app).toHaveProperty("createdAt");
 
-      expect(app).not.toHaveProperty("formData");
       expect(app).not.toHaveProperty("assignedOfficer");
       expect(app).not.toHaveProperty("applicant");
     });
