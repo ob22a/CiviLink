@@ -3,7 +3,7 @@ import Conversation from "../models/Conversation.js";
 
 const checkConversationAccess = async (req, res, next) => {
   const { conversationId } = req.params;
-  const userId = req.user.id; 
+  const userId = req.user.id?.toString(); 
   const userRole = req.user.role;
 
   if (!conversationId || !mongoose.Types.ObjectId.isValid(conversationId)) {
@@ -29,7 +29,7 @@ const checkConversationAccess = async (req, res, next) => {
         hasAccess = false; // Admins have no access to conversations
         break;
       case 'citizen':
-        hasAccess = conversation.citizenId.toString() === userId;
+        hasAccess = conversation.citizenId?.toString() === userId;
         break;
       case 'officer':
         hasAccess = conversation.officerId?.toString() === userId;

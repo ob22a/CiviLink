@@ -54,26 +54,40 @@ const assignApproverOfficer = async (req, res, next) => {
 const assignConversationOfficer = async (req, res, next) => {
     try {
         const subcity = req.body.subcity;
-        if (!subcity) {
-            return res.status(400).json({
-                success: false,
-                message: "subcity is required to assign an officer",
-            });
-        }
-        // Find the officer with the lowest workload(determined by number of active conversations) in the same subcity
 
-        const officer = await Officer.findOne({
+        let query = {
             onLeave: false,
-            department: "customer_support",
-            subcity,
-        }) .sort({ workLoad: 1 });
+            department: "customer_support"
+        };
+
+        if (subcity) {
+            query.subcity = subcity;
+        }
+
+        const officer = await Officer.findOne(query).sort({ workLoad: 1 });
+
+        if (!officer && subcity) {
+            // Fallback to any officer if subcity-specific one not found
+            delete query.subcity;
+            const fallbackOfficer = await Officer.findOne(query).sort({ workLoad: 1 });
+            if (fallbackOfficer) {
+                req.assignedOfficer = fallbackOfficer._id;
+                return next();
+            }
+        }
 
         if (!officer) {
-            return res.status(503).json({
-                success: false,
-                message: "No officers are currently available for this subcity",
-            });
+            // If it's a logged in citizen, we MUST have an officer. 
+            // If it's a guest, we allow it to proceed without assignedOfficer if none found.
+            if (req.user) {
+                return res.status(503).json({
+                    success: false,
+                    message: "No support officers are currently available",
+                });
+            }
+            return next();
         }
+
         req.assignedOfficer = officer._id;
         next();
     } catch (error) {

@@ -1,5 +1,5 @@
 import express from 'express';
-import { getApplicationDetails,getOfficerApplications } from '../controllers/officerController.js';
+import { getApplicationDetails, getOfficerApplications, getOfficerMetrics, getOfficerActivities } from '../controllers/officerController.js';
 import { verifyToken, authorizeRoles } from '../middleware/authMiddleware.js';
 import NewsRoutes from './news.route.js';
 
@@ -8,14 +8,26 @@ const router = express.Router();
 router.use(verifyToken)
 
 router.get(
-    '/applications', 
-    authorizeRoles('officer'), 
+    '/applications',
+    authorizeRoles('officer'),
     getOfficerApplications
 );
 
 router.get(
-    '/applications/:id', 
-    authorizeRoles('officer'), 
+    '/metrics',
+    authorizeRoles('officer'),
+    getOfficerMetrics
+);
+
+router.get(
+    '/activities',
+    authorizeRoles('officer'),
+    getOfficerActivities
+);
+
+router.get(
+    '/applications/:id',
+    authorizeRoles('officer'),
     getApplicationDetails
 );
 

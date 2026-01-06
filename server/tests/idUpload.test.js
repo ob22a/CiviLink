@@ -50,7 +50,7 @@ describe("ID Upload API", () => {
     acceptTerms: true,
   };
 
-  describe("GET /api/v1/user/id/upload - ID Upload Status", () => {
+  describe("GET /api/v1/user/id/data - ID Upload Status", () => {
     it("should return NONE when no IDs are uploaded", async () => {
       // Register a test user
       await request(app)
@@ -71,12 +71,12 @@ describe("ID Upload API", () => {
       const user = await User.findOne({ email: testUserData.email });
       testUserId = user._id;
 
-      const res = await agent.get("/api/v1/user/id/upload");
+      const res = await agent.get("/api/v1/user/id/data");
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
-      expect(res.body.status).toBe("NONE");
-      expect(res.body.message).toBe("No ID uploaded yet.");
+      expect(res.body.data.fayda).toBeNull()
+      expect(res.body.data.kebele).toBeNull();
     });
 
     it("should return ONLY_FAYDA when only Fayda ID is uploaded", async () => {
@@ -106,12 +106,12 @@ describe("ID Upload API", () => {
         fan: "FAN123456789"
       });
 
-      const res = await agent.get("/api/v1/user/id/upload");
+      const res = await agent.get("/api/v1/user/id/data");
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
-      expect(res.body.status).toBe("ONLY_FAYDA");
-      expect(res.body.message).toBe("Only Fayda ID uploaded.");
+      expect(res.body.data.fayda.userId?.toString()).toBe(testUserId?.toString());
+      expect(res.body.data.kebele).toBeNull();
     });
 
     it("should return ONLY_KEBELE when only Kebele ID is uploaded", async () => {
@@ -141,12 +141,12 @@ describe("ID Upload API", () => {
         idNumber: "KEB123456789"
       });
 
-      const res = await agent.get("/api/v1/user/id/upload");
+      const res = await agent.get("/api/v1/user/id/data");
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
-      expect(res.body.status).toBe("ONLY_KEBELE");
-      expect(res.body.message).toBe("Only Kebele ID uploaded.");
+      expect(res.body.data.kebele.userId?.toString()).toBe(testUserId?.toString());
+      expect(res.body.data.fayda).toBeNull();
     });
 
     it("should return BOTH when both IDs are uploaded", async () => {
@@ -185,16 +185,16 @@ describe("ID Upload API", () => {
         idNumber: "KEB123456789"
       });
 
-      const res = await agent.get("/api/v1/user/id/upload");
+      const res = await agent.get("/api/v1/user/id/data");
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
-      expect(res.body.status).toBe("BOTH");
-      expect(res.body.message).toBe("Both Fayda and Kebele IDs are uploaded.");
+      expect(res.body.data.fayda.userId?.toString()).toBe(testUserId?.toString());
+      expect(res.body.data.kebele.userId?.toString()).toBe(testUserId?.toString());
     });
 
     it("should return 401 without authentication token", async () => {
-      const res = await request(app).get("/api/v1/user/id/upload");
+      const res = await request(app).get("/api/v1/user/id/data");
 
       expect(res.status).toBe(401);
     });

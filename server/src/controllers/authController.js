@@ -48,21 +48,15 @@ const oauthHandler = async (req, res) => {
       maxAge: refreshTokenMaxAge,
     });
 
-    res.status(req.user.status).json({
-      success: true,
-      data: {
-        user: {
-          id: user._id,
-          fullName: user.fullName,
-          email: user.email,
-          role: user.role,
-        },
-        message: req.user.message,
-        status: req.user.status
-      },
-    });
+    // Redirect to frontend callback URL with success indicator
+    const frontendCallbackUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const redirectUrl = `${frontendCallbackUrl}/auth/google/callback?success=true`;
+    res.redirect(redirectUrl);
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message }); 
+    // Redirect to frontend callback with error
+    const frontendCallbackUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const redirectUrl = `${frontendCallbackUrl}/auth/google/callback?error=${encodeURIComponent(err.message)}`;
+    res.redirect(redirectUrl);
   }
   
 }

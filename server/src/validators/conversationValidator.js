@@ -7,9 +7,9 @@ export const citizenMessageSchema = Joi.object({
   message: Joi.string().required().messages({
     'string.required': 'Message is required'
   }),
-  subcity: Joi.string().required().messages({
-    'string.required': 'subcity is required'
-  })
+  subcity: Joi.string().optional().allow(''), // Made optional for guests
+  guestName: Joi.string().optional().allow(''),
+  guestEmail: Joi.string().email().optional().allow('')
 });
 
 export const officerMessageSchema = Joi.object({

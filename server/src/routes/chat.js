@@ -1,18 +1,30 @@
 import express from 'express';
 import { verifyToken, authorizeRoles } from '../middleware/authMiddleware.js';
-import { createConversation, getConversationById, getConversations, postMessageToConversation, markConversationAsRead } from '../controllers/chatController.js';
-import {assignConversationOfficer} from '../middleware/assignOfficer.js';
+import { createConversation, getConversationById, getConversations, postMessageToConversation, markConversationAsRead, getCitizenConversations } from '../controllers/chatController.js';
+import { assignConversationOfficer } from '../middleware/assignOfficer.js';
 import checkConversationAccess from '../middleware/conversationAuth.js';
 
 const router = express.Router();
 
-// Start a new conversation
+// Start a new conversation (Support Inquiry)
 router.post(
     '/',
-    verifyToken,
-    authorizeRoles('citizen'),
+    (req, res, next) => {
+        if (req.cookies?.accessToken) {
+            return verifyToken(req, res, next);
+        }
+        next();
+    },
     assignConversationOfficer,
     createConversation
+)
+
+// Get Conversations for citizen
+router.get(
+    '/my-conversations',
+    verifyToken,
+    authorizeRoles('citizen'),
+    getCitizenConversations
 )
 
 // Get Conversations for officer

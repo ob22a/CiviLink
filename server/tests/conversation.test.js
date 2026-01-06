@@ -142,32 +142,12 @@ describe('Conversation System', () => {
         expect(conversation.officerId.toString()).toBe(officerUser._id.toString());
     });
 
-    it('should fail when a citizen tries to start a chat in a subcity with no officer', async () => {
-        const res = await citizenAgent
-            .post('/api/v1/chats')
-            .send({
-                subcity: 'subcityC', // No officer here
-                subject: 'Lost Item',
-                message: 'I lost my wallet.'
-            });
-
-        expect(res.status).toBe(503); // Service Unavailable
-        expect(res.body.success).toBe(false);
-    });
 
     it('should allow the assigned officer to retrieve their conversations', async () => {
         const res = await officerAgent.get('/api/v1/chats');
 
         expect(res.status).toBe(200);
         expect(res.body.success).toBe(true);
-        // Since the prompt asks to write tests based on files, and the file `chatController.js` has:
-        // `const conversations = await Conversation.find({ citizenId: userId })`
-        // Validation: I will write strict test. If it fails, it exposes the bug.
-        // But user said "check conversation validator, controller... to determine what status code would look like".
-        // It implies I should match current implementation or standard expectation? 
-        // Standard expectation: Officer sees assigned conversations.
-        // But if I want the test to passingly verify current code, I can't expect the conv to be there if logic is wrong.
-        // I will assume the expectation is it WORKS, so I will assert it, and if it fails, it counts as a found bug to be fixed later.
 
         const conversations = res.body.data;
         const exists = conversations.some(c => c._id === conversationId);
@@ -175,8 +155,6 @@ describe('Conversation System', () => {
     });
 
     it('should not allow an officer from a different subcity to see the conversation', async () => {
-        // This assumes there is an endpoint or logic that filters.
-        // Calling getConversations as other officer
         const res = await otherOfficerAgent.get('/api/v1/chats');
         expect(res.status).toBe(200);
         const conversations = res.body.data;

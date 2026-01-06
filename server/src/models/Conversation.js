@@ -1,17 +1,27 @@
 import mongoose from "mongoose";
 
 const conversationSchema = new mongoose.Schema({
-  citizenId: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'User', 
-    required: true 
+  citizenId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: false // Changed to false to support guests
   },
-  officerId: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Officer' 
+  guestName: {
+    type: String,
+    trim: true,
+    maxlength: 100
   },
-  subject: { 
-    type: String, 
+  guestEmail: {
+    type: String,
+    trim: true,
+    lowercase: true
+  },
+  officerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  subject: {
+    type: String,
     required: true,
     trim: true,
     maxlength: 200
@@ -28,22 +38,22 @@ const conversationSchema = new mongoose.Schema({
     default: null,
   },
 
-  read:{
+  read: {
     type: Boolean,
     default: false
   },
 
-  status: { 
-    type: String, 
-    enum: ['pending', 'assigned', 'closed'], 
-    default: 'pending' 
+  status: {
+    type: String,
+    enum: ['pending', 'assigned', 'closed'],
+    default: 'pending'
   },
-}, 
-  { timestamps: true } 
+},
+  { timestamps: true }
 );
 
 // Index to improve performance
-conversationSchema.index({updatedAt: 1});
+conversationSchema.index({ updatedAt: 1 });
 
 const Conversation = mongoose.model('Conversation', conversationSchema);
 
