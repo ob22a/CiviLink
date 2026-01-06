@@ -38,7 +38,7 @@ const faydaOCR = async (req, res) => {
                 fan: data.fan
             }
         );
-        
+
         await faydaId.save();
 
         return res.status(201).json({
@@ -53,7 +53,7 @@ const faydaOCR = async (req, res) => {
             success: false,
             message: "OCR FAILED"
         });
-    }  finally {
+    } finally {
         await deleteFile(req.file.path);
     }
 };
@@ -106,57 +106,32 @@ const kebeleOCR = async (req, res) => {
         console.error(err.message);
         return res.status(500).json({
             success: false,
-            message:"OCR FAILED"
+            message: "OCR FAILED"
         });
-    }  finally {
+    } finally {
         await deleteFile(req.file.path);
     }
 };
 
-const getIDUploadStatus = async (req, res) => {
+const getIDData = async (req, res) => {
     try {
-        let faydaId = await FaydaId.findOne({userId: req.user.id});
-        let kebeleId = await KebeleId.findOne({userId: req.user.id});
+        const faydaId = await FaydaId.findOne({ userId: req.user.id });
+        const kebeleId = await KebeleId.findOne({ userId: req.user.id });
 
-        // No fayda and kebele ID
-        if (!faydaId && !kebeleId) {
-            return res.status(200).json({
-                success: true,
-                status: "NONE",
-                message: "No ID uploaded yet.",
-            });
-        };
-
-        // Only fayda ID is uploaded
-        if (faydaId && !kebeleId) {
-            return res.status(200).json({
-                success: true,
-                status: "ONLY_FAYDA",
-                message: "Only Fayda ID uploaded.",
-            });
-        }
-        
-        // Only kebele ID is uploaded
-        if (!faydaId && kebeleId) {
-            return res.status(200).json({
-                success: true,
-                status: "ONLY_KEBELE",
-                message: "Only Kebele ID uploaded.",
-            });
-        }
-        
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
-            status: "BOTH",
-            message: "Both Fayda and Kebele IDs are uploaded."
-        })
+            data: {
+                fayda: faydaId,
+                kebele: kebeleId
+            }
+        });
     } catch (err) {
         console.error(err);
         return res.status(500).json({
             success: false,
-            message: "Failed to check ID upload status.",
+            message: "Failed to fetch ID data.",
         });
     }
 }
 
-export { faydaOCR, kebeleOCR, getIDUploadStatus };
+export { faydaOCR, kebeleOCR, getIDData };
