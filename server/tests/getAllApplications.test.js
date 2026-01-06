@@ -177,8 +177,8 @@ describe("Get All Applications API", () => {
       expect(app).toHaveProperty("category");
       expect(app).toHaveProperty("status");
       expect(app).toHaveProperty("createdAt");
-
-      expect(app).not.toHaveProperty("formData");
+      expect(app).toHaveProperty("formData");
+      
       expect(app).not.toHaveProperty("assignedOfficer");
       expect(app).not.toHaveProperty("applicant");
     });
