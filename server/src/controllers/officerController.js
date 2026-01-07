@@ -2,12 +2,29 @@ import Application from "../models/Application.js";
 
 const getOfficerApplications = async (req, res) => {
     try {
+        const { page = 1, limit = 10 } = req.query;
+        const skip = (page - 1) * limit;
         const officerId = req.user.id;
-        const applications = await Application.find({ assignedOfficer: officerId });
+
+        const applications = await Application.find({ assignedOfficer: officerId })
+            .skip(skip)
+            .limit(parseInt(limit))
+            .sort({ createdAt: -1 });
+
+        const total = await Application.countDocuments({ assignedOfficer: officerId });
+        const totalPages = Math.ceil(total / limit);
 
         res.status(200).json({
             success: true,
-            data: applications
+            data: applications,
+            pagination: {
+                page: parseInt(page),
+                limit: parseInt(limit),
+                total,
+                totalPages,
+                hasNextPage: page < totalPages,
+                hasPrevPage: page > 1
+            }
         });
     } catch (error) {
         res.status(500).json({

@@ -55,21 +55,31 @@ export const createConversation = async (req, res) => {
 
 export const getConversations = async (req, res) => {
     try {
-        const { page = 1, limit = 10 } = req.query; // destructure page and limit from query parameters with default values
+        const { page = 1, limit = 10 } = req.query;
+        const skip = (page - 1) * limit;
         const officerId = req.user.id;
 
         const conversations = await Conversation.find({ officerId })
-            .skip((page - 1) * limit)
-            .limit(limit)
+            .skip(skip)
+            .limit(parseInt(limit))
             .sort({ createdAt: -1 });
 
-        // Count total unread conversations. THIS IS NOT EFFICIENT FOR LARGE DATASETS AND SHOULD BE OPTIMIZED LATER
-        const totalConversations = await Conversation.countDocuments({ officerId, read: false });
+        const total = await Conversation.countDocuments({ officerId });
+        const unreadCount = await Conversation.countDocuments({ officerId, read: false });
+        const totalPages = Math.ceil(total / limit);
 
         res.status(200).json({
             success: true,
             data: conversations,
-            unreadCount: totalConversations
+            unreadCount,
+            pagination: {
+                page: parseInt(page),
+                limit: parseInt(limit),
+                total,
+                totalPages,
+                hasNextPage: page < totalPages,
+                hasPrevPage: page > 1
+            }
         });
     } catch (error) {
         res.status(500).json({
@@ -127,7 +137,7 @@ export const postMessageToConversation = async (req, res) => {
         conversation.status = 'closed';
         await conversation.save();
 
-        if(conversation.citizenId) makeNotification(conversation.citizenId, "Officer Response", "Officers have responded to your message! Check your messages")
+        if (conversation.citizenId) makeNotification(conversation.citizenId, "Officer Response", "Officers have responded to your message! Check your messages")
 
         res.status(200).json({
             success: true,
@@ -147,24 +157,36 @@ export const postMessageToConversation = async (req, res) => {
 export const getCitizenConversations = async (req, res) => {
     try {
         const { page = 1, limit = 10 } = req.query;
+        const skip = (page - 1) * limit;
         const citizenId = req.user.id;
         console.log(citizenId);
 
         const conversations = await Conversation.find({ citizenId: new mongoose.Types.ObjectId(citizenId) })
             .populate('officerId', 'fullName')
-            .skip((page - 1) * limit)
-            .limit(limit)
+            .skip(skip)
+            .limit(parseInt(limit))
             .sort({ createdAt: -1 });
+
+        const total = await Conversation.countDocuments({ citizenId: new mongoose.Types.ObjectId(citizenId) });
+        const totalPages = Math.ceil(total / limit);
 
         res.status(200).json({
             success: true,
-            data: conversations
+            data: conversations,
+            pagination: {
+                page: parseInt(page),
+                limit: parseInt(limit),
+                total,
+                totalPages,
+                hasNextPage: page < totalPages,
+                hasPrevPage: page > 1
+            }
         });
     } catch (error) {
         console.error(error);
         res.status(500).json({
             success: false,
-            message: error
+            message: error.message || "Failed to fetch conversations"
         });
     }
 };

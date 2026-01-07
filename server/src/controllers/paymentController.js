@@ -154,13 +154,31 @@ const getPaymentStatus = async (req, res, next) => {
 // Get payment history (citizen)
 const getPaymentHistory = async (req, res, next) => {
   try {
+    const { page = 1, limit = 10 } = req.query;
+    const skip = (page - 1) * limit;
     const userId = req.user.id;
 
     const payments = await Payment.find({ userId })
       .sort({ createdAt: -1 })
-      .select("-__v"); // keep txRef if needed by verify
+      .skip(skip)
+      .limit(parseInt(limit))
+      .select("-__v");
 
-    return res.status(200).json({ success: true, data: payments });
+    const total = await Payment.countDocuments({ userId });
+    const totalPages = Math.ceil(total / limit);
+
+    return res.status(200).json({
+      success: true,
+      data: payments,
+      pagination: {
+        page: parseInt(page),
+        limit: parseInt(limit),
+        total,
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1
+      }
+    });
   } catch (error) {
     next(error);
   }
