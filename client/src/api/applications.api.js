@@ -199,16 +199,7 @@ export const finalizeTinApplication = async (id) => {
 export const downloadCertificate = async (applicationId) => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
   const url = `${API_BASE_URL}/applications/${applicationId}/download`;
-
-  const response = await fetch(url, {
-    method: 'GET',
-    credentials: 'include', // Automatically sends HTTP-only cookies
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to download certificate');
-  }
-
-  return response;
+  
+  window.location.href = url;
 };
 

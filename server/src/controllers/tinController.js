@@ -72,7 +72,7 @@ const submitTinApplication = async (req, res, next) => {
   }
 };
 
-const approveTinApplicatin = async (req, res) => {
+const approveTinApplication = async (req, res) => {
   try {
     const applicationId = req.params.id;
     const officerId = req.user.id;
@@ -128,7 +128,7 @@ const approveTinApplicatin = async (req, res) => {
 
     if (
       application.formData?.subcity &&
-      officer.subcity !== application.formData.subcity
+      officer.subcity.trim().toLowerCase() !== application.formData.subcity.trim().toLowerCase()
     ) {
       return res.status(403).json({
         success: false,
@@ -255,7 +255,7 @@ const rejectTinApplication = async (req, res) => {
 
     if (
       application.formData?.subcity &&
-      officer.subcity !== application.formData.subcity
+      officer.subcity.trim().toLowerCase() !== application.formData.subcity.trim().toLowerCase()
     ) {
       return res.status(403).json({
         success: false,
@@ -326,4 +326,4 @@ const finalizeTinApplication = async (req, res, next) => {
   }
 };
 
-export { submitTinApplication, approveTinApplicatin, rejectTinApplication, finalizeTinApplication }
+export { submitTinApplication, approveTinApplication, rejectTinApplication, finalizeTinApplication }

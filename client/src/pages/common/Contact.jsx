@@ -6,12 +6,15 @@ import Navigation2 from '../../components/Navigation2';
 import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
 import * as chatAPI from '../../api/chat.api';
+import { useChat } from '../../auth/ChatContext';
 
 function Contact() {
     const { user } = useAuth();
     const [searchParams] = useSearchParams();
     const navTypeParam = searchParams.get('navType');
     const navType = navTypeParam ? parseInt(navTypeParam) : 1;
+
+    const { submitSupportInquiry, isLoading: chatLoading, error: chatError, clearError } = useChat();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -44,6 +47,7 @@ function Contact() {
         e.preventDefault();
         setIsSubmitting(true);
         setStatus({ type: '', message: '' });
+        clearError();
 
         try {
             const payload = {
@@ -54,7 +58,7 @@ function Contact() {
                 guestEmail: !user ? formData.email : undefined
             };
 
-            const result = await chatAPI.submitInquiry(payload);
+            const result = await submitSupportInquiry(payload);
 
             if (result.success) {
                 setStatus({ type: 'success', message: 'Thank you! Your message has been sent successfully.' });
@@ -64,12 +68,10 @@ function Contact() {
                     message: '',
                     service: ''
                 }));
-            } else {
-                setStatus({ type: 'error', message: result.message || 'Failed to send message. Please try again.' });
             }
         } catch (error) {
             console.error('Contact form error:', error);
-            setStatus({ type: 'error', message: 'An error occurred. Please try again later.' });
+            setStatus({ type: 'error', message: chatError || error.message || 'An error occurred. Please try again later.' });
         } finally {
             setIsSubmitting(false);
         }

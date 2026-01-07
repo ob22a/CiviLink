@@ -1,30 +1,6 @@
 import React, { createContext, useContext, useReducer, useCallback } from 'react';
+import { chatReducer, chatActions } from '../reducers/chatReducer.js';
 import * as chatAPI from '../api/chat.api.js';
-
-// Simple reducer for chat since one didn't exist in the list I saw, 
-// or I can standardise it here.
-const chatActions = {
-    FETCH_CONVERSATIONS_START: 'FETCH_CONVERSATIONS_START',
-    FETCH_CONVERSATIONS_SUCCESS: 'FETCH_CONVERSATIONS_SUCCESS',
-    FETCH_CONVERSATIONS_FAILURE: 'FETCH_CONVERSATIONS_FAILURE',
-    SEND_MESSAGE_START: 'SEND_MESSAGE_START',
-    SEND_MESSAGE_SUCCESS: 'SEND_MESSAGE_SUCCESS',
-    SEND_MESSAGE_FAILURE: 'SEND_MESSAGE_FAILURE',
-};
-
-const chatReducer = (state, action) => {
-    switch (action.type) {
-        case chatActions.FETCH_CONVERSATIONS_START:
-            return { ...state, isLoading: true, error: null };
-        case chatActions.FETCH_CONVERSATIONS_SUCCESS:
-            return { ...state, conversations: action.payload, isLoading: false };
-        case chatActions.FETCH_CONVERSATIONS_FAILURE:
-            return { ...state, isLoading: false, error: action.payload };
-        // Add send message handlers as needed
-        default:
-            return state;
-    }
-};
 
 const ChatContext = createContext(null);
 
@@ -37,16 +13,29 @@ export const useChat = () => {
 export const ChatProvider = ({ children }) => {
     const [state, dispatch] = useReducer(chatReducer, {
         conversations: [],
+        selectedConversation: null,
+        unreadCount: 0,
         isLoading: false,
+        isSending: false,
         error: null,
+        pagination: {
+            page: 1,
+            totalPages: 1,
+            total: 0,
+            hasNextPage: false,
+            hasPrevPage: false,
+        },
     });
 
-    const fetchConversations = useCallback(async () => {
+    /**
+     * Fetch conversations for officer
+     */
+    const fetchConversations = useCallback(async (page, limit) => {
         dispatch({ type: chatActions.FETCH_CONVERSATIONS_START });
         try {
-            const response = await chatAPI.getCitizenConversations();
+            const response = await chatAPI.getConversations(page, limit);
             if (response.success) {
-                dispatch({ type: chatActions.FETCH_CONVERSATIONS_SUCCESS, payload: response.data });
+                dispatch({ type: chatActions.FETCH_CONVERSATIONS_SUCCESS, payload: response });
             } else {
                 dispatch({ type: chatActions.FETCH_CONVERSATIONS_FAILURE, payload: response.message });
             }
@@ -55,13 +44,110 @@ export const ChatProvider = ({ children }) => {
         }
     }, []);
 
-    // Can extend with sendMessage, etc.
+    /**
+     * Fetch conversations for citizen
+     */
+    const fetchCitizenConversations = useCallback(async (page, limit) => {
+        dispatch({ type: chatActions.FETCH_CONVERSATIONS_START });
+        try {
+            const response = await chatAPI.getCitizenConversations(page, limit);
+            if (response.success) {
+                dispatch({ type: chatActions.FETCH_CONVERSATIONS_SUCCESS, payload: response });
+            } else {
+                dispatch({ type: chatActions.FETCH_CONVERSATIONS_FAILURE, payload: response.message });
+            }
+        } catch (error) {
+            dispatch({ type: chatActions.FETCH_CONVERSATIONS_FAILURE, payload: error.message });
+        }
+    }, []);
+
+    /**
+     * Fetch conversation details
+     */
+    const fetchConversationDetails = useCallback(async (id) => {
+        dispatch({ type: chatActions.FETCH_CONVERSATION_DETAILS_START });
+        try {
+            const response = await chatAPI.getConversationById(id);
+            if (response.success) {
+                dispatch({ type: chatActions.FETCH_CONVERSATION_DETAILS_SUCCESS, payload: response });
+            } else {
+                dispatch({ type: chatActions.FETCH_CONVERSATION_DETAILS_FAILURE, payload: response.message });
+            }
+        } catch (error) {
+            dispatch({ type: chatActions.FETCH_CONVERSATION_DETAILS_FAILURE, payload: error.message });
+        }
+    }, []);
+
+    /**
+     * Send message/Response (Officer)
+     */
+    const sendMessage = useCallback(async (id, content) => {
+        dispatch({ type: chatActions.SEND_MESSAGE_START });
+        try {
+            const response = await chatAPI.postMessage(id, content);
+            if (response.success) {
+                dispatch({ type: chatActions.SEND_MESSAGE_SUCCESS, payload: response });
+                return response;
+            } else {
+                dispatch({ type: chatActions.SEND_MESSAGE_FAILURE, payload: response.message });
+                throw new Error(response.message);
+            }
+        } catch (error) {
+            dispatch({ type: chatActions.SEND_MESSAGE_FAILURE, payload: error.message });
+            throw error;
+        }
+    }, []);
+
+    /**
+     * Submit Support Inquiry (Citizen/Guest)
+     */
+    const submitSupportInquiry = useCallback(async (payload) => {
+        dispatch({ type: chatActions.SEND_MESSAGE_START });
+        try {
+            const response = await chatAPI.submitInquiry(payload);
+            if (response.success) {
+                dispatch({ type: chatActions.SEND_MESSAGE_SUCCESS, payload: response });
+                return response;
+            } else {
+                dispatch({ type: chatActions.SEND_MESSAGE_FAILURE, payload: response.message });
+                throw new Error(response.message);
+            }
+        } catch (error) {
+            dispatch({ type: chatActions.SEND_MESSAGE_FAILURE, payload: error.message });
+            throw error;
+        }
+    }, []);
+
+    /**
+     * Mark as read
+     */
+    const markAsRead = useCallback(async (id) => {
+        dispatch({ type: chatActions.MARK_READ_START, payload: id });
+        try {
+            const response = await chatAPI.markConversationAsRead(id);
+            if (response.success) {
+                dispatch({ type: chatActions.MARK_READ_SUCCESS, payload: response });
+            } else {
+                dispatch({ type: chatActions.MARK_READ_FAILURE, payload: { id, error: response.message } });
+            }
+        } catch (error) {
+            dispatch({ type: chatActions.MARK_READ_FAILURE, payload: { id, error: error.message } });
+        }
+    }, []);
+
+    const clearError = useCallback(() => dispatch({ type: chatActions.CLEAR_ERROR }), []);
+    const clearSelected = useCallback(() => dispatch({ type: chatActions.CLEAR_SELECTED }), []);
 
     const value = {
-        conversations: state.conversations,
-        isLoading: state.isLoading,
-        error: state.error,
+        ...state,
         fetchConversations,
+        fetchCitizenConversations,
+        fetchConversationDetails,
+        sendMessage,
+        submitSupportInquiry,
+        markAsRead,
+        clearError,
+        clearSelected,
     };
 
     return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;

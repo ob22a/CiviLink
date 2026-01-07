@@ -140,7 +140,7 @@ const approveVitalApplication = async (req, res) => {
     // RBAC checks
     if (
       application.formData?.subcity &&
-      officer.subcity !== application.formData.subcity
+      officer.subcity.trim().toLowerCase() !== application.formData.subcity.trim().toLowerCase()
     ) {
       return res.status(403).json({
         success: false,
@@ -273,7 +273,7 @@ const rejectVitalApplication = async (req, res) => {
 
     if (
       application.formData?.subcity &&
-      officer.subcity !== application.formData.subcity
+      officer.subcity.trim().toLowerCase() !== application.formData.subcity.trim().toLowerCase()
     ) {
       return res.status(403).json({
         success: false,

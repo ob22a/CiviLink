@@ -138,8 +138,8 @@ export const useApplicationState = () => {
      */
     const downloadCert = useCallback(async (applicationId) => {
         try {
-            const response = await downloadCertificate(applicationId);
-            return response;
+            downloadCertificate(applicationId);
+            console.log("Redirect to download page");
         } catch (error) {
             dispatch({
                 type: applicationActions.FETCH_APPLICATIONS_FAILURE,

@@ -6,7 +6,7 @@ import '../../styles/user/CitizenMessages.css';
 
 function CitizenMessages() {
     const { user } = useAuth();
-    const { conversations, isLoading, error, fetchConversations } = useChat();
+    const { conversations, isLoading, error, fetchCitizenConversations: fetchConversations } = useChat();
     const [selectedId, setSelectedId] = useState(null);
 
     useEffect(() => {

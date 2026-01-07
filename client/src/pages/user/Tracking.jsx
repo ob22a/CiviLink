@@ -52,8 +52,8 @@ const Tracking = () => {
         { step: 'Application Submitted', status: 'completed', date: '' },
         { step: 'Document Review', status: 'completed', date: '' },
         { step: 'Verification', status: 'completed', date: '' },
-        { step: 'Processing', status: 'active', date: '' },
-        { step: 'Completed', status: 'pending', date: '' }
+        { step: 'Processing', status: 'completed', date: '' },
+        { step: 'Completed', status: 'completed', date: '' }
       ],
       completed: [
         { step: 'Application Submitted', status: 'completed', date: '' },
@@ -153,27 +153,9 @@ const Tracking = () => {
   };
 
   // Download application certificate
-  const handleDownloadCertificate = async (appId) => {
-    try {
-      const response = await applicationsAPI.downloadCertificate(appId);
-
-      if (response.redirected) {
-        window.open(response.url, '_blank');
-        return;
-      }
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `certificate-${appId}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    } catch (err) {
-      alert(`Failed to download certificate: ${err.message}`);
-    }
+  const handleDownloadCertificate = (appId) => {
+    console.log("Redirecting to download page");
+    applicationsAPI.downloadCertificate(appId);
   };
 
   // Download payment receipt
@@ -194,12 +176,6 @@ const Tracking = () => {
     } catch (err) {
       alert(`Failed to download receipt: ${err.message}`);
     }
-  };
-
-  // Close progress tracker
-  const handleCloseProgress = () => {
-    setShowProgress(false);
-    setSelectedApp(null);
   };
 
   // Handle key press for reference number input
@@ -300,13 +276,13 @@ const Tracking = () => {
                 {/* Filters */}
                 <div className="filters">
                   {/* ... (Filters markup remains same) ... */}
-                  {['all', 'processing', 'approved', 'completed', 'rejected'].map(status => (
+                  {['all', 'processing', 'approved', 'rejected'].map(status => (
                     <button
                       key={status}
                       className={`filter-btn ${filter === status ? 'active' : ''}`}
                       onClick={() => setFilter(status)}
                     >
-                      {status.charAt(0).toUpperCase() + status.slice(1)} {status === 'all' ? 'Applications' : ''}
+                      {status === 'approved' ? 'Completed' : status.charAt(0).toUpperCase() + status.slice(1)} {status === 'all' ? 'Applications' : ''}
                     </button>
                   ))}
                 </div>
@@ -357,7 +333,7 @@ const Tracking = () => {
                                 >
                                   <i className="fas fa-eye"></i>
                                 </button>
-                                {app.status === 'completed' && (
+                                {['completed', 'approved'].includes(app.status) && (
                                   <button
                                     className="action-btn download"
                                     onClick={() => handleDownloadCertificate(app._id)}

@@ -28,7 +28,7 @@ function ApplicationDetails({ id, onClose, onRefresh }) {
 
                 if (response.success) {
                     const rawData = response.data;
-                    
+
                     // Determine type label
                     let typeLabel = 'TIN Registration';
                     if (rawData.category === 'VITAL') {
@@ -63,26 +63,27 @@ function ApplicationDetails({ id, onClose, onRefresh }) {
 
     const handleApprove = async () => {
         if (!application) return;
-        
+
         if (!window.confirm('Are you sure you want to approve this application?')) {
             return;
         }
 
         try {
             const api = await import('../../api/officer.api');
-            
-            // Only TIN applications have approve endpoint currently
+            let response;
+
             if (application.category === 'TIN') {
-                const response = await api.approveTinApplication(application.id);
-                if (response.success) {
-                    alert('Application approved successfully');
-                    if (onRefresh) onRefresh();
-                    onClose();
-                } else {
-                    alert('Failed to approve application: ' + (response.message || 'Unknown error'));
-                }
+                response = await api.approveTinApplication(application.id);
+            } else if (application.category === 'VITAL') {
+                response = await api.approveVitalApplication(application.type, application.id);
+            }
+
+            if (response && response.success) {
+                alert('Application approved successfully');
+                if (onRefresh) onRefresh();
+                onClose();
             } else {
-                alert('Approval for this application type is not yet implemented');
+                alert('Failed to approve application: ' + (response?.message || 'Unknown error'));
             }
         } catch (err) {
             console.error('Failed to approve application:', err);
@@ -90,21 +91,45 @@ function ApplicationDetails({ id, onClose, onRefresh }) {
         }
     };
 
-    const handleReject = () => {
+    const handleReject = async () => {
         if (!application) return;
         const reason = window.prompt('Please provide a reason for rejection:');
         if (!reason || !reason.trim()) {
             return;
         }
 
-        // Reject API not yet implemented in backend
-        alert('Rejection functionality is not yet implemented in the backend');
+        if (reason.trim().length < 5) {
+            alert('Rejection reason must be at least 5 characters long.');
+            return;
+        }
+
+        try {
+            const api = await import('../../api/officer.api');
+            let response;
+
+            if (application.category === 'TIN') {
+                response = await api.rejectTinApplication(application.id, reason);
+            } else if (application.category === 'VITAL') {
+                response = await api.rejectVitalApplication(application.type, application.id, reason);
+            }
+
+            if (response && response.success) {
+                alert('Application rejected successfully');
+                if (onRefresh) onRefresh();
+                onClose();
+            } else {
+                alert('Failed to reject application: ' + (response?.message || 'Unknown error'));
+            }
+        } catch (err) {
+            console.error('Failed to reject application:', err);
+            alert('Failed to reject application: ' + (err.message || 'Unknown error'));
+        }
     };
 
     // Render TIN form data
     const renderTINData = () => {
         if (!application.formData) return <p>No form data available.</p>;
-        
+
         const { personal, employmentDetails, addressDetails, subcity } = application.formData;
 
         return (
@@ -158,7 +183,7 @@ function ApplicationDetails({ id, onClose, onRefresh }) {
     // Render Birth Certificate form data
     const renderBirthData = () => {
         if (!application.formData || !application.formData.birth) return <p>No form data available.</p>;
-        
+
         const { birth, subcity } = application.formData;
 
         return (
@@ -224,7 +249,7 @@ function ApplicationDetails({ id, onClose, onRefresh }) {
     // Render Marriage Certificate form data
     const renderMarriageData = () => {
         if (!application.formData || !application.formData.marriage) return <p>No form data available.</p>;
-        
+
         const { marriage, subcity } = application.formData;
 
         return (
@@ -284,7 +309,7 @@ function ApplicationDetails({ id, onClose, onRefresh }) {
 
     const renderApplicationDetails = () => {
         if (!application) return null;
-        
+
         if (application.category === 'TIN') {
             return renderTINData();
         } else if (application.category === 'VITAL') {
@@ -294,7 +319,7 @@ function ApplicationDetails({ id, onClose, onRefresh }) {
                 return renderMarriageData();
             }
         }
-        
+
         return <div className="no-details"><p>No details available for this application type.</p></div>;
     };
 

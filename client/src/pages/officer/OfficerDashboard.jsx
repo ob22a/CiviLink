@@ -7,7 +7,7 @@ import AuthenticatedLayout from '../../components/layout/AuthenticatedLayout.jsx
 import { useAuth } from '../../auth/AuthContext.jsx';
 import { usePermissions } from '../../hooks/usePermissions.js';
 import * as officerAPI from '../../api/officer.api.js';
-import * as chatAPI from '../../api/chat.api.js';
+import { useChat } from '../../auth/ChatContext.jsx';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -45,6 +45,8 @@ function OfficerDashboard() {
         qualityRating: '4.8/5.0'
     });
 
+    const { fetchConversations, conversations: contextConversations } = useChat();
+
     // Fetch data based on role
     useEffect(() => {
         const fetchData = async () => {
@@ -66,8 +68,7 @@ function OfficerDashboard() {
                 }
 
                 if (canSupport) {
-                    const chatResponse = await chatAPI.getConversations(1, 5);
-                    setConversationsQueue(chatResponse.data || []);
+                    fetchConversations(1, 5);
                 }
             } catch (err) {
                 console.error('Failed to load dashboard data:', err);
@@ -77,7 +78,14 @@ function OfficerDashboard() {
         };
 
         fetchData();
-    }, [canApprove, canSupport]);
+    }, [canApprove, canSupport, fetchConversations]);
+
+    // Update local conversations queue when context state changes
+    useEffect(() => {
+        if (contextConversations) {
+            setConversationsQueue(contextConversations.slice(0, 5));
+        }
+    }, [contextConversations]);
 
     // Derived stats from applications queue
     const quickStats = {

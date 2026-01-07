@@ -4,50 +4,48 @@ import '../../styles/officer/MessageCenter.css';
 import Footer from '../../components/Footer';
 import Navigation2 from '../../components/Navigation2';
 import OfficerSideBar from '../../components/OfficerSideBar';
+import { useChat } from '../../auth/ChatContext.jsx';
 
-function MessageCenter() {
+const MessageCenter = () => {
     const navigate = useNavigate();
+    const {
+        conversations,
+        isLoading,
+        error,
+        fetchConversations,
+        sendMessage,
+        markAsRead,
+        isSending
+    } = useChat();
+
     const [viewModal, setViewModal] = useState({
         open: false,
         message: null
     });
     const [messages, setMessages] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     // Fetch conversations from backend
     useEffect(() => {
-        const fetchMessages = async () => {
-            setIsLoading(true);
-            try {
-                const response = await import('../../api/chat.api').then(api => api.getConversations(1, 100));
+        fetchConversations(1, 100);
+    }, [fetchConversations]);
 
-                // Map backend conversations to the UI expected format
-                const mappedMessages = (response.data || []).map(conv => ({
-                    id: conv._id,
-                    applicationId: conv.applicationId || 'N/A',
-                    applicationType: conv.applicationType || 'General Inquiry',
-                    applicantName: conv.citizenId?.fullName || 'Anonymous',
-                    applicantEmail: conv.citizenId?.email || '',
-                    subject: conv.subject || 'No Subject',
-                    message: conv.lastMessage?.content || 'No message content',
-                    status: conv.status === 'pending' ? 'unread' : conv.status === 'open' ? 'read' : 'replied',
-                    receivedDate: new Date(conv.updatedAt).toISOString().split('T')[0],
-                    receivedTime: new Date(conv.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                    category: conv.category || 'general'
-                }));
-
-                setMessages(mappedMessages);
-            } catch (err) {
-                console.error('Failed to load messages:', err);
-                setError('Failed to load messages. Please try again later.');
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchMessages();
-    }, []);
+    // Map backend conversations to the UI expected format
+    useEffect(() => {
+        const mappedMessages = (conversations || []).map(conv => ({
+            id: conv._id,
+            applicationId: conv.applicationId || 'N/A',
+            applicationType: conv.applicationType || 'General Inquiry',
+            applicantName: (conv.citizenId?.fullName || conv.guestName) || 'Anonymous',
+            applicantEmail: (conv.citizenId?.email || conv.guestEmail) || '',
+            subject: conv.subject || 'No Subject',
+            message: conv.citizenMessage || 'No message content',
+            status: conv.status === 'pending' ? 'unread' : conv.status === 'open' ? 'read' : 'replied',
+            receivedDate: new Date(conv.createdAt).toISOString().split('T')[0],
+            receivedTime: new Date(conv.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            category: conv.category || 'general'
+        }));
+        setMessages(mappedMessages);
+    }, [conversations]);
 
     const [filters, setFilters] = useState({
         status: 'all',
@@ -207,9 +205,7 @@ function MessageCenter() {
 
     // Handle mark as read
     const handleMarkAsRead = (msgId) => {
-        setMessages(prev => prev.map(msg =>
-            msg.id === msgId ? { ...msg, status: 'read' } : msg
-        ));
+        markAsRead(msgId);
     };
 
     // Handle batch actions
@@ -268,24 +264,22 @@ function MessageCenter() {
     };
 
     // Send reply
-    const handleSendReply = () => {
+    const handleSendReply = async () => {
         if (!replyModal.replyText.trim()) {
             alert('Please enter your reply message');
             return;
         }
 
-        // Update message status
-        setMessages(prev => prev.map(msg =>
-            msg.id === replyModal.messageId ? { ...msg, status: 'replied' } : msg
-        ));
-
-        // In a real app, this would send the email via your backend
-        console.log('Sending email to:', replyModal.applicantEmail);
-        console.log('Subject:', replyModal.subject);
-        console.log('Message:', replyModal.replyText);
-
-        alert(`Reply sent to ${replyModal.applicantEmail}`);
-        handleCloseReply();
+        try {
+            await sendMessage(replyModal.messageId, replyModal.replyText);
+            alert(`Reply sent successfully`);
+            handleCloseReply();
+            // Refresh conversations to get updated status
+            fetchConversations(1, 100);
+        } catch (err) {
+            console.error('Failed to send reply:', err);
+            alert('Failed to send reply. Please try again.');
+        }
     };
 
     // Open template modal
