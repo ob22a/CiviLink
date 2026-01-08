@@ -1,0 +1,100 @@
+        /* ===== NAVBAR ===== */
+              .nav2 .navbar {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 1rem clamp(1.5rem, 5vw, 10%);
+                    background: rgba(255, 255, 255, 0.95);
+                    backdrop-filter: blur(10px);
+                    -webkit-backdrop-filter: blur(10px);
+                    position: sticky;
+                    top: 0;
+                    z-index: 1000;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+                    border-bottom: none;
+              }
+
+              .nav2 .logo {
+                    color: #258cf4;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    text-decoration: none;
+              }
+
+              .nav2 .logo img {
+                    height: 48px;
+                    width: 48px;
+                    border-radius: 12px;
+                    object-fit: contain;
+              }
+
+              .nav2 .nav-right {
+                    display: flex;
+                    align-items: center;
+                    gap: 1.5rem;
+              }
+
+              .nav2 .user-profile {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+              }
+
+              .nav2 .user-info {
+                    display: flex;
+                    flex-direction: column;
+              }
+
+              .nav2 .user-menu {
+                    margin-left: 0.5rem;
+              }
+
+              .nav2 .logout-btn {
+                    background: none;
+                    border: none;
+                    color: #6c757d;
+                    cursor: pointer;
+                    padding: 8px;
+                    border-radius: 6px;
+                    transition: all 0.2s;
+                    font-size: 1.1rem;
+              }
+
+              .nav2 .logout-btn:hover {
+                    background: #f8f9fa;
+                    color: #dc3545;
+              }
+
+              .nav2 .user-avatar {
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 50%;
+                    background: linear-gradient(135deg, #258cf4, #0077cc);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-weight: 600;
+                    font-size: 1.2rem;
+              }
+
+              @media(max-width: 768px) {
+                     .nav2 .navbar {
+                         flex-direction: column;
+                         gap: 1rem;
+                         text-align: center;
+                    }
+
+                    .nav2 .nav-right {
+                         flex-direction: column;
+                         width: 100%;
+                    }
+
+                    .nav2 .user-profile {
+                         justify-content: center;
+                         width: 100%;
+                    }
+              }

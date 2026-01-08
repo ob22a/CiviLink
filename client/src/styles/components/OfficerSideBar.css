@@ -1,0 +1,122 @@
+.officer-bar {
+    width: 320px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 100px;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1.5rem;
+    z-index: 100;
+    box-sizing: border-box;
+    align-self: flex-start;
+}
+
+/* Hide scrollbar but keep scrolling functionality */
+.officer-bar::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+.officer-bar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.officer-bar .welcome-card {
+    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+    color: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 30px rgba(67, 97, 238, 0.3);
+}
+
+.officer-bar .welcome-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.officer-bar .welcome-card p {
+    opacity: 0.9;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.officer-bar .dashboard-menu {
+    background: white;
+    border-radius: 20px;
+    padding: 1.25rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.officer-bar .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    color: #4a5568;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+.officer-bar .menu-item:hover {
+    background: #f8fafc;
+    color: #258cf4;
+    transform: translateX(5px);
+}
+
+.officer-bar .menu-item.active {
+    background: #f0f7ff;
+    color: #258cf4;
+    font-weight: 500;
+}
+
+.officer-bar .menu-item i {
+    width: 24px;
+    font-size: 1.2rem;
+}
+
+.officer-bar .menu-item.logout-item {
+    background: #fff5f5;
+    color: #dc3545;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+.officer-bar .menu-item.logout-item:hover {
+    background: #ffe5e5;
+    color: #c82333;
+    transform: translateX(5px);
+}
+
+@media (max-width: 1024px) {
+    .officer-bar {
+        position: relative;
+        top: 0;
+        left: 0;
+        height: auto;
+        width: 100%;
+        padding: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .officer-bar .welcome-card {
+        padding: 1.5rem;
+    }
+    
+    .officer-bar .section-title {
+        font-size: 1.5rem;
+    }
+}
