@@ -1,0 +1,1065 @@
+/* ===== PERFORMANCE MONITORING LAYOUT ===== */
+.performance-monitoring {
+    display: flex;
+     max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    gap: 2rem;
+
+}
+
+.performance-monitoring .main-content {
+    flex: 1;
+}
+
+/* ===== PAGE HEADER ===== */
+.performance-monitoring .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.performance-monitoring .page-header h1 {
+    font-size: 2.5rem;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, #258cf4, #0077cc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.performance-monitoring .page-header p {
+    color: #4a5568;
+    font-size: 1.1rem;
+}
+
+.performance-monitoring .header-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* ===== BUTTONS ===== */
+.performance-monitoring .btn-primary {
+    background: linear-gradient(135deg, #258cf4, #0077cc);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.performance-monitoring .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 140, 244, 0.3);
+}
+
+.performance-monitoring .btn-outline {
+    background: white;
+    color: #258cf4;
+    border: 2px solid #258cf4;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.performance-monitoring .btn-outline:hover {
+    background: #258cf4;
+    color: white;
+}
+
+/* ===== EXPORT DROPDOWN ===== */
+.performance-monitoring .export-dropdown {
+    position: relative;
+}
+
+.performance-monitoring .export-options {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e2e8f0;
+    padding: 0.5rem;
+    min-width: 120px;
+    display: none;
+    z-index: 100;
+}
+
+.performance-monitoring .export-dropdown:hover .export-options {
+    display: block;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.performance-monitoring .export-options button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: none;
+    border: none;
+    text-align: left;
+    color: #4a5568;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.performance-monitoring .export-options button:hover {
+    background: #f8fafc;
+    color: #258cf4;
+}
+
+/* ===== FILTERS SECTION ===== */
+.performance-monitoring .filters-section {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+}
+
+.performance-monitoring .filter-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.performance-monitoring .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.performance-monitoring .filter-group label {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.9rem;
+}
+
+/* Time Range Tabs */
+.performance-monitoring .time-range-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.performance-monitoring .time-tab {
+    padding: 0.5rem 1rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #64748b;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.performance-monitoring .time-tab:hover {
+    background: #e2e8f0;
+}
+
+.performance-monitoring .time-tab.active {
+    background: #258cf4;
+    color: white;
+    border-color: #258cf4;
+}
+
+/* Custom Date Range */
+.performance-monitoring .custom-date-range {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.performance-monitoring .date-input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.performance-monitoring .date-input label {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.performance-monitoring .date-input input {
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: #4a5568;
+}
+
+.performance-monitoring .date-input input:focus {
+    outline: none;
+    border-color: #258cf4;
+}
+
+/* Filter Select */
+.performance-monitoring .filter-select {
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: #4a5568;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.performance-monitoring .filter-select:focus {
+    outline: none;
+    border-color: #258cf4;
+    box-shadow: 0 0 0 3px rgba(37, 140, 244, 0.1);
+}
+
+/* Metric Tabs */
+.performance-monitoring .metric-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.performance-monitoring .metric-tab {
+    padding: 0.75rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #64748b;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+}
+
+.performance-monitoring .metric-tab:hover {
+    background: #e2e8f0;
+}
+
+.performance-monitoring .metric-tab.active {
+    background: #258cf4;
+    color: white;
+    border-color: #258cf4;
+}
+
+.performance-monitoring .metric-tab i {
+    font-size: 1.25rem;
+}
+
+/* ===== PERFORMANCE OVERVIEW ===== */
+.performance-monitoring .performance-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.performance-monitoring .overview-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.performance-monitoring .overview-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.performance-monitoring .overview-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.performance-monitoring .overview-card .card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    background: #e3f2fd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.performance-monitoring .overview-card .card-icon i {
+    font-size: 1.5rem;
+    color: #1976d2;
+}
+
+.performance-monitoring .overview-card h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 0.25rem;
+    line-height: 1;
+}
+
+.performance-monitoring .overview-card p {
+    color: #64748b;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.performance-monitoring .card-trend {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.performance-monitoring .card-trend i {
+    font-size: 0.9rem;
+}
+
+.performance-monitoring .trend-label {
+    color: #94a3b8;
+    margin-left: 0.25rem;
+}
+
+/* ===== METRICS GRID ===== */
+.performance-monitoring .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.performance-monitoring .metric-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.performance-monitoring .metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.performance-monitoring .metric-card.large {
+    grid-column: span 2;
+}
+
+.performance-monitoring .metric-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.performance-monitoring .metric-card h3 {
+    font-size: 1.25rem;
+    color: #2d3748;
+    margin: 0;
+}
+
+.performance-monitoring .card-subtitle {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+/* Chart Controls */
+.performance-monitoring .chart-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.performance-monitoring .chart-select {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #4a5568;
+    background: white;
+    cursor: pointer;
+}
+
+/* Chart Container */
+.performance-monitoring .chart-container {
+    height: 300px;
+    position: relative;
+}
+
+/* Chart Fallback (for when Chart.js is not used) */
+.performance-monitoring .chart-fallback {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.performance-monitoring .chart-legend {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.performance-monitoring .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.performance-monitoring .legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.performance-monitoring .legend-color.requests {
+    background: #258cf4;
+}
+
+.performance-monitoring .legend-color.time {
+    background: #f59e0b;
+}
+
+.performance-monitoring .legend-color.satisfaction {
+    background: #10b981;
+}
+
+.performance-monitoring .chart-bars {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.performance-monitoring .chart-bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.performance-monitoring .chart-bar-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    white-space: nowrap;
+}
+
+.performance-monitoring .chart-bars-container {
+    width: 40px;
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    position: relative;
+}
+
+.performance-monitoring .chart-bar {
+    width: 12px;
+    border-radius: 2px 2px 0 0;
+    transition: height 0.3s ease;
+}
+
+.performance-monitoring .chart-bar.requests {
+    background: #258cf4;
+}
+
+.performance-monitoring .chart-bar.time {
+    background: #f59e0b;
+}
+
+.performance-monitoring .chart-bar.satisfaction {
+    background: #10b981;
+}
+
+/* Department List */
+.performance-monitoring .department-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.performance-monitoring .department-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.performance-monitoring .department-item:hover {
+    background: white;
+    border-color: #258cf4;
+    transform: translateX(4px);
+}
+
+.performance-monitoring .department-info h4 {
+    font-size: 0.95rem;
+    color: #2d3748;
+    margin-bottom: 0.25rem;
+}
+
+.performance-monitoring .department-metrics {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #64748b;
+    flex-wrap: wrap;
+}
+
+.performance-monitoring .department-trend i {
+    font-size: 1.1rem;
+}
+
+/* Top Performers */
+.performance-monitoring .top-performers {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.performance-monitoring .performer-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+    background: #f8fafc;
+    transition: all 0.3s ease;
+}
+
+.performance-monitoring .performer-item:hover {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.performance-monitoring .performer-rank {
+    flex-shrink: 0;
+}
+
+.performance-monitoring .rank-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.performance-monitoring .rank-1 {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.performance-monitoring .rank-2 {
+    background: linear-gradient(135deg, #94a3b8, #64748b);
+}
+
+.performance-monitoring .rank-3 {
+    background: linear-gradient(135deg, #d97706, #92400e);
+}
+
+.performance-monitoring .rank-4,
+.performance-monitoring .rank-5 {
+    background: #e2e8f0;
+    color: #64748b;
+}
+
+.performance-monitoring .performer-info {
+    flex: 1;
+}
+
+.performance-monitoring .performer-name {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.9rem;
+}
+
+.performance-monitoring .performer-department {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.performance-monitoring .performer-stats {
+    display: flex;
+    gap: 1rem;
+}
+
+.performance-monitoring .performer-requests,
+.performance-monitoring .performer-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+}
+
+.performance-monitoring .performer-requests i {
+    color: #258cf4;
+}
+
+.performance-monitoring .performer-rating i {
+    color: #f59e0b;
+}
+
+/* Key Metrics */
+.performance-monitoring .key-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.performance-monitoring .key-metric {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+}
+
+.performance-monitoring .key-metric .metric-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: #e3f2fd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.performance-monitoring .key-metric .metric-icon i {
+    color: #258cf4;
+    font-size: 1.2rem;
+}
+
+.performance-monitoring .key-metric h4 {
+    font-size: 1.25rem;
+    color: #2d3748;
+    margin-bottom: 0.25rem;
+}
+
+.performance-monitoring .key-metric p {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin: 0;
+}
+
+/* ===== PERFORMANCE TABLE ===== */
+.performance-monitoring .performance-table-section {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 2rem;
+}
+
+.performance-monitoring .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.performance-monitoring .section-header h3 {
+    font-size: 1.25rem;
+    color: #2d3748;
+    margin: 0;
+}
+
+/* Table Container */
+.performance-monitoring .table-container {
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+}
+
+.performance-monitoring .performance-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1000px;
+}
+
+.performance-monitoring .performance-table thead {
+    background: #f8fafc;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.performance-monitoring .performance-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.performance-monitoring .performance-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.performance-monitoring .performance-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.performance-monitoring .performance-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* Officer Cell */
+.performance-monitoring .officer-cell {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.performance-monitoring .officer-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #258cf4, #0077cc);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.performance-monitoring .officer-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.performance-monitoring .officer-name {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.95rem;
+}
+
+.performance-monitoring .officer-id {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+/* Department Tag */
+.performance-monitoring .department-tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: #e3f2fd;
+    color: #258cf4;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Metric Cell */
+.performance-monitoring .metric-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.performance-monitoring .metric-value {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 1rem;
+}
+
+.performance-monitoring .metric-progress {
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.performance-monitoring .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #258cf4, #0077cc);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+/* Time Cell */
+.performance-monitoring .time-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.performance-monitoring .time-cell i {
+    color: #f59e0b;
+}
+
+.performance-monitoring .time-cell span {
+    font-weight: 500;
+    color: #4a5568;
+}
+
+/* Rate Badge */
+.performance-monitoring .rate-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.performance-monitoring .rate-badge.high {
+    background: #e8f5e9;
+    color: #388e3c;
+}
+
+.performance-monitoring .rate-badge.medium {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+/* Satisfaction Cell */
+.performance-monitoring .satisfaction-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.performance-monitoring .stars {
+    display: flex;
+    gap: 0.125rem;
+}
+
+.performance-monitoring .stars i {
+    color: #e2e8f0;
+    font-size: 0.9rem;
+}
+
+.performance-monitoring .stars i.filled {
+    color: #f59e0b;
+}
+
+.performance-monitoring .rating {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.95rem;
+}
+
+/* Actions Cell */
+.performance-monitoring .actions-cell {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.performance-monitoring .action-btn.view {
+    padding: 0.5rem 1rem;
+    background: rgba(37, 140, 244, 0.1);
+    color: #258cf4;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.performance-monitoring .action-btn.view:hover {
+    background: #258cf4;
+    color: white;
+}
+
+/* ===== TEXT COLORS ===== */
+.performance-monitoring .text-success {
+    color: #10b981;
+}
+
+.performance-monitoring .text-warning {
+    color: #f59e0b;
+}
+
+.performance-monitoring .text-danger {
+    color: #ef4444;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1400px) {
+    .performance-monitoring .main-content {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    .performance-monitoring .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .performance-monitoring .metric-card.large {
+        grid-column: span 1;
+    }
+}
+
+@media (max-width: 992px) {
+    .performance-monitoring .page-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .performance-monitoring .header-actions {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+    
+    .performance-monitoring .performance-overview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .performance-monitoring .filter-controls {
+        grid-template-columns: 1fr;
+    }
+    
+    .performance-monitoring .key-metrics {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .performance-monitoring .main-content {
+        padding: 1.25rem;
+    }
+    
+    .performance-monitoring .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .performance-monitoring .performance-overview {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .performance-monitoring .time-range-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .performance-monitoring .metric-tabs {
+        grid-template-columns: 1fr;
+    }
+    
+    .performance-monitoring .section-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    
+    .performance-monitoring .section-header .btn-outline {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .performance-monitoring .main-content {
+        padding: 1rem;
+    }
+    
+    .performance-monitoring .page-header h1 {
+        font-size: 1.75rem;
+    }
+    
+    .performance-monitoring .filters-section {
+        padding: 1.25rem;
+    }
+    
+    .performance-monitoring .custom-date-range {
+        grid-template-columns: 1fr;
+    }
+    
+    .performance-monitoring .overview-card {
+        padding: 1.25rem;
+    }
+    
+    .performance-monitoring .metric-card {
+        padding: 1.25rem;
+    }
+    
+    .performance-monitoring .officer-cell {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.performance-monitoring .overview-card,
+.performance-monitoring .metric-card,
+.performance-monitoring .performance-table-section {
+    animation: slideIn 0.4s ease-out;
+}
+
+.performance-monitoring .overview-card:nth-child(1) { animation-delay: 0.1s; }
+.performance-monitoring .overview-card:nth-child(2) { animation-delay: 0.2s; }
+.performance-monitoring .overview-card:nth-child(3) { animation-delay: 0.3s; }
+.performance-monitoring .overview-card:nth-child(4) { animation-delay: 0.4s; }
+.performance-monitoring .metric-card:nth-child(1) { animation-delay: 0.5s; }
+.performance-monitoring .metric-card:nth-child(2) { animation-delay: 0.6s; }
+.performance-monitoring .metric-card:nth-child(3) { animation-delay: 0.7s; }
+.performance-monitoring .metric-card:nth-child(4) { animation-delay: 0.8s; }

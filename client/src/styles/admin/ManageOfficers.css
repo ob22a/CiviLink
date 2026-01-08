@@ -1,0 +1,697 @@
+/* ===== MANAGE OFFICERS LAYOUT ===== */
+.manage-officers {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    gap: 2rem;
+}
+
+.manage-officers .main-content {
+    flex: 1;
+}
+
+/* ===== PAGE HEADER ===== */
+.manage-officers .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.manage-officers .page-header h1 {
+    font-size: 2.5rem;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, #258cf4, #0077cc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.manage-officers .page-header p {
+    color: #4a5568;
+    font-size: 1.1rem;
+}
+
+.manage-officers .header-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+/* ===== BUTTONS ===== */
+.manage-officers .btn-primary {
+    background: linear-gradient(135deg, #258cf4, #0077cc);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.manage-officers .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 140, 244, 0.3);
+}
+
+.manage-officers .btn-secondary {
+    background: white;
+    color: #64748b;
+    border: 2px solid #e2e8f0;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.manage-officers .btn-secondary:hover {
+    background: #f8fafc;
+    border-color: #cbd5e0;
+    color: #2d3748;
+}
+
+.manage-officers .btn-outline {
+    background: white;
+    color: #258cf4;
+    border: 2px solid #e2e8f0;
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.manage-officers .btn-outline:hover:not(:disabled) {
+    border-color: #258cf4;
+    background: #f0f9ff;
+    color: #0077cc;
+}
+
+.manage-officers .btn-outline:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f8fafc;
+}
+
+.manage-officers .btn-danger {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.manage-officers .btn-danger:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+
+/* ===== STATS OVERVIEW ===== */
+.manage-officers .stats-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.manage-officers .stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.manage-officers .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.manage-officers .stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    background: #e3f2fd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.manage-officers .stat-icon i {
+    font-size: 1.5rem;
+    color: #1976d2;
+}
+
+.manage-officers .stat-info h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 0.25rem;
+    line-height: 1;
+}
+
+.manage-officers .stat-info p {
+    color: #64748b;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* ===== FILTERS SECTION ===== */
+.manage-officers .filters-section {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+}
+
+.manage-officers .filters-title {
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.manage-officers .filters-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Filter Rows */
+.manage-officers .filter-row-top {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.manage-officers .filter-group.search-group {
+    flex: 1;
+    min-width: 300px;
+}
+
+.manage-officers .search-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.manage-officers .search-input-wrapper i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 1rem;
+}
+
+.manage-officers .search-input-wrapper input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: #fff;
+}
+
+.manage-officers .search-input-wrapper input:focus,
+.manage-officers .filter-input:focus,
+.manage-officers .filter-select:focus {
+    outline: none;
+    border-color: #258cf4;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(37, 140, 244, 0.1);
+}
+
+.manage-officers .filter-row-middle {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.manage-officers .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.manage-officers .filter-group label {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.9rem;
+}
+
+.manage-officers .filter-input,
+.manage-officers .filter-select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    color: #4a5568;
+    background: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.manage-officers .filter-row-bottom {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 0.5rem;
+}
+
+/* ===== TABLE CONTAINER ===== */
+.manage-officers .table-container {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+}
+
+.manage-officers .officers-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1000px;
+}
+
+.manage-officers .officers-table thead {
+    background: #f8fafc;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.manage-officers .officers-table th {
+    padding: 1.25rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.manage-officers .officers-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.manage-officers .officers-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.manage-officers .officers-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* ===== PAGINATION ===== */
+.manage-officers .pagination-controls {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+.manage-officers .pagination-info {
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.manage-officers .pagination-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.manage-officers .page-numbers {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 0 0.5rem;
+}
+
+.manage-officers .page-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    color: #64748b;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.manage-officers .page-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e0;
+}
+
+.manage-officers .page-btn.active {
+    background: #258cf4;
+    color: white;
+    border-color: #258cf4;
+    box-shadow: 0 2px 8px rgba(37, 140, 244, 0.25);
+}
+
+.manage-officers .ellipsis {
+    color: #94a3b8;
+    margin: 0 0.25rem;
+}
+
+
+/* ===== OFFICER INFO & BADGES ===== */
+.manage-officers .officer-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.manage-officers .officer-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #258cf4, #0077cc);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 6px rgba(37, 140, 244, 0.2);
+}
+
+.manage-officers .officer-name {
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 0.15rem;
+    font-size: 0.95rem;
+}
+
+.manage-officers .officer-email {
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+.manage-officers .department-badge {
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    background: #e3f2fd;
+    color: #1976d2;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.manage-officers .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.manage-officers .action-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: none;
+    background: #f8fafc;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.manage-officers .action-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.manage-officers .action-btn.view:hover:not(:disabled) {
+    background: #eff6ff;
+    color: #258cf4;
+}
+
+.manage-officers .action-btn.delete:hover:not(:disabled) {
+    background: #fef2f2;
+    color: #ef4444;
+}
+
+/* ===== MODAL & FORM ===== */
+/* Reuse existing modal styles or refine them similarly if needed */
+.manage-officers .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+    backdrop-filter: blur(4px);
+}
+
+.manage-officers .modal-content {
+    background: white;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: modalSlide 0.3s ease;
+}
+
+@keyframes modalSlide {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.manage-officers .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.manage-officers .modal-header h2 {
+    font-size: 1.5rem;
+    color: #0f172a;
+    font-weight: 700;
+    margin: 0;
+}
+
+.manage-officers .modal-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: none;
+    background: #f1f5f9;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.manage-officers .modal-close:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.manage-officers .modal-body {
+    padding: 2rem;
+}
+
+.manage-officers .form-section {
+    margin-bottom: 2.5rem;
+}
+
+.manage-officers .form-section h3 {
+    font-size: 1.1rem;
+    color: #0f172a;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+    font-weight: 600;
+}
+
+.manage-officers .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.manage-officers .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.manage-officers .form-group label {
+    font-weight: 500;
+    color: #334155;
+    font-size: 0.9rem;
+}
+
+.manage-officers .form-group input,
+.manage-officers .form-group select {
+    padding: 0.75rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #0f172a;
+    background: white;
+    transition: border-color 0.2s;
+}
+
+.manage-officers .form-group input:focus,
+.manage-officers .form-group select:focus {
+    outline: none;
+    border-color: #258cf4;
+    ring: 2px solid rgba(37, 140, 244, 0.1);
+}
+
+.manage-officers .permissions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.manage-officers .permission-category {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+.manage-officers .permission-category h4 {
+    font-size: 0.95rem;
+    color: #334155;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.manage-officers .permission-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.manage-officers .permission-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+}
+
+.manage-officers .permission-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #258cf4;
+    border-radius: 4px;
+}
+
+.manage-officers .permission-item span {
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+.manage-officers .modal-footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    background: #f8fafc;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+/* ===== SEARCH DROPDOWN (Modal) ===== */
+.manage-officers .search-results-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 0.25rem;
+}
+
+.manage-officers .search-result-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s;
+}
+
+.manage-officers .search-result-item:last-child {
+    border-bottom: none;
+}
+
+.manage-officers .search-result-item:hover {
+    background: #f8fafc;
+}
+
+.manage-officers .search-result-item .user-name {
+    font-weight: 500;
+    color: #1e293b;
+    font-size: 0.95rem;
+}
+
+.manage-officers .search-result-item .user-email {
+    color: #64748b;
+    font-size: 0.85rem;
+}
