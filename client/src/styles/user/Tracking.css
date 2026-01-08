@@ -1,0 +1,545 @@
+.user-application {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    gap: 2rem;
+}
+
+/* Main Layout */
+.user-application .main-content {
+    flex: 1;
+}
+
+.user-application .page-header {
+    margin-bottom: 2rem;
+}
+
+.user-application .page-header h1 {
+    font-size: 2.5rem;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, #258cf4, #0077cc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.user-application .page-header p {
+    color: #4a5568;
+    font-size: 1.1rem;
+}
+
+/* ===== TRACKER SECTIONS ===== */
+.user-application .tracker-section {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.user-application .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.user-application .section-header h2 {
+    font-size: 1.8rem;
+    color: #2d3748;
+}
+
+.user-application .section-header .stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+/* Reference Number Search */
+.user-application .search-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.user-application .search-input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.user-application .search-input:focus {
+    outline: none;
+    border-color: #258cf4;
+    box-shadow: 0 0 0 3px rgba(37, 140, 244, 0.1);
+}
+
+.user-application .search-btn {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #258cf4, #0077cc);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-application .search-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 140, 244, 0.3);
+}
+
+.user-application .search-note {
+    color: #64748b;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Applications Table */
+.user-application .applications-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.user-application .applications-table thead {
+    background: #f8fafc;
+}
+
+.user-application .applications-table th {
+    padding: 1.2rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #2d3748;
+    border-bottom: 2px solid #e2e8f0;
+    white-space: nowrap;
+}
+
+.user-application .applications-table td {
+    padding: 1.2rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.user-application .applications-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.user-application .applications-table tbody tr:hover {
+    background: #f8fafc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Application ID */
+.user-application .app-id {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: #258cf4;
+    font-size: 0.95rem;
+}
+
+/* Service Type Badge */
+.user-application .service-badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.user-application .service-badge.tin {
+    background: rgba(37, 140, 244, 0.1);
+    color: #258cf4;
+}
+
+.user-application .service-badge.birth {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.user-application .service-badge.marriage {
+    background: rgba(244, 63, 94, 0.1);
+    color: #f43f5e;
+}
+
+.user-application .service-badge.passport {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+}
+
+/* Applicant Name */
+.user-application .applicant-name {
+    font-weight: 500;
+    color: #2d3748;
+}
+
+/* Dates */
+.user-application .date-cell {
+    font-size: 0.9rem;
+    color: #64748b;
+    white-space: nowrap;
+}
+
+/* Status Badge */
+.user-application .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.user-application .status-badge.submitted {
+    background: rgba(37, 140, 244, 0.1);
+    color: #258cf4;
+}
+
+.user-application .status-badge.processing {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+}
+
+.user-application .status-badge.approved {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.user-application .status-badge.rejected {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.user-application .status-badge.completed {
+    background: rgba(139, 92, 246, 0.1);
+    color: #8b5cf6;
+}
+
+/* Actions */
+.user-application .actions-cell {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.user-application .action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: none;
+    background: #f8fafc;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-application .action-btn:hover {
+    background: #258cf4;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.user-application .action-btn.view {
+    background: rgba(37, 140, 244, 0.1);
+    color: #258cf4;
+}
+
+.user-application .action-btn.download {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.user-application .action-btn.edit {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+}
+
+/* No Applications State */
+.user-application .no-applications {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #64748b;
+}
+
+.user-application .no-applications i {
+    font-size: 3rem;
+    color: #cbd5e0;
+    margin-bottom: 1rem;
+}
+
+/* Progress Tracker */
+.user-application .progress-tracker {
+    display: none;
+    margin-top: 2rem;
+    padding: 2rem;
+    background: #f8fafc;
+    border-radius: 12px;
+}
+
+.user-application .progress-tracker.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.user-application .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.user-application .progress-header h3 {
+    color: #2d3748;
+    font-size: 1.3rem;
+}
+
+.user-application .close-progress {
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.user-application .close-progress:hover {
+    color: #ef4444;
+}
+
+.user-application .progress-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 2rem 0;
+}
+
+.user-application .progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #e2e8f0;
+    z-index: 1;
+}
+
+.user-application .progress-bar {
+    position: absolute;
+    top: 16px;
+    left: 0;
+    height: 2px;
+    background: #258cf4;
+    z-index: 2;
+    transition: width 0.5s ease;
+}
+
+.user-application .step {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    width: 20%;
+}
+
+.user-application .step-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.user-application .step.completed .step-icon {
+    background: #10b981;
+    border-color: #10b981;
+    color: white;
+}
+
+.user-application .step.active .step-icon {
+    background: #258cf4;
+    border-color: #258cf4;
+    color: white;
+}
+
+.user-application .step-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-top: 0.5rem;
+}
+
+.user-application .step.completed .step-label,
+.user-application .step.active .step-label {
+    color: #2d3748;
+    font-weight: 500;
+}
+
+.user-application .step-date {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-top: 0.25rem;
+}
+
+/* Progress Details */
+.user-application .progress-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.user-application .detail-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.user-application .detail-card h4 {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-application .detail-card p {
+    color: #2d3748;
+    font-weight: 500;
+}
+
+/* ===== FILTERS ===== */
+.user-application .filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.user-application .filter-btn {
+    padding: 0.6rem 1.2rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    color: #64748b;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.user-application .filter-btn:hover {
+    background: #e2e8f0;
+}
+
+.user-application .filter-btn.active {
+    background: #258cf4;
+    color: white;
+    border-color: #258cf4;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media(max-width: 1024px) {
+    .user-application {
+        flex-direction: column;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .user-application .applications-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .user-application .search-container {
+        flex-direction: column;
+    }
+
+    .user-application .search-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .user-application .filters {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 0.5rem;
+    }
+
+    .user-application .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .user-application .stats {
+        align-self: flex-end;
+    }
+
+    .user-application .progress-steps {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .user-application .step {
+        width: 45%;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-application .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .user-application .tracker-section {
+        padding: 1.5rem;
+    }
+
+    .user-application .step {
+        width: 100%;
+    }
+
+    .user-application .progress-steps {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .user-application .progress-steps::before {
+        display: none;
+    }
+
+    .user-application .progress-bar {
+        display: none;
+    }
+}
