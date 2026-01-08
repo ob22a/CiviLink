@@ -1,8 +1,20 @@
-import React from 'react'
+import { useState } from 'react'
+import { BrowserRouter} from 'react-router-dom';
+import './App.css' 
+import CommonRoutes from "./routes/CommonRoutes";
 
-const App = () => {
+function App() {
+  
+
   return (
-    <div>App</div>
+    <>
+    <BrowserRouter>
+     <div className="App">
+       
+     </div>
+    </BrowserRouter>
+     
+    </>
   )
 }
 
