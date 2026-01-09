@@ -26,32 +26,15 @@ const exportToJson = async (logs) => {
   const jsonData = JSON.stringify(logs, null, 2);
   const fileName = `security_logs_${Date.now()}.json`;
 
-  // Check if we're in production/Render environment
-  if (isProductionEnvironment()) {
-    // For production/Render: Return base64 encoded data
-    const base64Data = Buffer.from(jsonData).toString("base64");
+  const base64Data = Buffer.from(jsonData).toString("base64");
 
-    return {
-      type: "base64",
-      data: base64Data,
-      filename: fileName,
-      contentType: "application/json",
-      message: "Logs exported as base64 encoded JSON data",
-    };
-  } else {
-    // For development: Save to local file system
-    const exportsDir = path.join(process.cwd(), "exports");
-
-    fs.mkdirSync(exportsDir, { recursive: true });
-    fs.writeFileSync(path.join(exportsDir, fileName), jsonData);
-
-    return {
-      type: "file",
-      downloadUrl: `/exports/${fileName}`,
-      filename: fileName,
-      message: "Logs exported to local file system",
-    };
-  }
+  return {
+    type: "base64",
+    data: base64Data,
+    filename: fileName,
+    contentType: "application/json",
+    message: "Logs exported as base64 encoded JSON data",
+  };
 };
 
 /**
@@ -105,33 +88,17 @@ const exportToExcel = async (logs) => {
 
   const fileName = `security_logs_${Date.now()}.xlsx`;
 
-  if (isProductionEnvironment()) {
-    // For production/Render: Return buffer as base64
-    const buffer = await workbook.xlsx.writeBuffer();
-    const base64Data = buffer.toString("base64");
+  const buffer = await workbook.xlsx.writeBuffer();
+  const base64Data = buffer.toString("base64");
 
-    return {
-      type: "base64",
-      data: base64Data,
-      filename: fileName,
-      contentType:
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      message: "Logs exported as base64 encoded Excel file",
-    };
-  } else {
-    // For development: Save to local file system
-    const exportsDir = path.join(process.cwd(), "exports");
-
-    fs.mkdirSync(exportsDir, { recursive: true });
-    await workbook.xlsx.writeFile(path.join(exportsDir, fileName));
-
-    return {
-      type: "file",
-      downloadUrl: `/exports/${fileName}`,
-      filename: fileName,
-      message: "Logs exported to local Excel file",
-    };
-  }
+  return {
+    type: "base64",
+    data: base64Data,
+    filename: fileName,
+    contentType:
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    message: "Logs exported as base64 encoded Excel file",
+  };
 };
 
 /**

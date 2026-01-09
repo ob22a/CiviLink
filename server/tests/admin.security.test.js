@@ -151,10 +151,10 @@ describe("Core Security Metrics Tests", () => {
 
     if (process.env.NODE_ENV === "test") {
       // In test environment, we should get file type
-      expect(res.body.type).toBe("file");
-      expect(res.body.downloadUrl).toMatch(
-        /^\/exports\/security_logs_\d+\.json$/
-      );
+      expect(res.body.type).toBe("base64");
+      // expect(res.body.downloadUrl).toMatch(
+      //   /^\/exports\/security_logs_\d+\.json$/
+      // );
     }
   });
 
@@ -171,11 +171,7 @@ describe("Core Security Metrics Tests", () => {
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
-
-    if (process.env.NODE_ENV === "test") {
-      expect(res.body.type).toBe("file");
-      expect(res.body.downloadUrl).toMatch(/\.xlsx$/);
-    }
+    expect(res.body.type).toBe("base64");
   });
 
   it("should download exported JSON file in test environment", async () => {
@@ -193,29 +189,31 @@ describe("Core Security Metrics Tests", () => {
       .query({ format: "json" });
 
     expect(exportRes.status).toBe(200);
-    expect(exportRes.body.type).toBe("file");
+    expect(exportRes.body.type).toBe("base64");
 
-    // Extract filename from downloadUrl
-    const filename = exportRes.body.downloadUrl.split("/").pop();
+    // // Extract filename from downloadUrl
+    // const filename = exportRes.body.downloadUrl.split("/").pop();
 
-    // Verify file exists locally
-    const filePath = path.join(exportsDir, filename);
-    expect(fs.existsSync(filePath)).toBe(true);
+    // // Verify file exists locally
+    // const filePath = path.join(exportsDir, filename);
+    // expect(fs.existsSync(filePath)).toBe(true);
 
-    // Now download the file via the API
-    const downloadRes = await agent.get(
-      `/api/v1/admin/security/download/${filename}`
-    );
+    // // Now download the file via the API
+    // const downloadRes = await agent.get(
+    //   `/api/v1/admin/security/download/${filename}`
+    // );
 
-    console.log("Download response status:", downloadRes.status);
+    // console.log("Download response status:", downloadRes.status);
 
-    if (downloadRes.status === 500) {
-      console.log("Download error:", downloadRes.body);
-    }
+    // if (downloadRes.status === 500) {
+    //   console.log("Download error:", downloadRes.body);
+    // }
 
-    expect(downloadRes.status).toBe(200);
-    expect(downloadRes.headers["content-type"]).toContain("application/json");
-    expect(downloadRes.headers["content-disposition"]).toContain(filename);
+    // expect(downloadRes.status).toBe(200);
+    // expect(downloadRes.headers["content-type"]).toContain("application/json");
+    // expect(downloadRes.headers["content-disposition"]).toContain(filename);
+
+    // This test is modified b/c the logic for downloading is changed making it send ing base 64 for all cases 
   });
 });
 
