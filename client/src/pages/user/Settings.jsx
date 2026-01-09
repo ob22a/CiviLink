@@ -8,7 +8,7 @@
  * - Right to Be Forgotten
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext.jsx';
 import { AuthGuard } from '../../auth/guards/AuthGuard.jsx';
@@ -17,7 +17,6 @@ import { RoleGuard } from '../../auth/guards/RoleGuard.jsx';
 import AuthenticatedLayout from '../../components/layout/AuthenticatedLayout.jsx';
 import LogoutModal from '../../components/common/LogoutModal.jsx';
 import * as userAPI from '../../api/user.api.js';
-import * as idUploadAPI from '../../api/idUpload.api.js';
 import '../../styles/user/Settings.css';
 
 function Settings() {
@@ -28,13 +27,10 @@ function Settings() {
     // Contexts
     const {
         idStatus,
-        faydaId,
-        kebeleId,
         uploadFayda,
         uploadKebele,
         deleteId,
         isLoading: isLoadingIdStatus,
-        error: contextError,
         fetchIdData
     } = useProfileAssets();
 
@@ -52,8 +48,10 @@ function Settings() {
     // We keep file selection local until upload
     const [faydaFile, setFaydaFile] = useState(null);
     const [faydaMessage, setFaydaMessage] = useState(null);
+    const [faydaUploading, setFaydaUploading] = useState(false);
     const [kebeleFile, setKebeleFile] = useState(null);
     const [kebeleMessage, setKebeleMessage] = useState(null);
+    const [kebeleUploading, setKebeleUploading] = useState(false);
 
     // Right to Be Forgotten / ID Deletion UI
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -123,8 +121,10 @@ function Settings() {
             return;
         }
 
+        setFaydaUploading(true);
         setFaydaMessage({ type: 'info', text: 'Uploading...' });
         const result = await uploadFayda(faydaFile);
+        setFaydaUploading(false);
 
         if (result.success) {
             setFaydaMessage({ type: 'success', text: 'Fayda ID uploaded successfully!' });
@@ -153,8 +153,10 @@ function Settings() {
             return;
         }
 
+        setKebeleUploading(true);
         setKebeleMessage({ type: 'info', text: 'Uploading...' });
         const result = await uploadKebele(kebeleFile);
+        setKebeleUploading(false);
 
         if (result.success) {
             setKebeleMessage({ type: 'success', text: 'Kebele ID uploaded successfully!' });
