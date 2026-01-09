@@ -38,7 +38,7 @@ const processPayment = async (req, res, next) => {
     });
 
     const callbackUrl = process.env.PAYMENT_CALLBACK_URL || `http://localhost:${process.env.PORT || 5000}/api/v1/payments/webhook`;
-    const frontendUrl = process.env.FRONT_END_URL || "http://localhost:5173";
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
     const returnUrl = req.body.returnUrl || process.env.PAYMENT_RETURN_URL || `${frontendUrl}/user/payment/callback`;
     const chapaBaseUrl = process.env.CHAPA_BASE_URL || process.env.CHAPA_BASE || "https://api.chapa.co";
 
