@@ -17,6 +17,8 @@ const submitTinApplication = async (req, res, next) => {
 
     if (error) {
       const errorMessages = error.details.map((detail) => detail.message);
+      console.error("TIN Validation Error:", errorMessages);
+      console.error("Request body:", JSON.stringify(req.body, null, 2));
 
       return res.status(400).json({
         success: false,
@@ -31,13 +33,19 @@ const submitTinApplication = async (req, res, next) => {
     const existing = await Application.findOne({
       applicant: userId,
       category: "TIN",
-      status: { $in: ["pending", "approved"] },
+      status: { $in: ["pending_payment", "pending", "approved"] },
     });
 
     if (existing) {
+      console.log("Existing TIN application found:", {
+        id: existing._id,
+        status: existing.status,
+        createdAt: existing.createdAt,
+        userId: userId
+      });
       return res.status(409).json({
         success: false,
-        message: "An active TIN application already exists",
+        message: `An active TIN application already exists (Status: ${existing.status}, ID: ${existing._id})`,
       });
     }
 
@@ -48,12 +56,11 @@ const submitTinApplication = async (req, res, next) => {
       formData,
       requiredIDs: req.uploadedIds || { kebele: false, fayda: false },
       assignedOfficer: assignedOfficerId,
+      status: "pending_payment"
     });
 
-    // Increment the workload of the assigned officer
-    await Officer.findByIdAndUpdate(assignedOfficerId, {
-      $inc: { workLoad: 1 },
-    });
+    // NOTE: Workload increment is deferred until payment/finalization
+
 
     res.status(201).json({
       success: true,
@@ -65,7 +72,7 @@ const submitTinApplication = async (req, res, next) => {
   }
 };
 
-const approveTinApplicatin = async (req, res) => {
+const approveTinApplication = async (req, res) => {
   try {
     const applicationId = req.params.id;
     const officerId = req.user.id;
@@ -121,7 +128,7 @@ const approveTinApplicatin = async (req, res) => {
 
     if (
       application.formData?.subcity &&
-      officer.subcity !== application.formData.subcity
+      officer.subcity.trim().toLowerCase() !== application.formData.subcity.trim().toLowerCase()
     ) {
       return res.status(403).json({
         success: false,
@@ -138,7 +145,7 @@ const approveTinApplicatin = async (req, res) => {
 
     // Flag formData as dirty
     application.markModified("formData");
-    
+
     try {
       await application.save();
     } catch (err) {
@@ -177,7 +184,7 @@ const approveTinApplicatin = async (req, res) => {
   } catch (err) {
     console.error(err);
     return res.status(500).json({
-      success: false, 
+      success: false,
       message: err.message
     });
   };
@@ -196,7 +203,7 @@ const rejectTinApplication = async (req, res) => {
       });
     }
 
-    const application = await Application.findById( applicationId );
+    const application = await Application.findById(applicationId);
 
     if (!application) {
       return res.status(404).json({
@@ -228,7 +235,7 @@ const rejectTinApplication = async (req, res) => {
       });
     }
 
-        // RBAC checks
+    // RBAC checks
     if (officer.department !== "approver") {
       return res.status(403).json({
         success: false,
@@ -248,7 +255,7 @@ const rejectTinApplication = async (req, res) => {
 
     if (
       application.formData?.subcity &&
-      officer.subcity !== application.formData.subcity
+      officer.subcity.trim().toLowerCase() !== application.formData.subcity.trim().toLowerCase()
     ) {
       return res.status(403).json({
         success: false,
@@ -271,10 +278,52 @@ const rejectTinApplication = async (req, res) => {
   } catch (err) {
     console.error(err);
     return res.status(500).json({
-      success: false, 
+      success: false,
       message: err.message
     });
   }
 }
 
-export { submitTinApplication, approveTinApplicatin, rejectTinApplication }
+const finalizeTinApplication = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    const application = await Application.findOne({ _id: id, applicant: userId });
+    if (!application) {
+      return res.status(404).json({ success: false, message: "Application not found" });
+    }
+
+    if (application.status !== "pending_payment") {
+      return res.status(400).json({ success: false, message: "Application is not in a finalizable state" });
+    }
+
+    // Check if payment is successful
+    const Payment = (await import("../models/Payment.js")).default;
+    const payment = await Payment.findOne({ applicationId: id, status: "success" });
+
+    if (!payment) {
+      return res.status(400).json({ success: false, message: "Successful payment not found for this application" });
+    }
+
+    // Move to pending
+    application.status = "pending";
+    await application.save();
+
+    // Now increment workload
+    if (application.assignedOfficer) {
+      await Officer.findByIdAndUpdate(application.assignedOfficer, {
+        $inc: { workLoad: 1 },
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "TIN application finalized successfully",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export { submitTinApplication, approveTinApplication, rejectTinApplication, finalizeTinApplication }

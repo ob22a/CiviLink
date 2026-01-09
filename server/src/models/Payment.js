@@ -12,7 +12,7 @@ const paymentSchema = new mongoose.Schema({
   applicationId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Application",
-    required: true,
+    // required: true, // Made optional to allow payment before application creation
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -54,3 +54,5 @@ const paymentSchema = new mongoose.Schema({
 const Payment = mongoose.model("Payment", paymentSchema);
 
 export default Payment;
+
+
