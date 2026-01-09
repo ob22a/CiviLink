@@ -1,5 +1,5 @@
 import { apiRequest } from '../utils/api.js';
-import { API_BASE_URL_LOCAL } from '../config/backend.js';
+import { API_BASE_URL } from '../config/backend.js';
 
 /**
  * Search for users (citizens)
@@ -76,7 +76,7 @@ export const exportPerformanceReport = async (params = {}) => {
     if (params[key]) queryParams.append(key, params[key]);
   });
   const queryString = queryParams.toString();
-  const url = `${API_BASE_URL_LOCAL}/admin/metrics/performance/download${queryString ? `?${queryString}` : ''}`;
+  const url = `${API_BASE_URL}/admin/metrics/performance/download${queryString ? `?${queryString}` : ''}`;
 
   const response = await fetch(url, {
     method: 'GET',
@@ -134,7 +134,7 @@ export const exportSecurityLogs = async (params = {}) => {
  * @returns {Promise<Response>} File response
  */
 export const downloadSecurityLog = async (filename) => {
-  const url = `${API_BASE_URL_LOCAL}/admin/security/download/${filename}`;
+  const url = `${API_BASE_URL}/admin/security/download/${filename}`;
 
   const response = await fetch(url, {
     method: 'GET',

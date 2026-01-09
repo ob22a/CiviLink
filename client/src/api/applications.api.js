@@ -7,6 +7,7 @@
  */
 
 import { apiRequest } from '../utils/api.js';
+import { API_BASE_URL } from '../config/backend.js';
 
 /**
  * Get all applications for the current user
@@ -197,7 +198,6 @@ export const finalizeTinApplication = async (id) => {
  * @param {string} applicationId - Application ID
  */
 export const downloadCertificate = async (applicationId) => {
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
   const url = `${API_BASE_URL}/applications/${applicationId}/download`;
   
   window.location.href = url;

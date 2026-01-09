@@ -61,15 +61,15 @@ export const notificationsReducer = (state = initialState, action) => {
     case notificationActions.FETCH_SUCCESS:
       return {
         ...state,
-        notifications: action.payload.notifications || [],
+        notifications: action.payload?.notifications || [],
         pagination: {
-          page: action.payload.page || 1,
-          totalPages: action.payload.totalPages || 1,
-          total: action.payload.total || 0,
-          hasNextPage: action.payload.hasNextPage || false,
-          hasPrevPage: action.payload.hasPrevPage || false,
+          page: action.payload?.page || 1,
+          totalPages: action.payload?.totalPages || 1,
+          total: action.payload?.total || 0,
+          hasNextPage: action.payload?.hasNextPage || false,
+          hasPrevPage: action.payload?.hasPrevPage || false,
         },
-        unreadCount: calculateUnreadCount(action.payload.notifications || []),
+        unreadCount: calculateUnreadCount(action.payload?.notifications || []),
         isLoading: false,
         error: null,
       };

@@ -49,7 +49,7 @@ function Landing() {
                         <div className="card">
                             <div className="icon-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
-                                    <g fill="none" stroke="#258cf4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                                    <g fill="none" stroke="#258cf4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5">
                                         <path d="M18.709 3.495C16.817 2.554 14.5 2 12 2s-4.816.554-6.709 1.495c-.928.462-1.392.693-1.841 1.419S3 6.342 3 7.748v3.49c0 5.683 4.542 8.842 7.173 10.196c.734.377 1.1.566 1.827.566s1.093-.189 1.827-.566C16.457 20.08 21 16.92 21 11.237V7.748c0-1.406 0-2.108-.45-2.834s-.913-.957-1.841-1.419" />
                                         <path d="M9 11.5s1.408.252 2 2c0 0 1.5-3 4-4" />
                                     </g>
@@ -59,7 +59,7 @@ function Landing() {
                             <p>Your transactions are protected with industry-leading encryption and multi-factor authentication standards.</p>
                             <a href="#" className="card-link">
                                 Learn more
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M5 12h14" />
                                     <path d="m12 5l7 7-7 7" />
                                 </svg>
@@ -77,7 +77,7 @@ function Landing() {
                             <p>Officially endorsed and utilized across multiple sub-city administrations for reliable civic services.</p>
                             <a href="#" className="card-link">
                                 See partners
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M5 12h14" />
                                     <path d="m12 5l7 7-7 7" />
                                 </svg>
@@ -87,14 +87,14 @@ function Landing() {
                         <div className="card">
                             <div className="icon-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
-                                    <path fill="none" stroke="#258cf4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m5.226 11.33l6.998-8.983c.547-.703 1.573-.266 1.573.67V9.97c0 .56.402 1.015.899 1.015H18.1c.773 0 1.185 1.03.674 1.686l-6.998 8.983c-.547.702-1.573.265-1.573-.671V14.03c0-.56-.403-1.015-.899-1.015H5.9c-.773 0-1.185-1.03-.674-1.686" />
+                                    <path fill="none" stroke="#258cf4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m5.226 11.33l6.998-8.983c.547-.703 1.573-.266 1.573.67V9.97c0 .56.402 1.015.899 1.015H18.1c.773 0 1.185 1.03.674 1.686l-6.998 8.983c-.547.702-1.573.265-1.573-.671V14.03c0-.56-.403-1.015-.899-1.015H5.9c-.773 0-1.185-1.03-.674-1.686" />
                                 </svg>
                             </div>
                             <h3>Fast, Transparent Service</h3>
                             <p>Experience expedited processing with clear visibility into your application status at every step.</p>
                             <a href="#" className="card-link">
                                 Track status
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M5 12h14" />
                                     <path d="m12 5l7 7-7 7" />
                                 </svg>
