@@ -1,0 +1,630 @@
+/* Officer Dashboard Styles */
+.officer-dashboard {
+    display: flex;
+    flex-direction: column;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+    background: #f8fafc;
+    gap: 2rem;
+}
+.officer-dashboard .main-content{
+    flex:1;
+    
+}
+
+/* Dashboard Header */
+.officer-dashboard .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.officer-dashboard .header-left h1 {
+    font-size: 2rem;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.officer-dashboard .welcome-text {
+    color: #64748b;
+    font-size: 1rem;
+}
+
+.officer-dashboard .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.officer-dashboard .current-time {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: #f1f5f9;
+    border-radius: 10px;
+    color: #2d3748;
+    font-weight: 500;
+}
+
+.officer-dashboard .current-time i {
+    color: #258cf4;
+    font-size: 1.1rem;
+}
+
+.officer-dashboard .next-app-btn {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #258cf4, #0077cc);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.officer-dashboard .next-app-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 140, 244, 0.3);
+}
+
+/* Metrics Grid */
+.officer-dashboard .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.officer-dashboard .metric-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.officer-dashboard .metric-card:hover {
+    transform: translateY(-5px);
+}
+
+.officer-dashboard .metric-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+}
+
+.officer-dashboard .metric-icon.pending {
+    background: linear-gradient(135deg, #ffedd5, #fed7aa);
+    color: #9a3412;
+}
+
+.officer-dashboard .metric-icon.completed {
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    color: #166534;
+}
+
+.officer-dashboard .metric-icon.time {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    color: #1e40af;
+}
+
+.officer-dashboard .metric-icon.approval {
+    background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+    color: #7c3aed;
+}
+
+.officer-dashboard .metric-content {
+    flex: 1;
+}
+
+.officer-dashboard .metric-content h3 {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.officer-dashboard .metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+}
+
+.officer-dashboard .metric-trend {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.officer-dashboard .metric-trend .trend-up {
+    color: #10b981;
+}
+
+.officer-dashboard .metric-trend .trend-down {
+    color: #ef4444;
+}
+
+/* Main Content Grid */
+.officer-dashboard .main-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.officer-dashboard .content-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Content Card */
+.officer-dashboard .content-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.officer-dashboard .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.officer-dashboard .card-header h2 {
+    font-size: 1.3rem;
+    color: #2d3748;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.officer-dashboard .badge-count {
+    background: #258cf4;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Queue Filters */
+.officer-dashboard .queue-filters {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.officer-dashboard .filter-btn {
+    padding: 0.5rem 1rem;
+    background: #f1f5f9;
+    border: none;
+    border-radius: 20px;
+    color: #64748b;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.officer-dashboard .filter-btn:hover {
+    background: #e2e8f0;
+}
+
+.officer-dashboard .filter-btn.active {
+    background: #258cf4;
+    color: white;
+}
+
+/* Applications List */
+.officer-dashboard .applications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.officer-dashboard .application-item {
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+    transition: all 0.3s ease;
+}
+
+.officer-dashboard .application-item:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e0;
+    transform: translateX(5px);
+}
+
+.officer-dashboard .app-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.officer-dashboard .app-id {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: #258cf4;
+    font-size: 0.9rem;
+}
+
+.officer-dashboard .app-type {
+    font-weight: 500;
+    color: #2d3748;
+}
+
+.officer-dashboard .app-applicant {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.officer-dashboard .app-details {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.officer-dashboard .priority-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: white;
+}
+
+.officer-dashboard .status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.officer-dashboard .days-pending {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.officer-dashboard .app-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.officer-dashboard .action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    background: #f1f5f9;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.officer-dashboard .action-btn.view:hover {
+    background: #258cf4;
+    color: white;
+}
+
+.officer-dashboard .action-btn.approve:hover {
+    background: #10b981;
+    color: white;
+}
+
+.officer-dashboard .action-btn.reassign:hover {
+    background: #8b5cf6;
+    color: white;
+}
+
+/* Performance Metrics */
+.officer-dashboard .performance-metrics {
+    padding: 1rem 0;
+}
+
+.officer-dashboard .target-progress {
+    margin-bottom: 1.5rem;
+}
+
+.officer-dashboard .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.officer-dashboard .progress-bar {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.officer-dashboard .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #34d399);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.officer-dashboard .progress-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.officer-dashboard .stat-item {
+    text-align: center;
+    padding: 0.75rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.officer-dashboard .stat-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 0.25rem;
+}
+
+.officer-dashboard .stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.officer-dashboard .stat-value.success {
+    color: #10b981;
+}
+
+/* Documents List */
+.officer-dashboard .documents-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.officer-dashboard .document-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.officer-dashboard .doc-icon {
+    width: 48px;
+    height: 48px;
+    background: #fee2e2;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #dc2626;
+    font-size: 1.5rem;
+}
+
+.officer-dashboard .doc-info {
+    flex: 1;
+}
+
+.officer-dashboard .doc-type {
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 0.25rem;
+}
+
+.officer-dashboard .doc-applicant {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 0.25rem;
+}
+
+.officer-dashboard .doc-details {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.8rem;
+}
+
+.officer-dashboard .doc-application {
+    color: #258cf4;
+    font-weight: 500;
+}
+
+.officer-dashboard .doc-uploaded {
+    color: #94a3b8;
+}
+
+.officer-dashboard .verify-btn {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #10b981, #34d399);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.officer-dashboard .verify-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+
+/* Card Footer */
+.officer-dashboard .card-footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+    text-align: center;
+}
+
+.officer-dashboard .view-all-btn {
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    color: #258cf4;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.officer-dashboard .view-all-btn:hover {
+    background: #f0f7ff;
+    border-color: #258cf4;
+}
+
+/* Quick Stats Bar */
+.officer-dashboard .quick-stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.officer-dashboard .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.officer-dashboard .stat-item i {
+    width: 48px;
+    height: 48px;
+    background: #f0f7ff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #258cf4;
+    font-size: 1.5rem;
+}
+
+.officer-dashboard .stat-content {
+    flex: 1;
+}
+
+.officer-dashboard .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.officer-dashboard .stat-label {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .officer-dashboard{
+        flex-direction: column;
+    }
+    .officer-dashboard .main-content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .officer-dashboard {
+        padding: 1rem;
+    }
+    
+    .officer-dashboard .dashboard-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .officer-dashboard .header-right {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .officer-dashboard .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .officer-dashboard .app-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .officer-dashboard .app-details {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .officer-dashboard .progress-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .officer-dashboard .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .officer-dashboard .quick-stats-bar {
+        grid-template-columns: 1fr;
+    }
+    
+    .officer-dashboard .filter-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+    }
+}
