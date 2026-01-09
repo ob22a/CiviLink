@@ -9,6 +9,7 @@
  */
 
 import {apiRequest} from '../utils/api.js';
+import {API_BASE_URL_DEV} from '../config/backend.js';
 
 /**
  * Register a new citizen user
@@ -67,7 +68,6 @@ export const refreshToken = async () => {
  * @returns {string} OAuth URL
  */
 export const getGoogleAuthUrl = () => {
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
-  return `${API_BASE_URL}/auth/google`;
+  return `${API_BASE_URL_DEV}/auth/google`;
 };
 

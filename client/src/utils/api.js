@@ -1,4 +1,4 @@
-import { API_BASE_URL_LOCAL } from '../config/backend.js';
+import { API_BASE_URL_DEV } from '../config/backend.js';
 
 /**
  * Normalizes API errors to a consistent format
@@ -38,7 +38,7 @@ export const normalizeError = (error) => {
  * @returns {Promise<Object>} Response data
  */
 export const apiRequest = async (endpoint, options = {}) => {
-  const url = `${API_BASE_URL_LOCAL}${endpoint}`;
+  const url = `${API_BASE_URL_DEV}${endpoint}`;
 
   const config = {
     ...options,
@@ -61,9 +61,9 @@ export const apiRequest = async (endpoint, options = {}) => {
           // Retry original request with _retry flag
           return apiRequest(endpoint, { ...options, _retry: true });
         }
-      } catch (refreshError) {
-        // Refresh failed, proceed to throw original error (or redirect)
-        // We don't throw refreshError to maintain the original 401 context if needed
+      } catch (err) {
+        console.error('Token refresh failed:', err);
+        throw new Error('Session expired. Please log in again.');
       }
     }
 
