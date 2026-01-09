@@ -5,9 +5,9 @@ import { faker } from "@faker-js/faker";
 const ATTEMPT_TYPES = [
   "LOGIN_FAILED",
   "LOGIN_SUCCESS",
-  "PASSWORD_RESET",
-  "ACCOUNT_LOCKED",
-  "SUSPICIOUS_ACTIVITY",
+  "TOKEN_EXPIRED",
+  "UNAUTHORIZED_ACCESS",
+  "LOGIN_FAILED",
 ];
 const DEPARTMENTS = [
   "approver",
@@ -384,3 +384,5 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     await seedSecurityLogs(count);
   });
 }
+
+
