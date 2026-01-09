@@ -1,0 +1,255 @@
+.tin-form {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    gap: 2rem;
+}
+
+/* Main Content */
+.tin-form .main-content {
+    flex: 1;
+}
+
+.tin-form .application-header {
+    margin-bottom: 2rem;
+}
+
+.tin-form .application-header h1 {
+    font-size: 2.5rem;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, #258cf4, #0077cc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.tin-form .application-header p {
+    color: #4a5568;
+    font-size: 1.1rem;
+}
+
+/* Form Sections */
+.tin-form .form-section {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.tin-form .form-section h2 {
+    font-size: 1.8rem;
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.tin-form .form-section h3 {
+    font-size: 1.3rem;
+    color: #2d3748;
+    margin: 2rem 0 1rem;
+}
+
+.tin-form .form-section p {
+    color: #64748b;
+    margin-bottom: 1.5rem;
+}
+
+/* Form Grid */
+.tin-form .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.tin-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.tin-form .form-group label {
+    display: block;
+    font-weight: 500;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+}
+
+.tin-form .form-group label .required {
+    color: #ef4444;
+}
+
+.tin-form .form-group input,
+.tin-form .form-group select,
+.tin-form .form-group textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.tin-form .form-group input:focus,
+.tin-form .form-group select:focus,
+.tin-form .form-group textarea:focus {
+    outline: none;
+    border-color: #258cf4;
+    box-shadow: 0 0 0 3px rgba(37, 140, 244, 0.1);
+}
+
+.tin-form .form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Address Input (Fixed) */
+.tin-form .address-input {
+    width: 100%;
+}
+
+.tin-form .address-input input {
+    margin-bottom: 1rem;
+}
+
+.tin-form .checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: #f8fafc;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+}
+
+.tin-form .checkbox-group input[type="checkbox"] {
+    margin-top: 0.25rem;
+    width: 20px;
+    height: 20px;
+}
+
+.tin-form .checkbox-group label {
+    font-weight: 400;
+    color: #2d3748;
+}
+
+.tin-form .checkbox-group .required {
+    color: #ef4444;
+}
+
+.tin-form  .submit-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin: 3rem 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #eef1f7 100%);
+    border-radius: 20px;
+}
+
+.tin-form a > .payment-btn {
+    display: flex;
+    justify-content: center;
+    width: 450px;
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, #25f4d8, #00ccc5);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(37, 216, 244, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tin-form a > .payment-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(37, 140, 244, 0.4);
+}
+
+.tin-form .submit-btn {
+    display: flex;
+    justify-content: center;
+    width: 450px;
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, #258cf4, #0077cc);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(37, 140, 244, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tin-form .submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(37, 140, 244, 0.4);
+}
+
+.tin-form .submit-btn:disabled {
+    background: #cbd5e0;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.tin-form .submit-info {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .tin-form {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .tin-form .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tin-form .form-section {
+        padding: 1.5rem;
+    }
+
+    .tin-form .submit-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .tin-form .application-header h1 {
+        font-size: 2rem;
+    }
+
+    .tin-form .form-section {
+        padding: 1.25rem;
+    }
+
+    .tin-form .upload-area {
+        padding: 1.5rem;
+    }
+
+    .tin-form .submit-section {
+        padding: 1.5rem;
+    }
+}
+
