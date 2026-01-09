@@ -1,0 +1,79 @@
+/**
+ * OAuth Callback Page Styles
+ */
+
+.oauth-callback-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f7fa;
+  padding: 2rem;
+}
+
+.oauth-callback-content {
+  background: white;
+  border-radius: 12px;
+  padding: 3rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.oauth-callback-content h2 {
+  margin: 1.5rem 0 0.5rem;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.oauth-callback-content p {
+  color: #6c757d;
+  margin: 0.5rem 0 0;
+}
+
+.oauth-callback-content.error {
+  color: #dc3545;
+}
+
+.oauth-callback-content.error i {
+  font-size: 3rem;
+  color: #dc3545;
+  margin-bottom: 1rem;
+}
+
+.oauth-callback-content.error h2 {
+  color: #dc3545;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1.5rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.retry-btn {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.retry-btn:hover {
+  background: #0056b3;
+}
+
