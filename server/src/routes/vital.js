@@ -1,8 +1,8 @@
 import express from "express";
 import { verifyToken, authorizeRoles } from "../middleware/authMiddleware.js";
 import checkIdsUploaded from "../middleware/checkIdsUploaded.js";
-import { submitVitalApplication, approveVitalApplication, rejectVitalApplication } from "../controllers/vitalController.js";
-import {assignApproverOfficer} from "../middleware/assignOfficer.js";
+import { submitVitalApplication, approveVitalApplication, rejectVitalApplication, finalizeVitalApplication } from "../controllers/vitalController.js";
+import { assignApproverOfficer } from "../middleware/assignOfficer.js";
 
 const router = express.Router();
 
@@ -13,6 +13,13 @@ router.post(
   checkIdsUploaded,
   assignApproverOfficer,
   submitVitalApplication
+);
+
+router.post(
+  "/:type/applications/:id/finalize",
+  verifyToken,
+  authorizeRoles("citizen"),
+  finalizeVitalApplication
 );
 
 router.post(
@@ -30,3 +37,4 @@ router.post(
 );
 
 export default router;
+
