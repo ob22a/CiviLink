@@ -27,7 +27,7 @@ describe("TIN Application Validation", () => {
           region: "Addis Ababa",
           postalCode: 1000,
         },
-        subCity: "Bole",
+        subcity: "Bole",
       },
     };
 
@@ -51,7 +51,7 @@ describe("TIN Application Validation", () => {
           email: "john@example.com",
         },
         // ... other sections
-        subCity: "Bole",
+        subcity: "Bole",
       },
     };
 
@@ -75,7 +75,7 @@ describe("TIN Application Validation", () => {
           email: "not-an-email", // 🎯 Invalid!
         },
         // ... other sections
-        subCity: "Bole",
+        subcity: "Bole",
       },
     };
 

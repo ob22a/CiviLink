@@ -26,8 +26,8 @@ const applicationSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ["pending", "approved", "rejected"],
-      default: "pending",
+      enum: ["pending_payment", "pending", "approved", "rejected"],
+      default: "pending_payment",
       index: true,
     },
 
@@ -58,5 +58,21 @@ const applicationSchema = new mongoose.Schema(
 );
 
 const Application = mongoose.model("Application", applicationSchema);
+
+// Indexes to improve query performance
+applicationSchema.index({ applicant: 1, category: 1, status: 1 });
+
+// No two approved TIN applications can share the same TIN
+applicationSchema.index(
+  { "formData.tin": 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      category: "TIN",
+      status: "approved",
+      "formData.tin": { $exists: true }
+    }
+  }
+);
 
 export default Application;

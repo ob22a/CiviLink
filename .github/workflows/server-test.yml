@@ -3,7 +3,6 @@ on:
   push:
     branches-ignore:
       - main
-
   pull_request:
     branches:
       - main
@@ -12,32 +11,59 @@ on:
 jobs:
   run-tests:
     runs-on: ubuntu-latest
+    environment: "Server env"
+    services:
+      mongodb:
+        image: mongo:6.0
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd="mongosh --eval 'db.adminCommand({ ping: 1 })'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    # Job-level environment so every step sees the variables
+    env:
+      ACCESS_TOKEN_EXPIRES: ${{ vars.ACCESS_TOKEN_EXPIRES }}        
+      REFRESH_TOKEN_EXPIRES: ${{ vars.REFRESH_TOKEN_EXPIRES }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      MONGO_URI: ${{ secrets.MONGO_URI }}
+      PORT: ${{ vars.PORT }}
+      ADMIN_EMAIL: ${{ vars.ADMIN_EMAIL }}
+      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+      NODE_ENV: ${{ vars.NODE_ENV }}
+      clientID: ${{ secrets.CLIENTID }}
+      clientSecret: ${{ secrets.CLIENTSECRET }}
+      TEST_DB_URI: ${{ vars.TEST_DB_URI }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20  
+          node-version: 20
 
-      # Server-side tests
+      - name: Verify required env vars are present
+        # SAFE: do not print secret values; only indicate presence
+        run: |
+          missing=0
+          for v in ACCESS_TOKEN_EXPIRES REFRESH_TOKEN_EXPIRES JWT_SECRET MONGO_URI; do
+            if [ -z "${!v}" ]; then
+              echo "ERROR: $v is not set"
+              missing=1
+            else
+              echo "$v is set"
+            fi
+          done
+          [ $missing -eq 0 ] || (echo "Some required vars are missing" && exit 1)
+
       - name: Install server dependencies
         run: npm ci
         working-directory: ./server
 
       - name: Run backend tests
         run: npm test
-        env:
-          MONGO_URI: ${{ secrets.MONGO_URI }}
-          PORT: ${{ vars.PORT }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          ADMIN_EMAIL: ${{ vars.ADMIN_EMAIL }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          ACCESS_TOKEN_EXPIRES: ${{ vars.ACCESS_TOKEN_EXPIRES }}
-          REFRESH_TOKEN_EXPIRES: ${{ vars.REFRESH_TOKEN_EXPIRES }}
-          NODE_ENV: ${{ vars.NODE_ENV }}
-          clientID: ${{ secrets.CLIENTID }}
-          clientSecret: ${{ secrets.CLIENTSECRET }}
         working-directory: ./server

@@ -30,7 +30,7 @@
         "region": "Addis Ababa",
         "postalCode": 1000 //Optional
     },
-    "subCity":"Bole",
+    "subcity":"Bole",
   }
 }
 ````
@@ -109,7 +109,7 @@ Full application document including:
 
 * Must be **assigned officer**
 * Officer must have **role = approval**
-* Officer's **subCity** must match
+* Officer's **subcity** must match
 
 ---
 

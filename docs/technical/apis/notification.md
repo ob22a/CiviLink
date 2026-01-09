@@ -11,22 +11,71 @@
 **Response:**  
 List of notifications ordered by `createdAt`.
 
+```json
+    {
+    "success": true,
+    "data": {
+        "notifications": [
+            {
+                "title": "New Login",
+                "message": "New login detected on Dec 30, 07:23 PM. If this wasn't you, please change your password.",
+                "read": true,
+                "createdAt": "2025-12-30T16:23:53.213Z",
+                "id": "6953fc99c792b874e01811b5"
+            },...
+        ],
+        "total": 2,
+        "page": 2,
+        "totalPages": 2,
+        "hasPrevPage": true,
+        "hasNextPage": false
+    }
+}
+```
+
 ---
 
 ### **2. Mark a Notification as Read**  
-`PUT /api/v1/notifications/:id/mark-read`  
-![PUT](https://img.shields.io/badge/PUT-FFC107?style=flat&labelColor=000)
+`PATCH /api/v1/notifications/:id/mark-read`  
+![PATCH](https://img.shields.io/badge/PATCH-FFC107?style=flat&labelColor=000)
 
 **Auth:** owner  
 **Response:** `200 OK`
 
+```json
+{
+    "success": true,
+    "data": {
+        "_id": "6953fc99c792b874e01811b5",
+        "title": "New Login",
+        "message": "New login detected on Dec 30, 07:23 PM. If this wasn't you, please change your password.",
+        "read": true,
+        "createdAt": "2025-12-30T16:23:53.213Z"
+    }
+}
+```
+
 ---
 
 ### **3. Mark All Notifications as Read**  
-`PUT /api/v1/notifications/mark-all-read`  
-![PUT](https://img.shields.io/badge/PUT-FFC107?style=flat&labelColor=000)
+`PATCH /api/v1/notifications/mark-all-read`  
+![PATCH](https://img.shields.io/badge/PATCH-FFC107?style=flat&labelColor=000)
 
 **Auth:** owner
+**Response:** `200 OK`
+
+```json
+    {
+    "success": true,
+    "data": {
+        "_id": "6953fc99c792b874e01811b5",
+        "title": "New Login",
+        "message": "New login detected on Dec 30, 07:23 PM. If this wasn't you, please change your password.",
+        "read": true,
+        "createdAt": "2025-12-30T16:23:53.213Z"
+    }
+}
+```
 
 ---
 
@@ -36,5 +85,18 @@ List of notifications ordered by `createdAt`.
 
 **Auth:** owner  
 **Behavior:** Delete the notification.
+**Response:** `200 OK`
+
+---
+
+```json
+{
+    "success": true,
+    "data": {
+        "id": "6953fc99c792b874e01811b5",
+        "message": "Notification deleted."
+    }
+}
+```
 
 ---

@@ -1,0 +1,38 @@
+/* Loading Spinner Styles */
+
+.loading-spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: #6b7280;
+    width: 100%;
+    min-height: 300px; /* Ensure vertical space */
+    animation: fadeIn 0.3s ease-in;
+}
+
+.spinner-icon {
+    font-size: 2.5rem;
+    color: #3b82f6; /* Admin/Primary Blue */
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 4px 6px rgba(59, 130, 246, 0.2));
+}
+
+.loading-message {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #4b5563;
+    letter-spacing: 0.025em;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}

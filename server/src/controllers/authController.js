@@ -7,6 +7,8 @@ import {
   isValidFullName,
   isValidEmail,
 } from "../utils/validators.js";
+import { makeNotification } from "../utils/makeNotification.js";
+
 
 const accessTokenMaxAge = ms(process.env.ACCESS_TOKEN_EXPIRES);
 const refreshTokenMaxAge = ms(process.env.REFRESH_TOKEN_EXPIRES);
@@ -46,21 +48,15 @@ const oauthHandler = async (req, res) => {
       maxAge: refreshTokenMaxAge,
     });
 
-    res.status(req.user.status).json({
-      success: true,
-      data: {
-        user: {
-          id: user._id,
-          fullName: user.fullName,
-          email: user.email,
-          role: user.role,
-        },
-        message: req.user.message,
-        status: req.user.status
-      },
-    });
+    // Redirect to frontend callback URL with success indicator
+    const frontendCallbackUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const redirectUrl = `${frontendCallbackUrl}/auth/google/callback?success=true`;
+    res.redirect(redirectUrl);
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message }); 
+    // Redirect to frontend callback with error
+    const frontendCallbackUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const redirectUrl = `${frontendCallbackUrl}/auth/google/callback?error=${encodeURIComponent(err.message)}`;
+    res.redirect(redirectUrl);
   }
   
 }
@@ -206,6 +202,21 @@ const login = async (req, res) => {
       sameSite: "Strict",
       maxAge: accessTokenMaxAge,
     });
+
+    const time = new Date();
+    // Options to make it look cleaner (e.g., "Dec 30, 5:45 PM")
+    const readableTime = time.toLocaleString('en-US', { 
+        month: 'short', 
+        day: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit' 
+    });
+
+    await makeNotification(
+        user._id, 
+        "New Login", 
+        `New login detected on ${readableTime}. If this wasn't you, please change your password.`
+    );
 
     // ✅ Add accessToken in response body for tests
     res.status(200).json({

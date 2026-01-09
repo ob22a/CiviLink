@@ -1,0 +1,76 @@
+.admin-bar {
+    width: 280px;
+    flex-shrink: 0;
+}
+
+.admin-bar .welcome-card {
+    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+    color: white;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(67, 97, 238, 0.3);
+}
+
+.admin-bar .welcome-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.admin-bar .welcome-card p {
+    opacity: 0.9;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.admin-bar .dashboard-menu {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.admin-bar .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    color: #4a5568;
+    transition: all 0.3s ease;
+}
+
+.officer-bar .menu-item:hover {
+    background: #f8fafc;
+    color: #258cf4;
+    transform: translateX(5px);
+}
+
+.officer-bar .menu-item.active {
+    background: #f0f7ff;
+    color: #258cf4;
+    font-weight: 500;
+}
+
+.officer-bar .menu-item i {
+    width: 24px;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 1024px) {
+    .officer-bar {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .officer-bar .welcome-card {
+        padding: 1.5rem;
+    }
+    
+    .officer-bar .section-title {
+        font-size: 1.5rem;
+    }
+}

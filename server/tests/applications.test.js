@@ -16,7 +16,8 @@ import app from "../src/index.js";
 import User from "../src/models/User.js";
 import Officer from '../src/models/Officer.js'
 import Application from "../src/models/Application.js";
-import UploadedID from "../src/models/UploadedID.js";
+import FaydaId from "../src/models/faydaIdSchema.js";
+import KebeleId from "../src/models/kebeleIdSchema.js";
 import bcrypt from "bcryptjs";
 
 jest.setTimeout(30000);
@@ -47,7 +48,7 @@ const tinFormData = {
     region: "Addis Ababa",
     postalCode: 1000, // optional
   },
-  subCity:"Bole",
+  subcity:"Bole",
 };
 
 // BIRTH APPLICATION TEST DATA (Matches API spec exactly)
@@ -82,7 +83,7 @@ const birthFormData = {
       address: "Bole Road, Addis Ababa",
     },
   },
-  subCity:"Bole",
+  subcity:"Bole",
 };
 
 //MARRIAGE APPLICATION TEST DATA (Matches API spec exactly)
@@ -145,7 +146,7 @@ const marriageFormData = {
       officiant: "Reverend Abraham Tesfaye",
     },
   },
-  subCity:"Bole",
+  subcity:"Bole",
 };
 
 beforeAll(async () => {
@@ -186,21 +187,44 @@ beforeAll(async () => {
 // Helper to create test IDs for user
 const createTestIDs = async (userId) => {
   // Clear any existing IDs
-  await UploadedID.deleteMany({ user: userId });
+  // await UploadedID.deleteMany({ user: userId });
+
+  await FaydaId.deleteOne({ userId });
+  await KebeleId.deleteOne({ userId });
 
   // Create both required IDs
-  await UploadedID.create([
-    {
-      user: userId,
-      type: "fayda",
-      imageUrl: "test/fayda-id.jpg",
-    },
-    {
-      user: userId,
-      type: "kebele",
-      imageUrl: "test/kebele-id.jpg",
-    },
-  ]);
+  // await UploadedID.create([
+  //   {
+  //     user: userId,
+  //     type: "fayda",
+  //     imageUrl: "test/fayda-id.jpg",
+  //   },
+  //   {
+  //     user: userId,
+  //     type: "kebele",
+  //     imageUrl: "test/kebele-id.jpg",
+  //   },
+  // ]);
+
+  // Create a Fayda ID record for the test user
+  await FaydaId.create({
+    userId: userId,
+    fullName: "Test User",
+    dateOfBirth: new Date("1990-01-01"),
+    sex: "M",
+    expiryDate: new Date("2030-12-31"),
+    fan: "FAN123456789"
+  });
+
+  // Create a Kebele ID record for the test user
+  await KebeleId.create({
+    userId: userId,
+    fullName: "Test User",
+    dateOfBirth: new Date("1990-01-01"),
+    sex: "F",
+    expiryDate: new Date("2030-12-31"),
+    idNumber: "KEB123456789"
+  });
 
   console.log("Test IDs created for user");
 };
@@ -221,7 +245,7 @@ beforeEach(async () => {
     password: hashedPassword,
     role: "officer",
     department: "approver",
-    subCity: "Bole",
+    subcity: "Bole",
   });
   console.log("Test officer created:", officer._id);
 
@@ -236,7 +260,9 @@ afterAll(async () => {
     await User.deleteMany({});
     await Application.deleteMany({});
     await Officer.deleteMany({});
-    await UploadedID.deleteMany({});
+    // await UploadedID.deleteMany({});
+    await FaydaId.deleteMany({});
+    await KebeleId.deleteMany({});
     await mongoose.connection.close();
     console.log("✅ Database cleaned up");
   } catch (error) {
@@ -329,7 +355,7 @@ describe("Sprint 2 - TIN Applications", () => {
         // Missing: lastName, dateOfBirth, gender, bankAccountNumber, FAN, email
       },
       // Missing: employmentDetails, addressDetails
-      subCity:"Bole",
+      subcity:"Bole",
     };
 
     const res = await agent
@@ -503,7 +529,7 @@ describe("Sprint 2 - Birth Applications", () => {
         father: birthFormData.birth.father,
         medicalFacility: birthFormData.birth.medicalFacility,
       },
-      subCity:"Bole",
+      subcity:"Bole",
     };
 
     const res = await agent
@@ -587,7 +613,7 @@ describe("Sprint 2 - Birth Applications", () => {
           address: "Address",
         },
       },
-      subCity:"Bole",
+      subcity:"Bole",
     };
 
     const res = await agent
@@ -676,7 +702,7 @@ describe("Sprint 2 - Marriage Applications", () => {
         wife: marriageFormData.marriage.wife,
         ceremonyDetails: marriageFormData.marriage.ceremonyDetails,
       },
-      subCity:"Bole",
+      subcity:"Bole",
     };
 
     const res = await agent
@@ -712,7 +738,7 @@ describe("Sprint 2 - Marriage Applications", () => {
         },
         ceremonyDetails: marriageFormData.marriage.ceremonyDetails,
       },
-      subCity:"Bole",
+      subcity:"Bole",
     };
 
     const res = await agent
@@ -794,7 +820,7 @@ describe("Sprint 2 - Marriage Applications", () => {
         },
         ceremonyDetails: marriageFormData.marriage.ceremonyDetails,
       },
-      subCity:"Bole",
+      subcity:"Bole",
     };
 
     const res = await agent

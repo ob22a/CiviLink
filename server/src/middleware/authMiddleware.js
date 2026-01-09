@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import Officer from "../models/Officer.js";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -51,4 +52,20 @@ const authorizeRoles = (...allowedRoles) => {
   };
 };
 
-export { verifyToken, authorizeRoles };
+const canWriteNews = async (req, res, next) => {
+    try {
+        const officer = await Officer.findById(req.user.id);
+        if (officer && officer.writeNews) {
+            return next();
+        }
+
+        return res.status(403).json({
+            success: false,
+            error: { message: "Unauthorized: You do not have news writing permissions." }
+        });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: { message: "Auth check failed." } });
+    }
+};
+
+export { verifyToken, authorizeRoles, canWriteNews };
