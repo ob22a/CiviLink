@@ -1,18 +1,12 @@
 /**
  * ID Upload API client
- * 
- * Handles ID verification operations:
- * - Upload Fayda ID
- * - Upload Kebele ID
- * - Get upload status
- * - Delete ID information (Right to Be Forgotten)
  */
 
 import { apiRequest } from '../utils/api.js';
+import { API_BASE_URL } from '../config/backend.js';
 
 /**
  * Get ID upload status
- * @returns {Promise<Object>} Upload status (NONE, ONLY_FAYDA, ONLY_KEBELE, BOTH)
  */
 export const getIDUploadStatus = async () => {
   return apiRequest('/user/id/data', {
@@ -22,47 +16,53 @@ export const getIDUploadStatus = async () => {
 
 /**
  * Upload Fayda ID
- * @param {File} file - ID image file
- * @returns {Promise<Object>} Upload result
  */
 export const uploadFaydaID = async (file) => {
   const formData = new FormData();
   formData.append('id_image', file);
 
-  // apiRequest handles Content-Type for FormData automatically (by letting browser set it)
-  // BUT our apiRequest utility might force Content-Type: application/json.
-  // We need to check api.js behavior or pass custom headers to override.
-  // Actually, standard fetch with FormData sets boundary correctly if Content-Type is NOT set.
-  // Let's assume apiRequest is smart enough or we pass generic headers.
-  return apiRequest('/user/id/upload/fayda', {
+  const response = await fetch(`${API_BASE_URL}/user/id/upload/fayda`, {
     method: 'POST',
     body: formData,
+    // credentials 'include' is required if your backend uses cookies/sessions
+    credentials: 'include', 
+    // We EXPLICITLY do not set headers here so the browser handles it
   });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || `Upload failed with status ${response.status}`);
+  }
+
+  return response.json();
 };
 
 /**
  * Upload Kebele ID
- * @param {File} file - ID image file
- * @returns {Promise<Object>} Upload result
  */
 export const uploadKebeleID = async (file) => {
   const formData = new FormData();
   formData.append('id_image', file);
 
-  return apiRequest('/user/id/upload/kebele', {
+  const response = await fetch(`${API_BASE_URL}/user/id/upload/kebele`, {
     method: 'POST',
     body: formData,
+    credentials: 'include',
   });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || `Upload failed with status ${response.status}`);
+  }
+
+  return response.json();
 };
 
 /**
- * Delete ID information (Right to Be Forgotten)
- * @param {string} idType - 'fayda', 'kebele', or 'both'
- * @returns {Promise<Object>} Deletion result
+ * Delete ID information
  */
 export const deleteIDInfo = async (idType) => {
   return apiRequest(`/user/id/${idType}`, {
     method: 'DELETE',
   });
 };
-
