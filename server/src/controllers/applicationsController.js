@@ -4,21 +4,37 @@ import { supabase } from "../../config/supabase.js";
 
 const getAllApplications = async (req, res) => {
     try {
+        const { page = 1, limit = 10 } = req.query;
+        const skip = (page - 1) * limit;
+
         const applications = await Application.find({ applicant: req.user.id })
             .select("_id category type status rejectionReason createdAt formData")
             .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(parseInt(limit))
             .lean();
+
+        const total = await Application.countDocuments({ applicant: req.user.id });
+        const totalPages = Math.ceil(total / limit);
 
         res.status(200).json({
             success: true,
-            data: applications
-        })
+            data: applications,
+            pagination: {
+                page: parseInt(page),
+                limit: parseInt(limit),
+                total,
+                totalPages,
+                hasNextPage: page < totalPages,
+                hasPrevPage: page > 1
+            }
+        });
     } catch (err) {
         console.log(err.message);
         res.status(500).json({
             success: false,
             message: err.message
-        })
+        });
     }
 };
 
