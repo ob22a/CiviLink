@@ -9,7 +9,7 @@
  */
 
 import {apiRequest} from '../utils/api.js';
-import {API_BASE_URL_DEV} from '../config/backend.js';
+import {API_BASE_URL} from '../config/backend.js';
 
 /**
  * Register a new citizen user
@@ -68,6 +68,6 @@ export const refreshToken = async () => {
  * @returns {string} OAuth URL
  */
 export const getGoogleAuthUrl = () => {
-  return `${API_BASE_URL_DEV}/auth/google`;
+  return `${API_BASE_URL}/auth/google`;
 };
 

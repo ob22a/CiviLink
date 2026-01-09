@@ -1,4 +1,4 @@
-import { API_BASE_URL_DEV } from '../config/backend.js';
+import { API_BASE_URL } from '../config/backend.js';
 
 /**
  * Normalizes API errors to a consistent format
@@ -38,7 +38,7 @@ export const normalizeError = (error) => {
  * @returns {Promise<Object>} Response data
  */
 export const apiRequest = async (endpoint, options = {}) => {
-  const url = `${API_BASE_URL_DEV}${endpoint}`;
+  const url = `${API_BASE_URL}${endpoint}`;
 
   const config = {
     ...options,

@@ -1,5 +1,5 @@
 import { apiRequest } from '../utils/api.js';
-import { API_BASE_URL_DEV } from '../config/backend.js';
+import { API_BASE_URL } from '../config/backend.js';
 
 /**
  * Initialize a payment (citizen)
@@ -61,7 +61,7 @@ export const getPaymentHistory = async (page = 1, limit = 10) => {
  * @param {string} id - Payment document ID
  */
 export const downloadReceipt = async (id) => {
-    const url = `${API_BASE_URL_DEV}/payments/${id}/receipt`;
+    const url = `${API_BASE_URL}/payments/${id}/receipt`;
 
     const response = await fetch(url, {
         method: 'GET',
