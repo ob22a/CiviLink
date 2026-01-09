@@ -11,6 +11,11 @@ export const getSecurityLogs = async (req, res) => {
     const { page = 1, limit = 10 } = req.query;
     const filter = buildSecurityFilter(req.query);
 
+    const totalDocs = await SecurityLog.countDocuments(filter);
+    const totalPages = Math.ceil(totalDocs / limit);
+    const hasNextPage = page < totalPages;
+    const hasPrevPage = page > 1;
+
     const logs = await SecurityLog.find(filter)
       .sort({ timeOfAttempt: -1 })
       .skip((page - 1) * limit)
@@ -24,6 +29,11 @@ export const getSecurityLogs = async (req, res) => {
         count: log.count,
         officerName: log.officerName,
       })),
+      totalDocs,
+      totalPages,
+      page: Number(page),
+      hasNextPage,
+      hasPrevPage
     });
   } catch (error) {
     res.status(500).json({

@@ -1,4 +1,5 @@
 import OfficerStats from "../../models/views/OfficerStats.js";
+import Officer from "../../models/Officer.js"
 import { Types } from "mongoose";
 
 /**
@@ -195,7 +196,7 @@ export async function getAggregatedPerformance({ from, to, officerId, department
 /**
  * Specifically for the paginated list of officers
  */
-export async function getPaginatedOfficerStats({ from, to, department, subcity, page = 1, limit = 10 }) {
+export async function getPaginatedOfficerStats({ from, to, department, subcity, search, page = 1, limit = 10 }) {
     const match = {};
     if (from || to) {
         match.period = {};
@@ -215,6 +216,30 @@ export async function getPaginatedOfficerStats({ from, to, department, subcity, 
         },
         { $unwind: '$officer' }
     ];
+
+    if (search) {
+        const searchRegex = new RegExp(search, 'i');
+        pipeline.push({
+            $match: {
+                $or: [
+                    { 'officer.fullName': searchRegex },
+                    { 'officer.email': searchRegex }
+                ]
+            }
+        });
+    }
+
+    if (search) {
+        const searchRegex = new RegExp(search, 'i');
+        pipeline.push({
+            $match: {
+                $or: [
+                    { 'officer.fullName': searchRegex },
+                    { 'officer.email': searchRegex }
+                ]
+            }
+        });
+    }
 
     if (department) pipeline.push({ $match: { 'officer.department': department } });
     if (subcity) pipeline.push({ $match: { 'officer.subcity': subcity } });
@@ -259,8 +284,45 @@ export async function getPaginatedOfficerStats({ from, to, department, subcity, 
 
     aggregate.sort({ rawScore: -1, requestsTotal: -1 });
 
+    // --- Calculate Global Counts (Total, Active, On Leave) ---
+    // We query the Officer model directly to get accurate current system state counts,
+    // independent of whether they have performance stats in the selected period.
+    const countQuery = {};
+
+    if (department) countQuery.department = department;
+    if (subcity) countQuery.subcity = subcity;
+
+    if (search) {
+        const searchRegex = new RegExp(search, 'i');
+        countQuery.$or = [
+            { fullName: searchRegex },
+            { email: searchRegex }
+        ];
+    }
+
+    // Run counts concurrently for performance
+    const [totalCount, activeCount, onLeaveCount] = await Promise.all([
+        Officer.countDocuments(countQuery),
+        Officer.countDocuments({ ...countQuery, onLeave: { $ne: true } }),
+        Officer.countDocuments({ ...countQuery, onLeave: true })
+    ]);
+
+    const counts = {
+        total: totalCount,
+        active: activeCount,
+        onLeave: onLeaveCount
+    };
+    // ---------------------------------------------------------
+
     const options = { page: parseInt(page), limit: parseInt(limit) };
     const results = await OfficerStats.aggregatePaginate(aggregate, options);
+
+    // Attach counts to results
+    results.counts = {
+        total: counts.total,
+        active: counts.active,
+        onLeave: counts.onLeave
+    };
 
     results.docs = results.docs.map(o => {
         const totalConv = o.totalConversations || 0;

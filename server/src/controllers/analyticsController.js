@@ -14,8 +14,8 @@ export async function getPerformanceMetrics(req, res) {
 
     let officerPerformanceData = [];
 
-    if(data.officerPerformance){
-      data.officerPerformance.forEach(officerData=>{
+    if (data.officerPerformance) {
+      data.officerPerformance.forEach(officerData => {
         officerPerformanceData.push({
           officerId: officerData._id,
           fullName: officerData.officer.fullName,
@@ -33,10 +33,10 @@ export async function getPerformanceMetrics(req, res) {
         })
       })
     }
-    
+
 
     res.json({
-      data:{
+      data: {
         summary: {
           totalRequestsProcessed: stats.totalRequestsProcessed,
           averageResponseTimeMs: stats.avgResponseTimeMs || 0,
@@ -67,13 +67,14 @@ export async function getPerformanceMetrics(req, res) {
  */
 export async function getOfficerPerformance(req, res) {
   try {
-    const { from, to, department, subcity, page, limit } = req.query;
+    const { from, to, department, subcity, search, page, limit } = req.query;
 
     const results = await getPaginatedOfficerStats({
       from,
       to,
       department,
       subcity,
+      search,
       page,
       limit
     });
@@ -81,6 +82,7 @@ export async function getOfficerPerformance(req, res) {
     res.json({
       success: true,
       data: results,
+      counts: results.counts, // Explicitly expose counts at top level or within data
       error: null
     });
   } catch (err) {
