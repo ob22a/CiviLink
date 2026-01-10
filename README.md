@@ -65,7 +65,7 @@ CiviLink/
 | Frontend        | React, React Router            |
 | Backend         | Node.js, Express.js            |
 | Database        | MongoDB                        |
-| Validation      | Joi / express-validator        |
+| Validation      | Joi                            |
 | Auth            | JWT-based RBAC                 |
 | Testing         | Jest, Supertest                |
 | Deployment      | Render                         |
