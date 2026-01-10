@@ -285,3 +285,29 @@ Includes:
 <a href="https://github.com/ob22a/CiviLink/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=ob22a/CiviLink" />
 </a>
+
+---
+
+# 📊 Contribution & Commit History Clarification
+
+# 📊 Contribution & Commit History Clarification
+
+Most of the development work for this project was carried out in **individual forks** and the **`dev` branch**.
+
+For grading and review purposes:
+- Contributors worked primarily in personal forks and feature branches
+- Pull requests were merged into `dev` using **squash-and-merge**
+- Releases from `dev` to `main` were also squashed
+
+As a result:
+- The number of commits visible in `dev` or `main` may appear lower than the actual development effort
+- Individual contribution levels are more accurately reflected in:
+  - Fork commit histories
+  - Pull request discussions
+  - The GitHub Contributors graph
+
+Reviewers are encouraged to inspect:
+- Individual forks
+- Feature branches
+- Pull request history  
+to better assess the level of contribution.
