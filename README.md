@@ -290,8 +290,6 @@ Includes:
 
 # 📊 Contribution & Commit History Clarification
 
-# 📊 Contribution & Commit History Clarification
-
 Most of the development work for this project was carried out in **individual forks** and the **`dev` branch**.
 
 For grading and review purposes:
