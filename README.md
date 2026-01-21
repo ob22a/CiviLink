@@ -84,10 +84,11 @@ CiviLink/
 
 ### 🔹 News Officer
 
-* **Email:** [annabelle.sporer99@hotmail.com](mailto:annabelle.sporer99@hotmail.com)
+* **Email:** [fekeAsche@yahoo.com](mailto:fekeAsche@yahoo.com)
 
 ⚠️ **Note:**
 News content is seeded using **FakerJS**, which is why the text may appear random or meaningless.
+The news officer changes weekly so if this officer has been reassigned please tell us and we'll update the README
 
 ---
 
