@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../../assets/logo.png';
 import hero from '../../assets/hero.png';
-import '../../styles/common/landing.css'
+import '../../styles/common/Landing.css'
 import Navigation1 from '../../components/Navigation1';
 
 import { Link, useNavigate } from 'react-router-dom';

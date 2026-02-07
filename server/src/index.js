@@ -37,6 +37,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
+app.enable('trust proxy');
 
 // connect to database only when NOT running tests
 if (process.env.NODE_ENV !== "test") {

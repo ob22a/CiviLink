@@ -2,11 +2,15 @@
 
 *A platform for citizens, officers, and administrators to manage national services efficiently.*
 
+🔗 **Live Deployment:** [https://civilink.onrender.com/](https://civilink.onrender.com/)
+<br/>
+📧 **Additional Contact:** [ob22adegefu123@gmail.com](mailto:ob22adegefu123@gmail.com)
+
 ---
 
 ## 📌 **Overview**
 
-CiviLink is a government service automation system that allows:
+CiviLink is a role-based government service automation system that allows:
 
 ### 👤 Citizens
 
@@ -25,9 +29,9 @@ CiviLink is a government service automation system that allows:
 ### 👨‍⚖️ Admins
 
 * Manage officer accounts
-* Assign/removal of roles
+* Assign and remove roles
 * View system metrics
-* Monitor security issues
+* Monitor system activity
 
 ---
 
@@ -36,19 +40,21 @@ CiviLink is a government service automation system that allows:
 The system follows a **modular full-stack architecture**:
 
 ```
-Civilink/
+CiviLink/
 │
 ├── client/        # React frontend
 ├── server/        # Node.js backend
 ├── docs/          # All documentation
 └── .github/       # GitHub automation (CI, PR templates)
+                   # CI is partially non-functional due to
+                   # MongoDB & environment variable limitations
 ```
 
-🟦 **Frontend:** React (JavaScript, no TypeScript)
-🟩 **Backend:** Node.js (JavaScript)
-🗄 **Database:** MongoDB
-🧪 **Testing:** Jest (unit), Cypress (E2E)
-🚀 **Deployment:** Render (no Docker, no reverse proxy)
+🟦 **Frontend:** React (JavaScript, no TypeScript) <br/>
+🟩 **Backend:** Node.js (JavaScript, Express.js) <br/>
+🗄 **Database:** MongoDB <br/>
+🧪 **Testing:** Jest, Supertest <br/>
+🚀 **Deployment:** Render
 
 ---
 
@@ -56,61 +62,76 @@ Civilink/
 
 | Layer           | Technologies                   |
 | --------------- | ------------------------------ |
-| Frontend        | React, React Router, Axios     |
+| Frontend        | React, React Router            |
 | Backend         | Node.js, Express.js            |
 | Database        | MongoDB                        |
-| Validation      | Joi / express-validator        |
+| Validation      | Joi                            |
 | Auth            | JWT-based RBAC                 |
-| Testing         | Jest, Supertest, Cypress       |
+| Testing         | Jest, Supertest                |
 | Deployment      | Render                         |
 | Version Control | Git + GitHub (dev → main flow) |
 
 ---
 
-## 📂 **Repository Structure**
+## 👥 **User Roles & Test Accounts**
 
-```
-Civilink/
-├── client/                
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── features/     
-│   │   │   ├── citizen/
-│   │   │   ├── officer/
-│   │   │   └── admin/
-│   │   ├── services/
-│   │   ├── hooks/
-│   │   ├── utils/
-│   │   └── __tests__/
-│   └── .env.example
-│
-├── server/                
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── services/
-│   ├── validations/
-│   ├── config/
-│   ├── helpers/
-│   ├── repositories/
-│   └── __tests__/
-│
-├── docs/
-│   ├── product/
-│   ├── scrum/
-│   ├── academic/
-│   ├── technical/
-│   ├── risks-and-project-plans/
-│   └── user-guides/
-│
-└── .github/
-    ├── workflows/
-    ├── PULL_REQUEST_TEMPLATE.md
-    └── ISSUE_TEMPLATE/
-```
+### 🔹 Admin
+
+* **Email:** [superadmin@civillink.com](mailto:superadmin@civillink.com)
+* **Password:** TheAdmin1@
+
+---
+
+### 🔹 News Officer
+
+* **Email:** [fekeAsche@yahoo.com](mailto:fekeAsche@yahoo.com)
+
+⚠️ **Note:**
+News content is seeded using **FakerJS**, which is why the text may appear random or meaningless.
+The news officer changes weekly so if this officer has been reassigned please tell us and we'll update the README
+
+---
+
+### 🔹 Approver Officer
+
+* **Email:** [fekeAsche@yahoo.com](mailto:fekeAsche@yahoo.com)
+
+### 🔹 Customer Support Officer
+
+* **Email:** [SemeK@gmail.com](mailto:SemeK@gmail.com)
+---
+
+## 🧪 **Additional Seeded Test Accounts**
+
+Because the application uses **seeded data**, some backend actions (approval, rejection, or responses) may fail if the data was not part of the original seed.
+
+Additional seeded officers:
+
+### Approver Officer
+
+* [rylan42@hotmail.com](mailto:rylan42@hotmail.com)
+
+### Customer Support Officer
+
+* [orrin.cole@hotmail.com](mailto:orrin.cole@hotmail.com)
+
+⚠️ This behavior is **intentional** and part of backend validation logic.
+
+**Password for all officers is:** Password123!
+
+---
+
+## 💳 **Payments (Chappa – Test Mode)**
+
+The application integrates **Chappa** for payments.
+
+⚠️ **Important for Testing:**
+
+* When redirected to Chappa’s payment page, **DO NOT use your personal phone number or password**
+* Select **one of Chappa’s official test phone numbers**
+* Complete the payment using **test credentials only**
+
+This is required because the integration runs in **sandbox/test mode**.
 
 ---
 
@@ -123,16 +144,18 @@ git clone https://github.com/ob22a/CiviLink
 cd CiviLink
 ```
 
+---
+
 ## 2️⃣ Install Dependencies
 
-### Client:
+### Client
 
 ```sh
 cd client
 npm install
 ```
 
-### Server:
+### Server
 
 ```sh
 cd server
@@ -141,46 +164,35 @@ npm install
 
 ---
 
-# 🔐 Environment Variables
+# 🔐 **Environment Variables**
 
-### Frontend: `/client/.env.example`
+### Frontend (`/client/.env.example`)
 
-```
-REACT_APP_API_URL=https://your-backend-url.onrender.com
-```
+### Backend (`/server/.env.example`)
 
-### Backend: `/server/.env.example`
-
-```
-MONGO_URI=
-JWT_SECRET=
-ADMIN_EMAIL=
-ADMIN_PASSWORD=
-```
-
-Copy each example file and rename to `.env`.
+Copy each `.env.example` file and rename it to `.env` and fill it with the appropriate values.
 
 ---
 
-# ▶️ Run Locally
+# ▶️ **Run Locally**
 
-### Start Backend:
+### Start Backend
 
 ```sh
 cd server
 npm run dev
 ```
 
-### Start Frontend:
+### Start Frontend
 
 ```sh
 cd client
-npm start
+npm run dev
 ```
 
 ---
 
-# 🧪 Testing
+# 🧪 **Testing**
 
 ### Backend Tests (Jest + Supertest)
 
@@ -189,22 +201,15 @@ cd server
 npm test
 ```
 
-### End-to-End Tests (Cypress)
-
-```sh
-cd client
-npm run cypress
-```
-
-Every PR must include tests **if applicable**.
+✔ Every pull request should include tests **where applicable**.
 
 ---
 
-# 🌀 Git Workflow (Important)
+# 🌀 **Git Workflow (Important)**
 
-### All work is done in `dev` branch.
+* All development is done on the `dev` branch
 
-✔ Developers create feature branches:
+### Branch naming
 
 ```
 feature/<name>
@@ -212,72 +217,96 @@ bugfix/<name>
 hotfix/<name>
 ```
 
-✔ Pull requests must target:
+### Merging Rules
 
-```
-dev → main only when releasing
-```
-
-✔ No one merges their own PR.
+* PRs target `dev`
+* `dev → main` only during releases
+* No self-merging allowed
 
 ---
 
-# 📄 Documentation
+# 📄 **Documentation**
 
-All project documents live here:
+All documentation is located in:
 
 ```
 /docs/
 ```
 
-Contains:
+Includes:
 
 * Product requirements
-* SRS
 * API documentation
-* Architecture
-* Testing
+* Architecture documentation
+
+Not currently available:
+
 * Roadmaps
 * Risk analysis
 * Scrum artifacts
+* Manuals for officers and Admins
 
 ---
 
-# 🔒 Security
+# 🔒 **Security**
 
-The system follows:
+The system enforces:
 
 * JWT authentication
-* RBAC per role (citizen/officer/admin)
-* Input validation on every endpoint
+* Role-Based Access Control (RBAC)
+* Input validation on all endpoints
 * Request logging
-* No storing of sensitive data in logs
+* No sensitive data in logs
 * HTTPS enforced by Render
 
-To report a security issue, contact the PM or create a **Security Issue** in GitHub.
+To report a security issue, create a **GitHub Security Issue** or contact the project owner.
 
 ---
 
-# 👥 Contributing
+# 👥 **Contributing**
 
-Follow the rules in:
+See:
 
 ```
-/docs/guidelines/CONTRIBUTING.md
+/CONTRIBUTING.md
 ```
 
 Includes:
 
-* Branch naming rules
-* PR requirements
+* Branch rules
 * Commit style
-* Testing policy
+* PR requirements
+* Testing expectations
 * Reviewer responsibilities
 
 ---
 
-# 🎉 Contributors
+# 🎉 **Contributors**
 
-(Add your names or leave this dynamic.)
+<a href="https://github.com/ob22a/CiviLink/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ob22a/CiviLink" />
+</a>
 
 ---
+
+# 📊 Contribution & Commit History Clarification
+
+Most of the development work for this project was carried out in **individual forks** and the **`dev` branch**.
+
+For grading and review purposes:
+- Contributors worked primarily in personal forks and feature branches
+- Pull requests were merged into `dev` using **squash-and-merge**
+- Releases from `dev` to `main` were also squashed
+
+As a result:
+- The number of commits visible in `dev` or `main` may appear lower than the actual development effort
+- Individual contribution levels are more accurately reflected in:
+  - Fork commit histories
+  - Pull request discussions
+  - The GitHub Contributors graph
+
+Reviewers are encouraged to inspect:
+- Individual forks
+- Feature branches
+- Pull request history  
+to better assess the level of contribution.

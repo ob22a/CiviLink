@@ -12,6 +12,7 @@ if (process.env.clientID && process.env.clientSecret) {
         callbackURL: "/api/v1/auth/google/callback",
         clientID: process.env.clientID,
         clientSecret: process.env.clientSecret,
+        proxy: true, // To handle proxy issues in some environments
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
