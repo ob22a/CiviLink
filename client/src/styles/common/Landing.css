@@ -214,12 +214,17 @@
 .landing-container .card:hover .icon-container {
     transform: scale(1.1) rotate(5deg);
     background: linear-gradient(135deg, #258cf4, #0077cc);
+    
 }
 
 .landing-container .card svg {
     width: 40px;
     height: 40px;
     transition: all 0.4s ease;
+}
+
+.landing-container .card:hover svg {
+    background-color: white;
 }
 
 .landing-container .card h3 {
