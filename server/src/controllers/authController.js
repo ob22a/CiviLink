@@ -37,14 +37,14 @@ const oauthHandler = async (req, res) => {
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: isProduction,
-      sameSite: "none",
+      sameSite: isProduction ? "none" : "lax",
       maxAge: accessTokenMaxAge,
     });
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: isProduction,
-      sameSite: "none",
+      sameSite: isProduction ? "none" : "lax",
       maxAge: refreshTokenMaxAge,
     });
 
@@ -128,13 +128,13 @@ const register = async (req, res) => {
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: isProduction,
-      sameSite: "none",
+      sameSite: isProduction ? "none" : "lax",
       maxAge: accessTokenMaxAge,
     });
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: isProduction,
-      sameSite: "none",
+      sameSite: isProduction ? "none" : "lax",
       maxAge: refreshTokenMaxAge,
     });
 
@@ -191,7 +191,7 @@ const login = async (req, res) => {
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: isProduction,
-        sameSite: "none",
+        sameSite: isProduction ? "none" : "lax",
         maxAge: refreshTokenMaxAge,
       });
     }
@@ -199,7 +199,7 @@ const login = async (req, res) => {
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: isProduction,
-      sameSite: "none",
+      sameSite: isProduction ? "none" : "lax",
       maxAge: accessTokenMaxAge,
     });
 
@@ -250,13 +250,13 @@ const logout = async (req, res) => {
     res.clearCookie("accessToken", {
       httpOnly: true,
       secure: isProduction,
-      sameSite: "none",
+      sameSite: isProduction ? "none" : "lax",
     });
 
     res.clearCookie("refreshToken", {
       httpOnly: true,
       secure: isProduction,
-      sameSite: "none",
+      sameSite: isProduction ? "none" : "lax",
     });
 
     res.status(200).json({
@@ -313,14 +313,14 @@ const refreshToken = async (req, res) => {
         res.cookie("accessToken", newAccessToken, {
           httpOnly: true,
           secure: isProduction,
-          sameSite: "none",
+          sameSite: isProduction ? "none" : "lax",
           maxAge: accessTokenMaxAge,
         });
 
         res.cookie("refreshToken", newRefreshToken, {
           httpOnly: true,
           secure: isProduction,
-          sameSite: "none",
+          sameSite: isProduction ? "none" : "lax",
           maxAge: refreshTokenMaxAge,
         });
 
