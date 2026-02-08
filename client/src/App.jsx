@@ -5,6 +5,7 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import { NotificationsProvider } from "./context/NotificationsContext.jsx";
 import { ApplicationProvider } from "./context/ApplicationContext.jsx";
 import { ChatProvider } from "./context/ChatContext.jsx";
+import { NewsProvider } from './context/NewsContext.jsx';
 import CommonRoutes from "./routes/CommonRoutes";
 import UserRoutes from "./routes/UserRoutes";
 import OfficerRoutes from "./routes/OfficerRoutes";
@@ -61,20 +62,22 @@ function App() {
       <TitleManager />
       <AuthProvider>
         <NotificationsProvider>
-              <ApplicationProvider>
-                <ChatProvider>
-                  <div className="App">
-                    <CommonRoutes />
-                    <ProfileAssetsProvider>
-                        <PaymentProvider>
-                            <UserRoutes />
-                        </PaymentProvider>
-                    </ProfileAssetsProvider>
-                    <OfficerRoutes />
-                    <AdminRoutes />
-                  </div>
-                </ChatProvider>
-              </ApplicationProvider>
+          <NewsProvider>
+            <ApplicationProvider>
+              <ChatProvider>
+                <div className="App">
+                  <CommonRoutes />
+                  <ProfileAssetsProvider>
+                    <PaymentProvider>
+                      <UserRoutes />
+                    </PaymentProvider>
+                  </ProfileAssetsProvider>
+                  <OfficerRoutes />
+                  <AdminRoutes />
+                </div>
+              </ChatProvider>
+            </ApplicationProvider>
+          </NewsProvider>
         </NotificationsProvider>
       </AuthProvider>
     </BrowserRouter>
