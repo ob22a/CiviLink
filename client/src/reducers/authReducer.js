@@ -103,6 +103,8 @@ export const authReducer = (state = initialState, action) => {
     case authActions.REFRESH_TOKEN_FAILURE:
       return {
         ...state,
+        user: null,
+        isAuthenticated: false,
         isRefreshing: false,
         error: action.payload,
       };
