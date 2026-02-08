@@ -374,7 +374,7 @@ function Login() {
                     </div>
                     
                     <div className="data">
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <label>
                             <input 
                                 type="checkbox" 
                                 id="acceptTerms"
