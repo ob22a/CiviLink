@@ -10,9 +10,9 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { useAuth } from '../../auth/AuthContext.jsx';
-import { AuthGuard } from '../../auth/guards/AuthGuard.jsx';
-import { RoleGuard } from '../../auth/guards/RoleGuard.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { AuthGuard } from '../../guards/AuthGuard.jsx';
+import { RoleGuard } from '../../guards/RoleGuard.jsx';
 import AuthenticatedLayout from '../../components/layout/AuthenticatedLayout.jsx';
 import * as applicationsAPI from '../../api/applications.api.js';
 import NewsSlider from '../../components/NewsSlider.jsx';

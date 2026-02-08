@@ -12,7 +12,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useAuth } from '../../auth/AuthContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
 import * as userAPI from '../../api/user.api.js';
 import '../../styles/common/OAuthCallback.css';
 

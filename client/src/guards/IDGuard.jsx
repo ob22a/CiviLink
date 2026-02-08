@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext.jsx';
-import { useProfileAssets } from '../ProfileAssetsContext.jsx';
-import '../../styles/auth/IDGuard.css';
+import { useAuth } from '../context/AuthContext.jsx';
+import { useProfileAssets } from '../context/ProfileAssetsContext.jsx';
+import '../styles/auth/IDGuard.css';
 
 export const IDGuard = ({ children }) => {
   const { isAuthenticated, role } = useAuth();

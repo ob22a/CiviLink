@@ -1,17 +1,17 @@
 import { BrowserRouter } from "react-router-dom"
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './App.css'
-import { AuthProvider } from "./auth/AuthContext.jsx";
-import { NotificationsProvider } from "./auth/NotificationsContext.jsx";
-import { ApplicationProvider } from "./auth/ApplicationContext.jsx";
-import { ChatProvider } from "./auth/ChatContext.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
+import { NotificationsProvider } from "./context/NotificationsContext.jsx";
+import { ApplicationProvider } from "./context/ApplicationContext.jsx";
+import { ChatProvider } from "./context/ChatContext.jsx";
 import CommonRoutes from "./routes/CommonRoutes";
 import UserRoutes from "./routes/UserRoutes";
 import OfficerRoutes from "./routes/OfficerRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
 
-import { ProfileAssetsProvider } from './auth/ProfileAssetsContext.jsx';
-import { PaymentProvider } from './auth/PaymentContext.jsx';
+import { ProfileAssetsProvider } from './context/ProfileAssetsContext.jsx';
+import { PaymentProvider } from './context/PaymentContext.jsx';
 
 function App() {
 

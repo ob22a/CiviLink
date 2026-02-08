@@ -4,9 +4,9 @@ import '../../styles/user/MarriageForm.css';
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import AuthenticatedLayout from "../../components/layout/AuthenticatedLayout";
-import { useAuth } from '../../auth/AuthContext';
-import { useProfileAssets } from '../../auth/ProfileAssetsContext';
-import { usePayment } from '../../auth/PaymentContext';
+import { useAuth } from '../../context/AuthContext';
+import { useProfileAssets } from '../../context/ProfileAssetsContext';
+import { usePayment } from '../../context/PaymentContext';
 import PaymentModal from '../../components/common/PaymentModal';
 import * as applicationsAPI from '../../api/applications.api';
 import * as userAPI from '../../api/user.api';

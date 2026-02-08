@@ -8,8 +8,8 @@
 
 import Logo from '../assets/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth/AuthContext.jsx';
-import { NotificationBell } from './notifications/NotificationBell.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
+import { NotificationBell } from './common/NotificationBell.jsx';
 import LogoutModal from './common/LogoutModal.jsx';
 import { useState } from 'react';
 import '../styles/components/Navigation2.css';

@@ -6,7 +6,7 @@
  */
 
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../AuthContext.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
 
 export const AuthGuard = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();

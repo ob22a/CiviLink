@@ -6,7 +6,7 @@
  */
 
 import { useMemo } from 'react';
-import { useAuth } from '../auth/AuthContext.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
 import { PERMISSIONS } from '../constants/roles.js';
 
 /**

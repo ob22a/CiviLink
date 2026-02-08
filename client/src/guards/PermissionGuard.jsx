@@ -6,8 +6,8 @@
  */
 
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext.jsx';
-import { usePermissions } from '../../hooks/usePermissions.js';
+import { useAuth } from '../context/AuthContext.jsx';
+import { usePermissions } from '../hooks/usePermissions.js';
 
 /**
  * PermissionGuard - Protects routes by permission

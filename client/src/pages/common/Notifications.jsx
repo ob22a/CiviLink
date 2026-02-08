@@ -11,9 +11,9 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNotifications } from '../../auth/NotificationsContext.jsx';
-import { useAuth } from '../../auth/AuthContext.jsx';
-import { AuthGuard } from '../../auth/guards/AuthGuard.jsx';
+import { useNotifications } from '../../context/NotificationsContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { AuthGuard } from '../../guards/AuthGuard.jsx';
 import AuthenticatedLayout from '../../components/layout/AuthenticatedLayout.jsx';
 import '../../styles/common/Notifications.css';
 

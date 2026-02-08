@@ -4,10 +4,10 @@ import Navigation2 from '../../components/Navigation2';
 import Footer from '../../components/Footer';
 import OfficerSideBar from '../../components/OfficerSideBar';
 import AuthenticatedLayout from '../../components/layout/AuthenticatedLayout.jsx';
-import { useAuth } from '../../auth/AuthContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
 import { usePermissions } from '../../hooks/usePermissions.js';
 import * as officerAPI from '../../api/officer.api.js';
-import { useChat } from '../../auth/ChatContext.jsx';
+import { useChat } from '../../context/ChatContext.jsx';
 import { useNavigate } from 'react-router-dom';
 
 

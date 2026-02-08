@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
-import { AuthGuard } from '../auth/guards/AuthGuard.jsx';
-import { RoleGuard } from '../auth/guards/RoleGuard.jsx';
+import { AuthGuard } from '../guards/AuthGuard.jsx';
+import { RoleGuard } from '../guards/RoleGuard.jsx';
 import OfficerDashboard from '../pages/officer/OfficerDashboard';
 import ApplicationRequests from '../pages/officer/ApplicationRequests';
 import ApplicationDetails from '../pages/officer/ApplicationDetails';

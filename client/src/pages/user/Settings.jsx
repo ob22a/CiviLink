@@ -10,10 +10,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../auth/AuthContext.jsx';
-import { AuthGuard } from '../../auth/guards/AuthGuard.jsx';
-import { useProfileAssets } from '../../auth/ProfileAssetsContext.jsx';
-import { RoleGuard } from '../../auth/guards/RoleGuard.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { AuthGuard } from '../../guards/AuthGuard.jsx';
+import { useProfileAssets } from '../../context/ProfileAssetsContext.jsx';
+import { RoleGuard } from '../../guards/RoleGuard.jsx';
 import AuthenticatedLayout from '../../components/layout/AuthenticatedLayout.jsx';
 import LogoutModal from '../../components/common/LogoutModal.jsx';
 import * as userAPI from '../../api/user.api.js';

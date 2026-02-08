@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../auth/AuthContext.jsx';
-import { useApplication } from '../../auth/ApplicationContext.jsx';
-import { AuthGuard } from '../../auth/guards/AuthGuard.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { useApplication } from '../../context/ApplicationContext.jsx';
+import { AuthGuard } from '../../guards/AuthGuard.jsx';
 import '../../styles/user/Tracking.css';
 import Navigation2 from '../../components/Navigation2';
 import SideBar1 from '../../components/Sidebar1';

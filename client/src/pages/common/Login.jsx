@@ -4,7 +4,7 @@ import '../../styles/common/Login.css';
 import GoogleSvg from '../../assets/uil--google.svg';
 import Navigation1 from '../../components/Navigation1';
 import Footer from '../../components/Footer';
-import { useAuth } from '../../auth/AuthContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
 import { getGoogleAuthUrl } from '../../api/auth.api.js';
 
 function Login() {

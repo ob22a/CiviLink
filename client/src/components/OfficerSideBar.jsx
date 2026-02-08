@@ -12,7 +12,7 @@
 
 import '../styles/components/OfficerSideBar.css';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth/AuthContext.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
 import { usePermissions } from '../hooks/usePermissions.js';
 import LogoutModal from './common/LogoutModal.jsx';
 import { useMemo, useState } from 'react';

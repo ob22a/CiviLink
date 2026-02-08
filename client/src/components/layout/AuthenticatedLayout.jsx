@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { useAuth } from '../../auth/AuthContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
 import Navigation2 from '../Navigation2.jsx';
 import SideBar1 from '../Sidebar1.jsx';
 import AdminSideBar from '../AdminSideBar.jsx';
