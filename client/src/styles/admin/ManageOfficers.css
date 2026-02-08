@@ -595,7 +595,7 @@
 .manage-officers .form-group select:focus {
     outline: none;
     border-color: #258cf4;
-    ring: 2px solid rgba(37, 140, 244, 0.1);
+    outline: 2px solid rgba(37, 140, 244, 0.1);
 }
 
 .manage-officers .permissions-grid {
