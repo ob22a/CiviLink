@@ -7,7 +7,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { usePayment } from '../../context/PaymentContext.jsx';
+import { usePayment } from '../../hooks/usePayment';
 import Navigation2 from '../../components/Navigation2';
 import Footer from '../../components/Footer';
 

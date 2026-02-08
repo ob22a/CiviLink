@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { usePayment } from '../../context/PaymentContext.jsx';
+import { usePayment } from '../../hooks/usePayment';
 import '../../styles/components/PaymentModal.css';
 
 const PaymentModal = ({ isOpen, onClose, application }) => {

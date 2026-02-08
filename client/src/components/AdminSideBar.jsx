@@ -1,5 +1,5 @@
 import '../styles/components/AdminSideBar.css';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import LogoutModal from './common/LogoutModal';

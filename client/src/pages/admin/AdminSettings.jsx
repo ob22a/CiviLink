@@ -4,7 +4,7 @@ import '../../styles/admin/AdminSettings.css';
 import Navigation2 from '../../components/Navigation2';
 import Footer from '../../components/Footer';
 import AdminSideBar from '../../components/AdminSideBar';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import { changePassword } from '../../api/user.api';
 import StatusModal from '../../components/common/StatusModal';
 

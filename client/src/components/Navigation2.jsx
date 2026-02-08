@@ -8,13 +8,13 @@
 
 import Logo from '../assets/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext.jsx';
+import { useAuth } from '../hooks/useAuth';
 import { NotificationBell } from './common/NotificationBell.jsx';
 import LogoutModal from './common/LogoutModal.jsx';
 import { useState } from 'react';
 import '../styles/components/Navigation2.css';
 
-function Navigation2(){
+function Navigation2() {
     const { user, logout, role } = useAuth();
     const navigate = useNavigate();
     const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -62,7 +62,7 @@ function Navigation2(){
                         <img src={Logo} alt="CiviLink Logo" />
                         <span>CiviLink</span>
                     </Link>
-                    
+
                     <div className="nav-right">
                         {/* Notification Bell */}
                         <NotificationBell />
@@ -75,9 +75,9 @@ function Navigation2(){
                             <div className="user-info">
                                 <div style={{ fontWeight: 600 }}>{user.fullName}</div>
                                 <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                                    {role === 'admin' ? 'Administrator' : 
-                                     role === 'officer' ? `Officer - ${user.department || 'N/A'}` :
-                                     `Citizen`}
+                                    {role === 'admin' ? 'Administrator' :
+                                        role === 'officer' ? `Officer - ${user.department || 'N/A'}` :
+                                            `Citizen`}
                                 </div>
                             </div>
                             <div className="user-menu">

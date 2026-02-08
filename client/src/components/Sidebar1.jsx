@@ -7,7 +7,7 @@
 
 import '../styles/components/Sidebar1.css';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext.jsx';
+import { useAuth } from '../hooks/useAuth';
 import LogoutModal from './common/LogoutModal.jsx';
 import { useMemo, useState } from 'react';
 

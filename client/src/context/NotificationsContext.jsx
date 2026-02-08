@@ -15,17 +15,11 @@
 import React, { createContext, useContext, useReducer, useCallback, useEffect } from 'react';
 import { notificationsReducer, notificationActions } from '../reducers/notificationsReducer.js';
 import * as notificationsAPI from '../api/notifications.api.js';
-import { useAuth } from './AuthContext.jsx';
+import { useAuth } from '../hooks/useAuth';
 
-const NotificationsContext = createContext(null);
+export const NotificationsContext = createContext(null);
 
-export const useNotifications = () => {
-  const context = useContext(NotificationsContext);
-  if (!context) {
-    throw new Error('useNotifications must be used within a NotificationsProvider');
-  }
-  return context;
-};
+// Hook removed and moved to src/hooks/useNotifications.js
 
 export const NotificationsProvider = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -160,7 +154,7 @@ export const NotificationsProvider = ({ children }) => {
     pagination: state.pagination,
     isLoading: state.isLoading,
     error: state.error,
-    
+
     // Methods
     fetchNotifications,
     markAsRead,

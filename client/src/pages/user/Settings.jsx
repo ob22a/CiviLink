@@ -10,9 +10,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useAuth } from '../../hooks/useAuth';
+import { useProfileAssets } from '../../hooks/useProfileAssets';
 import { AuthGuard } from '../../guards/AuthGuard.jsx';
-import { useProfileAssets } from '../../context/ProfileAssetsContext.jsx';
 import { RoleGuard } from '../../guards/RoleGuard.jsx';
 import AuthenticatedLayout from '../../components/layout/AuthenticatedLayout.jsx';
 import LogoutModal from '../../components/common/LogoutModal.jsx';

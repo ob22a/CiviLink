@@ -13,8 +13,8 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useNotifications } from '../../context/NotificationsContext.jsx';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useNotifications } from '../../hooks/useNotifications';
+import { useAuth } from '../../hooks/useAuth';
 import '../../styles/components/NotificationBell.css';
 
 export const NotificationBell = () => {

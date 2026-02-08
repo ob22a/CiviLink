@@ -4,9 +4,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import FormSideBar from '../../components/FormSideBar';
 import AuthenticatedLayout from '../../components/layout/AuthenticatedLayout';
 
-import { useAuth } from '../../context/AuthContext.jsx';
-import { useProfileAssets } from '../../context/ProfileAssetsContext.jsx';
-import { usePayment } from '../../context/PaymentContext.jsx';
+import { useAuth } from '../../hooks/useAuth';
+import { useProfileAssets } from '../../hooks/useProfileAssets';
+import { usePayment } from '../../hooks/usePayment';
 import PaymentModal from '../../components/common/PaymentModal';
 import * as applicationsAPI from '../../api/applications.api';
 import * as userAPI from '../../api/user.api';

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNews } from '../context/NewsContext.jsx';
+import { useNews } from '../hooks/useNews';
 import '../styles/components/NewsSlider.css';
 
 const NewsSlider = () => {

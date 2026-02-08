@@ -1,15 +1,9 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import * as newsAPI from '../api/news.api';
 
-const NewsContext = createContext(null);
+export const NewsContext = createContext(null);
 
-export const useNews = () => {
-    const context = useContext(NewsContext);
-    if (!context) {
-        throw new Error('useNews must be used within a NewsProvider');
-    }
-    return context;
-};
+// Hook removed and moved to src/hooks/useNews.js
 
 export const NewsProvider = ({ children }) => {
     const [news, setNews] = useState([]);

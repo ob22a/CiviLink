@@ -4,7 +4,7 @@ import '../../styles/officer/MessageCenter.css';
 import Footer from '../../components/Footer';
 import Navigation2 from '../../components/Navigation2';
 import OfficerSideBar from '../../components/OfficerSideBar';
-import { useChat } from '../../context/ChatContext.jsx';
+import { useChat } from '../../hooks/useChat';
 
 const MessageCenter = () => {
     const navigate = useNavigate();

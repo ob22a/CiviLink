@@ -6,7 +6,7 @@
  */
 
 import { useMemo } from 'react';
-import { useAuth } from '../context/AuthContext.jsx';
+import { useAuth } from './useAuth';
 import { PERMISSIONS } from '../constants/roles.js';
 
 /**
@@ -41,12 +41,12 @@ export const usePermissions = () => {
     canApprove,
     canSupport,
     canWriteNews,
-    
+
     // Role checks
     isCitizen,
     isOfficer,
     isAdmin,
-    
+
     // Raw access
     permissions,
     role,

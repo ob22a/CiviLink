@@ -6,7 +6,7 @@ import Navigation1 from '../../components/Navigation1';
 
 import { Link, useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useAuth } from '../../hooks/useAuth';
 
 function Landing() {
     const { isAuthenticated, role, isLoading } = useAuth();

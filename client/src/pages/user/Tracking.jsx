@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../context/AuthContext.jsx';
-import { useApplication } from '../../context/ApplicationContext.jsx';
+import { useAuth } from '../../hooks/useAuth';
+import { useApplication } from '../../hooks/useApplication';
 import { AuthGuard } from '../../guards/AuthGuard.jsx';
 import '../../styles/user/Tracking.css';
 import Navigation2 from '../../components/Navigation2';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext.jsx';
+import { useAuth } from '../../hooks/useAuth';
 import { AuthGuard } from '../../guards/AuthGuard.jsx';
 import { RoleGuard } from '../../guards/RoleGuard.jsx';
 import AuthenticatedLayout from '../../components/layout/AuthenticatedLayout.jsx';
