@@ -171,7 +171,7 @@ const login = async (req, res) => {
     if (!isMatch)
       return res
         .status(400)
-        .json({ success: false, message: "Invalid password" });
+        .json({ success: false, message: "Invalid password or Email" });
 
     const accessToken = jwt.sign(
       { id: user._id, role: user.role },

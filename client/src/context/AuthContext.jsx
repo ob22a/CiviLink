@@ -19,6 +19,8 @@ import { registerRefreshHandler } from '../utils/api.js';
 
 const AuthContext = createContext(null);
 
+// Ignored for now next I'll split it into hooks and controllers 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -115,7 +117,7 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: authActions.REFRESH_TOKEN_SUCCESS, payload: userData });
       return { success: true, data: userData };
     } catch (error) {
-      dispatch({ type: authActions.REFRESH_TOKEN_FAILURE, payload: error.message });
+      dispatch({ type: authActions.REFRESH_TOKEN_FAILURE}); // I removed the error message from payload to avoid showing token refresh errors to users in login page
       return { success: false, error: error.message };
     }
   }, []);

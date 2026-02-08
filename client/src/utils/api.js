@@ -6,14 +6,7 @@ import { API_BASE_URL } from '../config/backend.js';
  * @returns {Object} Normalized error object
  */
 export const normalizeError = (error) => {
-  if (error.response) {
-    // Axios-style error (if we add axios later)
-    return {
-      message: error.response.data?.message || error.response.data?.error?.message || 'An error occurred',
-      status: error.response.status,
-      data: error.response.data
-    };
-  }
+  
 
   if (error instanceof Response) {
     // Fetch API error

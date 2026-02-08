@@ -46,7 +46,7 @@ function Login() {
 
     // Show auth errors
     useEffect(() => {
-        if (authError) {
+        if (authError && authError !== "No refresh token provided") {
             setError(authError);
         }
     }, [authError]);
