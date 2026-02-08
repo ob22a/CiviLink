@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import '../../styles/admin/ManageOfficers.css';
 import Navigation2 from '../../components/Navigation2.jsx';
@@ -9,7 +9,7 @@ import LoadingSpinner from '../../components/common/LoadingSpinner';
 import { formatDuration } from '../../utils/formatters';
 
 function ManageOfficers() {
-  const { fetchOfficerList, promoteUser, searchUser, loading, error } = useAdmin();
+  const { fetchOfficerList, promoteUser, searchUser } = useAdmin();
 
   // URL Params
   const [searchParams, setSearchParams] = useSearchParams();
@@ -90,8 +90,8 @@ function ManageOfficers() {
           hasNextPage: response.hasNextPage,
           hasPrevPage: response.hasPrevPage
         }));
-        if (response.counts) {
-          setCounts(response.counts);
+        if (response.data?.counts) {
+          setCounts(response.data?.counts);
         }
       } else {
         setOfficers([]);
@@ -448,8 +448,8 @@ function PromoteOfficerModal({ departments, onClose, onSave, searchUser }) {
         try {
           const results = await searchUser({ name: searchTerm });
           // searchUser returns { success: true, count: N, citizens: [] }
-          if (results && results.citizens) {
-            setSearchResults(results.citizens);
+          if (results && results.data?.citizens) {
+            setSearchResults(results.data?.citizens);
           } else {
             setSearchResults([]);
           }
@@ -537,7 +537,6 @@ function PromoteOfficerModal({ departments, onClose, onSave, searchUser }) {
                     }}
                     placeholder="Type to search..."
                     disabled={!!formData.userId}
-                    style={{ paddingRight: formData.userId ? '2.5rem' : '1rem' }}
                   />
                   {formData.userId && (
                     <button

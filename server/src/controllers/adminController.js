@@ -12,7 +12,7 @@ const searchUser = async (req, res) => {
         if (!name && !email) {
             return res.status(400).json({
                 success: false,
-                message: "Either name or email query parameter is required"
+                error: {message: "Either name or email query parameter is required"}
             });
         };
 
@@ -33,14 +33,18 @@ const searchUser = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            count: users.length,
-            citizens: users
+            data: {
+                count: users.length,
+                citizens: users
+            }
         })
         
     } catch (err) {
         res.status(500).json({
             success: false,
-            message: err.message
+            error:{
+                message: err.message
+            }
         })
     }
 }
@@ -49,11 +53,10 @@ const assignOfficer = async (req, res) => {
     try {
         const { userId, department, subcity, adminPassword } = req.body;
 
-        ///
         if (!userId || !department || !subcity || !adminPassword) {
             return res.status(400).json({
                 success: false,
-                message: "Missing required fields"
+                error: {message: "Missing required fields"}
             });
         };
 
@@ -61,7 +64,7 @@ const assignOfficer = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(userId)) {
             return res.status(400).json({
                 success: false,
-                message: "Invalid userId"
+                error: {message: "Invalid userId"}
             });
         };
 
@@ -70,7 +73,7 @@ const assignOfficer = async (req, res) => {
         if (!admin || !admin.password) {
             return res.status(401).json({
                 success: false,
-                message: "Admin authentication failed"
+                error: {message: "Admin authentication failed"}
             });
         }
 
@@ -81,7 +84,7 @@ const assignOfficer = async (req, res) => {
             .status(401)
             .json({ 
                 success: false,
-                message: "Invalid admin password" 
+                error: {message: "Invalid admin password"} 
             });
         };
 
@@ -89,7 +92,7 @@ const assignOfficer = async (req, res) => {
         if (!allowedDepartments.includes(department)) {
             return res.status(400).json({
                 success: false,
-                message: "Invalid department"
+                error:{message: "Invalid department"}
             });
         }
 
@@ -100,7 +103,7 @@ const assignOfficer = async (req, res) => {
         if (!user) {
             return res.status(404).json({
                 success: false,
-                message: "User not found"
+                error:{message: "User not found"}
             });
         };
 
@@ -108,7 +111,7 @@ const assignOfficer = async (req, res) => {
         if (user.role !== "citizen") {
             return res.status(409).json({
                 success: false,
-                message: "User is not eligible for officer role"
+                error:{message: "User is not eligible for officer role"}
             });
         }
        
@@ -132,7 +135,7 @@ const assignOfficer = async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message: err.message
+            error:{message: err.message}
         });
     }
 }
@@ -143,7 +146,7 @@ const createAdmin = async (req, res) => {
         if (existingAdmin) {
             return res.status(400).json({
                 success: false,
-                message: "Admin already exists",
+                error:{message: "Admin already exists"},
             });
         };
 
@@ -152,31 +155,31 @@ const createAdmin = async (req, res) => {
         if (!acceptTerms)
             return res
             .status(400)
-            .json({ success: false, message: "Terms must be accepted" });
+            .json({ success: false, error:{message: "Terms must be accepted"} });
     
         if (password !== confirmPassword)
             return res
             .status(400)
-            .json({ success: false, message: "Passwords do not match" });
+            .json({ success: false, error:{message: "Passwords do not match"} });
     
         if (!isValidFullName(fullName)) {
             return res.status(400).json({
             success: false,
-            message: "Full name is required and must be at least 2 characters",
+            error:{message: "Full name is required and must be at least 2 characters"},
             });
         }
     
         if (!isValidEmail(email)) {
             return res
             .status(400)
-            .json({ success: false, message: "Invalid email format" });
+            .json({ success: false, error:{message: "Invalid email format"} });
         }
     
         if (!isValidPassword(password))
             return res.status(400).json({
             success: false,
-            message:
-                "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character",
+            error:{message:
+                "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character"},
             });
 
         const salt = await bcrypt.genSalt(10);
