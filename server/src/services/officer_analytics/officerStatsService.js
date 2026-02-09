@@ -1,6 +1,9 @@
 import Conversation from '../../models/Conversation.js';
 import Application from '../../models/Application.js';
-import OfficerStats from '../../models/views/OfficerStats.js';
+import OfficerStatsMonthly from '../../models/views/OfficerStatsMonthly.js';
+import OfficerStatsCumulative from '../../models/views/OfficerStatsCumulative.js';
+import GlobalMaxScore from '../../models/views/GlobalMaxScore.js';
+import Officer from '../../models/Officer.js';
 import { getMonthRange } from '../../utils/date.js';
 
 export async function calculateOfficerStats(month) {
@@ -81,6 +84,8 @@ export async function calculateOfficerStats(month) {
         _id: 0,
         officerId: '$_id.officerId',
         period: '$_id.period',
+        department: '$officer.department',
+        subcity: '$officer.subcity',
         totalConversations: '$assignedCount',
         totalApplications: { $literal: 0 },
         // exact processed counts for conversations
@@ -151,7 +156,7 @@ export async function calculateOfficerStats(month) {
             0
           ]
         }
-      ,
+        ,
         averageResponseTimeMs: {
           $cond: [
             { $gt: ['$processedCount', 0] },
@@ -176,6 +181,8 @@ export async function calculateOfficerStats(month) {
         _id: 0,
         officerId: '$_id.officerId',
         period: '$_id.period',
+        department: '$officer.department',
+        subcity: '$officer.subcity',
         totalConversations: { $literal: 0 },
         totalApplications: '$assignedCount',
         // exact processed counts for applications
@@ -192,9 +199,35 @@ export async function calculateOfficerStats(month) {
 
   const allStats = [...conversationStats, ...applicationStats];
 
+  // Map to the new schema format and ensure all fields are computed
+  const processedStats = allStats.map(stat => {
+    const requestsProcessed = (stat.processedConversations || 0) + (stat.processedApplications || 0);
+    const requestsTotal = (stat.totalConversations || 0) + (stat.totalApplications || 0);
+    const score = requestsTotal > 0 ? (requestsProcessed / requestsTotal) * Math.log(requestsTotal + 1) : 0;
+
+    return {
+      officerId: stat.officerId,
+      period: stat.period,
+      department: stat.department,
+      subcity: stat.subcity,
+      totalConversations: stat.totalConversations || 0,
+      processedConversations: stat.processedConversations || 0,
+      totalApplications: stat.totalApplications || 0,
+      processedApplications: stat.processedApplications || 0,
+      communicationResponseRate: stat.communicationResponseRate || 0,
+      applicationResponseRate: stat.applicationResponseRate || 0,
+      averageResponseTimeMs: stat.averageResponseTimeMs || 0,
+      requestsProcessed,
+      requestsTotal,
+      rawScore: score,
+      rankScore: score
+    };
+  });
+
+  // 1. Update OfficerStatsMonthly
   await Promise.all(
-    allStats.map(stat =>
-      OfficerStats.findOneAndUpdate(
+    processedStats.map(stat =>
+      OfficerStatsMonthly.findOneAndUpdate(
         { officerId: stat.officerId, period: stat.period },
         { $set: stat },
         { upsert: true, new: true }
@@ -202,5 +235,71 @@ export async function calculateOfficerStats(month) {
     )
   );
 
-  return allStats;
+  // 2. Update OfficerStatsCumulative for involved officers
+  const uniqueOfficerIds = [...new Set(processedStats.map(s => s.officerId))];
+  await Promise.all(
+    uniqueOfficerIds.map(async (officerId) => {
+      const officerMonthlyData = await OfficerStatsMonthly.find({ officerId });
+      const officer = await Officer.findById(officerId);
+
+      if (!officer) return;
+
+      const cumulative = officerMonthlyData.reduce((acc, curr) => {
+        acc.totalConversations += curr.totalConversations;
+        acc.processedConversations += curr.processedConversations;
+        acc.totalApplications += curr.totalApplications;
+        acc.processedApplications += curr.processedApplications;
+        acc.requestsProcessed += curr.requestsProcessed;
+        acc.requestsTotal += curr.requestsTotal;
+        return acc;
+      }, {
+        totalConversations: 0,
+        processedConversations: 0,
+        totalApplications: 0,
+        processedApplications: 0,
+        requestsProcessed: 0,
+        requestsTotal: 0
+      });
+
+      // Recalculate weighted rates and score for cumulative
+      cumulative.communicationResponseRate = cumulative.totalConversations > 0 ? cumulative.processedConversations / cumulative.totalConversations : 0;
+      cumulative.applicationResponseRate = cumulative.totalApplications > 0 ? cumulative.processedApplications / cumulative.totalApplications : 0;
+
+      const totalTime = officerMonthlyData.reduce((acc, curr) => {
+        const processed = (curr.processedConversations + curr.processedApplications);
+        return acc + (curr.averageResponseTimeMs * processed);
+      }, 0);
+      cumulative.averageResponseTimeMs = cumulative.requestsProcessed > 0 ? totalTime / cumulative.requestsProcessed : 0;
+
+      cumulative.rawScore = cumulative.requestsTotal > 0 ? (cumulative.requestsProcessed / cumulative.requestsTotal) * Math.log(cumulative.requestsTotal + 1) : 0;
+      cumulative.rankScore = cumulative.rawScore;
+
+      await OfficerStatsCumulative.findOneAndUpdate(
+        { officerId },
+        {
+          $set: {
+            ...cumulative,
+            department: officer.department,
+            subcity: officer.subcity
+          }
+        },
+        { upsert: true }
+      );
+    })
+  );
+
+  // 3. Update GlobalMaxScore for this period
+  const period = processedStats[0]?.period;
+  if (period) {
+    const maxData = await OfficerStatsMonthly.findOne({ period }).sort({ rankScore: -1 });
+    if (maxData) {
+      await GlobalMaxScore.findOneAndUpdate(
+        { period },
+        { $set: { maxRankScore: maxData.rankScore } },
+        { upsert: true }
+      );
+    }
+  }
+
+  return processedStats;
 }
