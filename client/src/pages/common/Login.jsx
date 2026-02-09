@@ -21,7 +21,8 @@ function Login() {
         signupPassword: '',
         confirmPassword: '',
         idPhoto: null,
-        acceptTerms: false
+        acceptTerms: false,
+        rememberMe: false
     });
     const [showLoginPassword, setShowLoginPassword] = useState(false);
     const [showSignupPassword, setShowSignupPassword] = useState(false);
@@ -104,7 +105,7 @@ function Login() {
             const result = await login({
                 email: formData.user, // Backend expects 'email' field
                 password: formData.loginPassword,
-                rememberMe: false, // You can add a checkbox for this
+                rememberMe: formData.rememberMe,
             });
 
             if (result.success) {
@@ -253,6 +254,19 @@ function Login() {
                                         <i className={`far fa-eye${showLoginPassword ? '-slash' : ''}`}></i>
                                     </button>
                                 </div>
+                            </div>
+
+                            <div className="data remember-me-container">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="rememberMe"
+                                        checked={formData.rememberMe}
+                                        onChange={(e) => setFormData(prev => ({ ...prev, rememberMe: e.target.checked }))}
+                                        disabled={isSubmitting}
+                                    />
+                                    <span>Remember Me</span>
+                                </label>
                             </div>
 
                             <a href="#" id="forgot">Forgot Password?</a>

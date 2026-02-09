@@ -58,7 +58,7 @@ const oauthHandler = async (req, res) => {
     const redirectUrl = `${frontendCallbackUrl}/auth/google/callback?error=${encodeURIComponent(err.message)}`;
     res.redirect(redirectUrl);
   }
-  
+
 }
 
 // User Registration
@@ -179,22 +179,20 @@ const login = async (req, res) => {
       { expiresIn: process.env.ACCESS_TOKEN_EXPIRES }
     );
 
-    let refreshToken;
-    if (rememberMe) {
-      refreshToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.REFRESH_TOKEN_EXPIRES,
-      });
+    // Always generate a refresh token, but duration depends on rememberMe
+    const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: rememberMe ? process.env.REFRESH_TOKEN_EXPIRES : "24h",
+    });
 
-      user.refreshToken = refreshToken;
-      await user.save();
+    user.refreshToken = refreshToken;
+    await user.save();
 
-      res.cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        secure: isProduction,
-        sameSite: isProduction ? "none" : "lax",
-        maxAge: refreshTokenMaxAge,
-      });
-    }
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
+      maxAge: rememberMe ? refreshTokenMaxAge : undefined, // If not rememberMe, it's a session cookie
+    });
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
@@ -205,17 +203,17 @@ const login = async (req, res) => {
 
     const time = new Date();
     // Options to make it look cleaner (e.g., "Dec 30, 5:45 PM")
-    const readableTime = time.toLocaleString('en-US', { 
-        month: 'short', 
-        day: 'numeric', 
-        hour: '2-digit', 
-        minute: '2-digit' 
+    const readableTime = time.toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
     });
 
     await makeNotification(
-        user._id, 
-        "New Login", 
-        `New login detected on ${readableTime}. If this wasn't you, please change your password.`
+      user._id,
+      "New Login",
+      `New login detected on ${readableTime}. If this wasn't you, please change your password.`
     );
 
     // ✅ Add accessToken in response body for tests
