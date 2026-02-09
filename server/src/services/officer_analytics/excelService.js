@@ -111,8 +111,20 @@ function setupOfficerSheet(sheet, officers, filterInfo, title) {
     headerRow.alignment = { horizontal: 'center' };
 
     officers.forEach((o, i) => {
-        const name = o.name || `${o.officer?.firstName || 'Unknown'} ${o.officer?.lastName || ''}`.trim();
-        const rateValue = (typeof o.responseRate === 'number') ? (o.responseRate / 100) : ((o.communicationResponseRate || 0) || (o.applicationResponseRate || 0));
+        const name = o.name || `${o.officer?.firstName || o.officer?.fullName || 'Unknown'} ${o.officer?.lastName || ''}`.trim();
+
+        // Unified Response Rate (prefers combinedResponseRate from service which is 0-100)
+        let rateValue = 0;
+        if (typeof o.combinedResponseRate === 'number') {
+            rateValue = o.combinedResponseRate / 100;
+        } else if (typeof o.responseRate === 'number') {
+            rateValue = o.responseRate / 100;
+        } else {
+            rateValue = (o.communicationResponseRate || 0) || (o.applicationResponseRate || 0);
+        }
+
+        // Unified Avg Response Time (ms)
+        const avgTime = Number(o.avgResponseTimeMs || o.combinedAvgResponseTimeMs || o.avgResponseTime || 0);
         const perfValue = (o.normalizedScore || o.score || 0) / 100;
 
         const row = sheet.addRow([
@@ -122,7 +134,7 @@ function setupOfficerSheet(sheet, officers, filterInfo, title) {
             o.subcity || o.officer?.subcity || 'N/A',
             Number(o.requestsTotal || 0),
             Number(o.requestsProcessed || 0),
-            Number(o.avgResponseTime || 0),
+            avgTime,
             Number(rateValue),
             Number(o.rawScore || 0),
             Number(perfValue)

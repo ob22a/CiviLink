@@ -161,7 +161,8 @@ export async function getAggregatedPerformance({ from, to, officerId, department
                 rankScore: raw,
                 normalizedScore,
                 combinedResponseRate: o.requestsTotal > 0 ? (o.requestsProcessed / o.requestsTotal * 100) : 0,
-                combinedAvgResponseTimeMs: o.avgResponseTimeMs
+                combinedAvgResponseTimeMs: o.avgResponseTimeMs || 0,
+                avgResponseTimeMs: o.avgResponseTimeMs || 0 // Explicitly include it
             };
         });
     }
@@ -282,8 +283,10 @@ export async function getPaginatedOfficerStats({ from, to, department, subcity, 
             subcity: o.subcity || o.officer.subcity,
             requestsTotal: o.requestsTotal,
             requestsProcessed: o.requestsProcessed,
-            avgResponseTime: o.averageResponseTimeMs || o.avgResponseTime || 0,
+            avgResponseTimeMs: o.averageResponseTimeMs || o.avgResponseTime || 0,
+            avgResponseTime: o.averageResponseTimeMs || o.avgResponseTime || 0, // Keep both for safety
             responseRate: Number((combinedResponseRate * 100)),
+            combinedResponseRate: Number((combinedResponseRate * 100)), // Map to combinedResponseRate
             rawScore: raw,
             rankScore: raw,
             score: Number(((raw / (globalMax || 1)) * 100))
