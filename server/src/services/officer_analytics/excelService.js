@@ -74,14 +74,20 @@ export async function generatePerformanceExcel(data, { from, to, department, sub
     trendSheet.getRow(1).font = { bold: true };
 
     monthlyTrend.forEach(m => {
+        const rate = (m.communicationResponseRate || m.applicationResponseRate || 0);
         trendSheet.addRow({
             month: m.month,
-            requests: m.requestsProcessed || 0,
-            time: (m.averageResponseTimeMs || 0).toFixed(0),
-            // Prefer combined/application rates when available
-            rate: `${(((m.communicationResponseRate || 0) || (m.applicationResponseRate || 0)) * 100).toFixed(1)}%`
+            requests: Number(m.requestsProcessed || 0),
+            time: Number(m.averageResponseTimeMs || 0),
+            rate: Number(rate)
         });
     });
+
+    // Formatting monthly trend
+    trendSheet.getColumn('requests').numFmt = '#,##0';
+    trendSheet.getColumn('time').numFmt = '#,##0';
+    trendSheet.getColumn('rate').numFmt = '0.0%';
+    trendSheet.autoFilter = 'A1:D1';
 
     // 5. All Officers Database
     const allSheet = workbook.addWorksheet('All Officers');
@@ -92,42 +98,51 @@ export async function generatePerformanceExcel(data, { from, to, department, sub
 
 function setupOfficerSheet(sheet, officers) {
     sheet.columns = [
-        { header: 'Rank', key: 'rank', width: 8 },
+        { header: 'Rank', key: 'rank', width: 8, style: { alignment: { horizontal: 'center' } } },
         { header: 'Name', key: 'name', width: 30 },
         { header: 'Department', key: 'dept', width: 22 },
         { header: 'Subcity', key: 'subcity', width: 20 },
-        { header: 'Tasks Assigned', key: 'assigned', width: 15 },
-        { header: 'Tasks Processed', key: 'processed', width: 15 },
-        { header: 'Avg Response Time (ms)', key: 'time', width: 22 },
-        { header: 'Response Rate', key: 'rate', width: 15 },
-        { header: 'Weighted Score', key: 'score', width: 15 },
-        { header: 'Performance %', key: 'perf', width: 15 },
+        { header: 'Tasks Assigned', key: 'assigned', width: 15, style: { alignment: { horizontal: 'center' } } },
+        { header: 'Tasks Processed', key: 'processed', width: 15, style: { alignment: { horizontal: 'center' } } },
+        { header: 'Avg Response Time (ms)', key: 'time', width: 22, style: { numFmt: '#,##0', alignment: { horizontal: 'center' } } },
+        { header: 'Response Rate', key: 'rate', width: 15, style: { numFmt: '0.0%', alignment: { horizontal: 'center' } } },
+        { header: 'Weighted Score', key: 'score', width: 15, style: { numFmt: '0.0000', alignment: { horizontal: 'center' } } },
+        { header: 'Performance %', key: 'perf', width: 15, style: { numFmt: '0.0%', alignment: { horizontal: 'center' } } },
     ];
 
     // Style the header row
     const headerRow = sheet.getRow(1);
-    headerRow.font = { bold: true };
+    headerRow.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+    headerRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF4F81BD' } };
     headerRow.alignment = { vertical: 'middle', horizontal: 'center' };
 
     officers.forEach((o, i) => {
-        // Nested safety check for officer name/details
         const firstName = o.officer?.firstName || o.officer?.fullName || 'Unknown';
         const lastName = o.officer?.lastName || '';
-        // Prefer combined metrics if available (created in performanceService)
+
+        // Ensure values are numbers for Excel
         const rateValue = (typeof o.combinedResponseRate === 'number') ? (o.combinedResponseRate / 100) : ((o.communicationResponseRate || 0) || (o.applicationResponseRate || 0));
         const timeValue = (typeof o.combinedAvgResponseTimeMs === 'number') ? o.combinedAvgResponseTimeMs : (o.avgResponseTimeMs || 0);
+        const scoreValue = o.rawScore || o.rankScore || 0;
+        const perfValue = (o.normalizedScore || 0) / 100; // Convert 0-100 to 0-1 for % format
 
         sheet.addRow({
             rank: i + 1,
             name: `${firstName} ${lastName}`.trim(),
             dept: o.officer?.department || 'N/A',
             subcity: o.officer?.subcity || 'N/A',
-            assigned: o.requestsTotal || 0,
-            processed: o.requestsProcessed || 0,
-            time: (timeValue || 0).toFixed(0),
-            rate: `${((rateValue || 0) * 100).toFixed(1)}%`,
-            score: (o.rawScore || o.rankScore || 0).toFixed(4),
-            perf: `${(o.normalizedScore || 0).toFixed(1)}%`
+            assigned: Number(o.requestsTotal || 0),
+            processed: Number(o.requestsProcessed || 0),
+            time: Number(timeValue),
+            rate: Number(rateValue),
+            score: Number(scoreValue),
+            perf: Number(perfValue)
         });
     });
+
+    // Add filter on top
+    sheet.autoFilter = {
+        from: { row: 1, column: 1 },
+        to: { row: 1, column: 10 }
+    };
 }
