@@ -8,7 +8,8 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config.mjs --runInBand",
     "seed": "node --env-file=.env tests/seed/runSeeds.js",
     "clear": "node --env-file=.env tests/seed/clear.js",
-    "seed:fresh": "npm run clear && npm run seed"
+    "seed:fresh": "npm run clear && npm run seed",
+    "migration": "node --env-file=.env scripts/migrate_analytics.js"
   },
   "type": "module",
   "keywords": [],
