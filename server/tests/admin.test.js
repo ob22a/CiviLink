@@ -105,7 +105,7 @@ describe("Admin Routes (Cookie-Based Auth)", () => {
 
             expect(res.status).toBe(400);
             expect(res.body.success).toBe(false);
-            expect(res.body.message).toBe("Either name or email query parameter is required")
+            expect(res.body.error.message).toBe("Either name or email query parameter is required")
         })
 
         it("It should find citizens by name", async () => {
@@ -116,8 +116,8 @@ describe("Admin Routes (Cookie-Based Auth)", () => {
 
             expect(res.status).toBe(200);
             expect(res.body.success).toBe(true);
-            expect(res.body.citizens.length).toBe(1);
-            expect(res.body.citizens[0].role).toBe("citizen");
+            expect(res.body.data?.citizens.length).toBe(1);
+            expect(res.body.data?.citizens[0].role).toBe("citizen");
         });
 
         it("It should find citizens by email", async () => {
@@ -128,8 +128,8 @@ describe("Admin Routes (Cookie-Based Auth)", () => {
 
             expect(res.status).toBe(200);
             expect(res.body.success).toBe(true);
-            expect(res.body.citizens.length).toBe(1);
-            expect(res.body.citizens[0].role).toBe("citizen");
+            expect(res.body.data?.citizens.length).toBe(1);
+            expect(res.body.data?.citizens[0].role).toBe("citizen");
         });
 
         it("It should never return officers or admins", async () => {
@@ -139,8 +139,8 @@ describe("Admin Routes (Cookie-Based Auth)", () => {
                 .query({ name: "one" });
 
             expect(res.status).toBe(200);
-            expect(res.body.citizens.length).toBe(1);
-            expect(res.body.citizens[0].role).toBe("citizen");
+            expect(res.body.data?.citizens.length).toBe(1);
+            expect(res.body.data?.citizens[0].role).toBe("citizen");
         });
 
         it("It should return a maximum of 5 users", async () => {
@@ -150,8 +150,8 @@ describe("Admin Routes (Cookie-Based Auth)", () => {
                 .query({ name: "Citizen" })
 
             expect(res.status).toBe(200);
-            expect(res.body.citizens.length).toBe(5);
-            expect(res.body.citizens[0].role).toBe("citizen");
+            expect(res.body.data?.citizens.length).toBe(5);
+            expect(res.body.data?.citizens[0].role).toBe("citizen");
           })
     });
 
@@ -185,7 +185,7 @@ describe("Admin Routes (Cookie-Based Auth)", () => {
 
             expect(res.status).toBe(401)
             expect(res.body.success).toBe(false)
-            expect(res.body.message).toBe("Invalid admin password")
+            expect(res.body.error.message).toBe("Invalid admin password")
         });
 
         it("It should return 400 if adminpassword is missing", async () => {
@@ -199,7 +199,7 @@ describe("Admin Routes (Cookie-Based Auth)", () => {
 
             expect(res.status).toBe(400)
             expect(res.body.success).toBe(false)
-            expect(res.body.message).toBe("Missing required fields")
+            expect(res.body.error.message).toBe("Missing required fields")
         });
 
         it("It should return 404 if user does not exist", async () => {
@@ -216,7 +216,7 @@ describe("Admin Routes (Cookie-Based Auth)", () => {
 
             expect(res.status).toBe(404)
             expect(res.body.success).toBe(false)
-            expect(res.body.message).toBe("User not found")
+            expect(res.body.error.message).toBe("User not found")
         });
 
         it("It should return 409 if user is not a citizen", async () => {
@@ -231,7 +231,7 @@ describe("Admin Routes (Cookie-Based Auth)", () => {
 
             expect(res.status).toBe(409)
             expect(res.body.success).toBe(false)
-            expect(res.body.message).toBe("User is not eligible for officer role")
+            expect(res.body.error.message).toBe("User is not eligible for officer role")
         });
 
         it("It should successfully promote a citizen to officer", async () => {

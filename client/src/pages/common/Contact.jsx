@@ -4,9 +4,9 @@ import Navigation1 from '../../components/Navigation1';
 import Footer from '../../components/Footer';
 import Navigation2 from '../../components/Navigation2';
 import { useSearchParams } from 'react-router-dom';
-import { useAuth } from '../../auth/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import * as chatAPI from '../../api/chat.api';
-import { useChat } from '../../auth/ChatContext';
+import { useChat } from '../../hooks/useChat';
 
 function Contact() {
     const { user } = useAuth();

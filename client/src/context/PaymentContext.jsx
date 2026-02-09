@@ -9,15 +9,9 @@ import React, { createContext, useContext, useReducer, useCallback } from 'react
 import { paymentReducer, paymentActions } from '../reducers/paymentReducer.js';
 import * as paymentAPI from '../api/payment.api.js';
 
-const PaymentContext = createContext(null);
+export const PaymentContext = createContext(null);
 
-export const usePayment = () => {
-    const context = useContext(PaymentContext);
-    if (!context) {
-        throw new Error('usePayment must be used within a PaymentProvider');
-    }
-    return context;
-};
+// Hook removed and moved to src/hooks/usePayment.js
 
 export const PaymentProvider = ({ children }) => {
     const [state, dispatch] = useReducer(paymentReducer, {
@@ -94,6 +88,19 @@ export const PaymentProvider = ({ children }) => {
         isProcessing: state.isProcessing,
         isVerifying: state.isVerifying,
         error: state.error,
+
+        // Derived Logic (Merged from usePaymentState standalone)
+        hasPayments: state.payments.length > 0,
+        successfulPayments: state.payments.filter(p => p.status === 'success'),
+        pendingPayments: state.payments.filter(p => p.status === 'pending'),
+        failedPayments: state.payments.filter(p => p.status === 'failed'),
+        paymentCounts: {
+            total: state.payments.length,
+            successful: state.payments.filter(p => p.status === 'success').length,
+            pending: state.payments.filter(p => p.status === 'pending').length,
+            failed: state.payments.filter(p => p.status === 'failed').length,
+        },
+        isCurrentPaymentSuccessful: state.currentPayment?.status === 'success',
 
         // Actions
         fetchPaymentHistory,

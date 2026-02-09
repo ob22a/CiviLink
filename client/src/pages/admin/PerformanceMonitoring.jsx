@@ -207,12 +207,21 @@ function PerformanceMonitoringContent() {
           <div className="performance-overview">
             <div className="overview-card">
               <div className="card-header">
-                <div className="card-icon">
-                  <i className="fas fa-tasks"></i>
+                <div>
+                  <h3>{(metricsSummary?.totalTasksAssigned || 0).toLocaleString()}</h3>
+                  <p>Tasks Assigned</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="overview-card">
+              <div className="card-header">
+                <div className="card-icon" style={{ background: '#e1f5fe' }}>
+                  <i className="fas fa-check-double" style={{ color: '#0288d1' }}></i>
                 </div>
                 <div>
                   <h3>{(metricsSummary?.totalRequestsProcessed || 0).toLocaleString()}</h3>
-                  <p>Total Requests</p>
+                  <p>Tasks Processed</p>
                 </div>
               </div>
             </div>
@@ -235,7 +244,7 @@ function PerformanceMonitoringContent() {
                   <i className="fas fa-chart-line" style={{ color: '#388e3c' }}></i>
                 </div>
                 <div>
-                  <h3>{metricsSummary?.communicationResponseRate !== undefined ? `${(metricsSummary.communicationResponseRate <= 1 ? metricsSummary.communicationResponseRate * 100 : metricsSummary.communicationResponseRate).toFixed(2)}%` : 'N/A'}</h3>
+                  <h3>{metricsSummary?.combinedResponseRate !== undefined ? `${(metricsSummary.combinedResponseRate <= 1 ? metricsSummary.combinedResponseRate * 100 : metricsSummary.combinedResponseRate).toFixed(1)}%` : 'N/A'}</h3>
                   <p>Response Rate</p>
                 </div>
               </div>
@@ -291,7 +300,11 @@ function PerformanceMonitoringContent() {
                     let value = 0;
                     if (selectedMetric === 'requests') value = item.requestsProcessed;
                     else if (selectedMetric === 'time') value = Number((item.averageResponseTimeMs / 3600000).toFixed(1));
-                    else if (selectedMetric === 'rate') value = Number((((item.communicationResponseRate || 0) + (item.applicationResponseRate || 0)) / 2 * 100).toFixed(2));
+                    else if (selectedMetric === 'rate') {
+                      // Use the accurate domain-specific rates from backend if available, or fall back to combined
+                      const rate = item.communicationResponseRate || item.applicationResponseRate || 0;
+                      value = Number((rate * 100).toFixed(1));
+                    }
                     return { label: item.month, value };
                   });
                   const maxVal = Math.max(...data.map(d => d.value)) * 1.1 || 10;
@@ -365,8 +378,8 @@ function PerformanceMonitoringContent() {
                     <i className="fas fa-check-circle"></i>
                   </div>
                   <div className="metric-info">
-                    <h4>{metricsSummary?.communicationResponseRate !== undefined ? `${(metricsSummary.communicationResponseRate <= 1 ? metricsSummary.communicationResponseRate * 100 : metricsSummary.communicationResponseRate).toFixed(2)}%` : 'N/A'}</h4>
-                    <p>Response Rate</p>
+                    <h4>{metricsSummary?.combinedResponseRate !== undefined ? `${(metricsSummary.combinedResponseRate <= 1 ? metricsSummary.combinedResponseRate * 100 : metricsSummary.combinedResponseRate).toFixed(1)}%` : 'N/A'}</h4>
+                    <p>Org. Response Rate</p>
                   </div>
                 </div>
                 <div className="key-metric">

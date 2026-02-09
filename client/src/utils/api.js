@@ -6,14 +6,7 @@ import { API_BASE_URL } from '../config/backend.js';
  * @returns {Object} Normalized error object
  */
 export const normalizeError = (error) => {
-  if (error.response) {
-    // Axios-style error (if we add axios later)
-    return {
-      message: error.response.data?.message || error.response.data?.error?.message || 'An error occurred',
-      status: error.response.status,
-      data: error.response.data
-    };
-  }
+
 
   if (error instanceof Response) {
     // Fetch API error
@@ -30,6 +23,15 @@ export const normalizeError = (error) => {
     data: null
   };
 };
+
+/**
+ * Makes an API request with automatic token handling
+ * @param {string} endpoint - API endpoint (without base URL)
+ * @param {Object} options - Fetch options
+ * @returns {Promise<Object>} Response data
+ */
+let refreshHandler = null;
+let refreshPromise = null;
 
 /**
  * Makes an API request with automatic token handling
@@ -56,12 +58,28 @@ export const apiRequest = async (endpoint, options = {}) => {
     // Skip if this IS the refresh request (prevent infinite loop)
     if (response.status === 401 && !options._retry && refreshHandler && !endpoint.includes('refresh-token')) {
       try {
-        const refreshResult = await refreshHandler();
+        // Singleton pattern: If a refresh is already in flight, wait for it
+        if (!refreshPromise) {
+          refreshPromise = refreshHandler();
+        }
+
+        const refreshResult = await refreshPromise;
+
+        // Reset promise after it completes (success or fail)
+        // so that future 401s after a NEW session expiration can trigger a new refresh
+        if (refreshPromise) {
+          refreshPromise = null;
+        }
+
         if (refreshResult && refreshResult.success) {
           // Retry original request with _retry flag
           return apiRequest(endpoint, { ...options, _retry: true });
+        } else {
+          // If refresh failed, don't retry, just bubble up the error
+          throw new Error('Session expired. Please log in again.');
         }
       } catch (err) {
+        refreshPromise = null;
         console.error('Token refresh failed:', err);
         throw new Error('Session expired. Please log in again.');
       }
@@ -91,8 +109,6 @@ export const apiRequest = async (endpoint, options = {}) => {
     throw normalizeError(error);
   }
 };
-
-let refreshHandler = null;
 
 /**
  * Registers a function to handle token refresh attempts

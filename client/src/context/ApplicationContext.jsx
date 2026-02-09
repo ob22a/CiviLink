@@ -2,15 +2,9 @@ import React, { createContext, useContext, useReducer, useCallback } from 'react
 import { applicationReducer, applicationActions } from '../reducers/applicationReducer.js';
 import * as applicationsAPI from '../api/applications.api.js';
 
-const ApplicationContext = createContext(null);
+export const ApplicationContext = createContext(null);
 
-export const useApplication = () => {
-    const context = useContext(ApplicationContext);
-    if (!context) {
-        throw new Error('useApplication must be used within an ApplicationProvider');
-    }
-    return context;
-};
+// Hook removed and moved to src/hooks/useApplication.js
 
 export const ApplicationProvider = ({ children }) => {
     const [state, dispatch] = useReducer(applicationReducer, {
@@ -90,11 +84,26 @@ export const ApplicationProvider = ({ children }) => {
     }, []);
 
     const value = {
+        // State
         applications: state.applications,
         selectedApplication: state.selectedApplication,
         isLoading: state.isLoading,
         isSubmitting: state.isSubmitting,
         error: state.error,
+
+        // Derived Logic (Merged from useApplicationState standalone)
+        hasApplications: state.applications.length > 0,
+        pendingApplications: state.applications.filter(app => app.status === 'pending'),
+        approvedApplications: state.applications.filter(app => app.status === 'approved'),
+        rejectedApplications: state.applications.filter(app => app.status === 'rejected'),
+        applicationCounts: {
+            total: state.applications.length,
+            pending: state.applications.filter(app => app.status === 'pending').length,
+            approved: state.applications.filter(app => app.status === 'approved').length,
+            rejected: state.applications.filter(app => app.status === 'rejected').length,
+        },
+
+        // Actions
         fetchApplications,
         getApplicationDetails,
         submitApplication,

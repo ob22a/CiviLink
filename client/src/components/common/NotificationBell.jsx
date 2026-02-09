@@ -13,9 +13,9 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useNotifications } from '../../auth/NotificationsContext.jsx';
-import { useAuth } from '../../auth/AuthContext.jsx';
-import './NotificationBell.css';
+import { useNotifications } from '../../hooks/useNotifications';
+import { useAuth } from '../../hooks/useAuth';
+import '../../styles/components/NotificationBell.css';
 
 export const NotificationBell = () => {
   const { notifications, unreadCount, markAsRead, isLoading } = useNotifications();

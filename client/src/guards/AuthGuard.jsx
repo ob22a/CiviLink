@@ -6,7 +6,7 @@
  */
 
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../AuthContext.jsx';
+import { useAuth } from '../hooks/useAuth';
 
 export const AuthGuard = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -15,11 +15,11 @@ export const AuthGuard = ({ children }) => {
   if (isLoading) {
     // Show loading spinner or skeleton
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh' 
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
       }}>
         <div>Loading...</div>
       </div>

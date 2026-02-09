@@ -4,10 +4,10 @@ import Navigation2 from '../../components/Navigation2';
 import Footer from '../../components/Footer';
 import OfficerSideBar from '../../components/OfficerSideBar';
 import AuthenticatedLayout from '../../components/layout/AuthenticatedLayout.jsx';
-import { useAuth } from '../../auth/AuthContext.jsx';
+import { useAuth } from '../../hooks/useAuth';
 import { usePermissions } from '../../hooks/usePermissions.js';
 import * as officerAPI from '../../api/officer.api.js';
-import { useChat } from '../../auth/ChatContext.jsx';
+import { useChat } from '../../hooks/useChat';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -97,7 +97,7 @@ function OfficerDashboard() {
     // Handle next application click
     const handleNextApplication = () => {
         if (applicationsQueue.length > 0) {
-            navigate(`/officer/applications/${applicationsQueue[0]._id}`);
+            navigate(`/ officer / applications / ${applicationsQueue[0]._id} `);
         } else {
             alert('No pending applications in queue');
         }
@@ -106,7 +106,7 @@ function OfficerDashboard() {
     // Handle next chat click
     const handleNextChat = () => {
         if (conversationsQueue.length > 0) {
-            navigate(`/officer/messages`);
+            navigate(`/ officer / messages`);
         } else {
             alert('No pending chats in queue');
         }
@@ -115,13 +115,13 @@ function OfficerDashboard() {
 
     // Handle view application details
     const handleViewApplication = (appId) => {
-        alert(`Viewing application: ${appId}`);
+        alert(`Viewing application: ${appId} `);
         // In real app, navigate to application details
     };
 
     // Handle reassign application
     const handleReassignApplication = (appId) => {
-        alert(`Reassigning application: ${appId}`);
+        alert(`Reassigning application: ${appId} `);
         // In real app, open reassign modal
     };
 
@@ -132,7 +132,7 @@ function OfficerDashboard() {
                 app.id === appId ? { ...app, status: newStatus } : app
             )
         );
-        alert(`Application ${appId} status updated to: ${newStatus}`);
+        alert(`Application ${appId} status updated to: ${newStatus} `);
     };
 
     // Calculate completion percentage for monthly target
@@ -315,7 +315,7 @@ function OfficerDashboard() {
                                                 <div className="app-applicant">From: {chat.citizenId?.fullName || 'Citizen'}</div>
                                             </div>
                                             <div className="app-details">
-                                                <span className={`status-badge ${chat.read ? 'read' : 'unread'}`} style={{
+                                                <span className={`status - badge ${chat.read ? 'read' : 'unread'} `} style={{
                                                     background: chat.read ? '#f1f5f9' : '#eff6ff',
                                                     color: chat.read ? '#64748b' : '#3b82f6'
                                                 }}>
@@ -360,7 +360,7 @@ function OfficerDashboard() {
                                     <div className="progress-bar">
                                         <div
                                             className="progress-fill"
-                                            style={{ width: `${calculateCompletionPercentage()}%` }}
+                                            style={{ width: `${calculateCompletionPercentage()}% ` }}
                                         ></div>
                                     </div>
                                     <div className="progress-stats">

@@ -4,14 +4,14 @@ import '../../styles/common/Login.css';
 import GoogleSvg from '../../assets/uil--google.svg';
 import Navigation1 from '../../components/Navigation1';
 import Footer from '../../components/Footer';
-import { useAuth } from '../../auth/AuthContext.jsx';
+import { useAuth } from '../../hooks/useAuth';
 import { getGoogleAuthUrl } from '../../api/auth.api.js';
 
 function Login() {
     const navigate = useNavigate();
     const location = useLocation();
     const { login, register, isAuthenticated, error: authError, clearError } = useAuth();
-    
+
     const [isLogin, setIsLogin] = useState(true);
     const [formData, setFormData] = useState({
         name: '',
@@ -21,7 +21,8 @@ function Login() {
         signupPassword: '',
         confirmPassword: '',
         idPhoto: null,
-        acceptTerms: false
+        acceptTerms: false,
+        rememberMe: false
     });
     const [showLoginPassword, setShowLoginPassword] = useState(false);
     const [showSignupPassword, setShowSignupPassword] = useState(false);
@@ -46,14 +47,14 @@ function Login() {
 
     // Show auth errors
     useEffect(() => {
-        if (authError) {
+        if (authError && authError !== "No refresh token provided") {
             setError(authError);
         }
     }, [authError]);
 
     const handleInputChange = (e) => {
         const { id, value, files, type, checked } = e.target;
-        
+
         if (id === 'idphoto' && files && files.length > 0) {
             setFormData(prev => ({ ...prev, idPhoto: files[0] }));
             setFileName(files[0].name);
@@ -69,7 +70,7 @@ function Login() {
                 'signup-password': 'signupPassword',
                 'confirm': 'confirmPassword',
             };
-            
+
             const fieldName = fieldMap[id] || id;
             setFormData(prev => ({ ...prev, [fieldName]: value }));
         }
@@ -78,7 +79,7 @@ function Login() {
     const handleFileDrop = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        
+
         if (e.dataTransfer.files.length > 0) {
             const file = e.dataTransfer.files[0];
             setFormData(prev => ({ ...prev, idPhoto: file }));
@@ -104,7 +105,7 @@ function Login() {
             const result = await login({
                 email: formData.user, // Backend expects 'email' field
                 password: formData.loginPassword,
-                rememberMe: false, // You can add a checkbox for this
+                rememberMe: formData.rememberMe,
             });
 
             if (result.success) {
@@ -177,272 +178,285 @@ function Login() {
 
     return (
         <>
-        <Navigation1></Navigation1>
-        <div className="login-container">
-        <section className="login-signup">
-            <div className="switch-btn">
-                <button 
-                    id="log-btn" 
-                    className={isLogin ? 'active' : ''}
-                    onClick={() => setIsLogin(true)}
-                >
-                    Login
-                </button>
-                <button 
-                    id="sign-btn" 
-                    className={!isLogin ? 'active' : ''}
-                    onClick={() => setIsLogin(false)}
-                >
-                    Sign Up
-                </button>
-            </div>
-
-            <div className="form-container">
-                {/* Login Form */}
-                <form 
-                    className={`login-form ${!isLogin ? 'hidden' : ''}`}
-                    onSubmit={handleLoginSubmit}
-                >
-                    <div className="welcome-text">
-                        <h1>Welcome Back!</h1>
-                        <span>Sign in to continue</span>
-                    </div>
-
-                    {error && (
-                        <div className="error-message" style={{ 
-                            color: 'red', 
-                            marginBottom: '1rem',
-                            padding: '0.5rem',
-                            backgroundColor: '#ffe6e6',
-                            borderRadius: '4px'
-                        }}>
-                            {error}
-                        </div>
-                    )}
-
-                    <div className="data">
-                        <label htmlFor="user">Email</label>
-                        <input 
-                            type="email" 
-                            id="user" 
-                            placeholder="Enter your email"
-                            value={formData.user}
-                            onChange={handleInputChange}
-                            required
-                            disabled={isSubmitting}
-                        />
-                    </div>
-
-                    <div className="data">
-                        <label htmlFor="login-password">Password</label>
-                        <div className="password-container">
-                            <input 
-                                type={showLoginPassword ? "text" : "password"} 
-                                id="login-password" 
-                                placeholder="Enter your password"
-                                value={formData.loginPassword}
-                                onChange={handleInputChange}
-                                required
-                                disabled={isSubmitting}
-                            />
-                            <button 
-                                type="button" 
-                                className="password-toggle" 
-                                onClick={() => setShowLoginPassword(!showLoginPassword)}
-                            >
-                                <i className={`far fa-eye${showLoginPassword ? '-slash' : ''}`}></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <a href="#" id="forgot">Forgot Password?</a>
-
-                    <div className="form-foot">
-                        <button 
-                            className="form-btn" 
-                            type="submit"
-                            disabled={isSubmitting}
+            <Navigation1></Navigation1>
+            <div className="login-container">
+                <section className="login-signup">
+                    <div className="switch-btn">
+                        <button
+                            id="log-btn"
+                            className={isLogin ? 'active' : ''}
+                            onClick={() => setIsLogin(true)}
                         >
-                            {isSubmitting ? 'Logging in...' : 'Login'}
+                            Login
                         </button>
-                        <span>OR CONTINUE WITH</span>
-                        <button 
-                            className="google-btn" 
-                            type="button"
-                            onClick={handleGoogleAuth}
+                        <button
+                            id="sign-btn"
+                            className={!isLogin ? 'active' : ''}
+                            onClick={() => setIsLogin(false)}
                         >
-                            <img 
-                                src={GoogleSvg}
-                                style={{ backgroundColor: '#333' }} 
-                                alt="google-logo"
-                            />
-                            Log in with Google
+                            Sign Up
                         </button>
                     </div>
-                </form>
 
-                {/* Sign Up Form */}
-                <form 
-                    className={`signup-form ${isLogin ? 'hidden' : ''}`}
-                    onSubmit={handleSignupSubmit}
-                >
-                    <div className="welcome-text">
-                        <h1>Create Your Account</h1>
-                        <span>Sign up to access all CiviLink Services</span>
-                    </div>
-
-                    {error && (
-                        <div className="error-message" style={{ 
-                            color: 'red', 
-                            marginBottom: '1rem',
-                            padding: '0.5rem',
-                            backgroundColor: '#ffe6e6',
-                            borderRadius: '4px'
-                        }}>
-                            {error}
-                        </div>
-                    )}
-
-                    <div className="data">
-                        <label htmlFor="name">Full Name</label>
-                            <input 
-                                id="name" 
-                                type="text" 
-                                placeholder="Enter your name"
-                                value={formData.name}
-                                onChange={handleInputChange}
-                                required
-                                disabled={isSubmitting}
-                            />
-                    </div>
-                    
-                    <div className="data">
-                        <label htmlFor="email">Email</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            placeholder="Enter your email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            required
-                            disabled={isSubmitting}
-                        />
-                    </div>
-                    
-                    <div className="data">
-                        <label htmlFor="signup-password">Password</label>
-                        <div className="password-container">
-                            <input 
-                                type={showSignupPassword ? "text" : "password"} 
-                                id="signup-password" 
-                                placeholder="Enter your password"
-                                value={formData.signupPassword}
-                                onChange={handleInputChange}
-                                required
-                                disabled={isSubmitting}
-                            />
-                            <button 
-                                type="button" 
-                                className="password-toggle" 
-                                onClick={() => setShowSignupPassword(!showSignupPassword)}
-                            >
-                                <i className={`far fa-eye${showSignupPassword ? '-slash' : ''}`}></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="data">
-                        <label htmlFor="confirm">Confirm Password</label>
-                        <div className="password-container">
-                            <input 
-                                type={showConfirmPassword ? "text" : "password"} 
-                                id="confirm" 
-                                placeholder="Confirm password"
-                                value={formData.confirmPassword}
-                                onChange={handleInputChange}
-                                required
-                                disabled={isSubmitting}
-                            />
-                            <button 
-                                type="button" 
-                                className="password-toggle" 
-                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                            >
-                                <i className={`far fa-eye${showConfirmPassword ? '-slash' : ''}`}></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div className="data">
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <input 
-                                type="checkbox" 
-                                id="acceptTerms"
-                                checked={formData.acceptTerms}
-                                onChange={(e) => setFormData(prev => ({ ...prev, acceptTerms: e.target.checked }))}
-                                required
-                                disabled={isSubmitting}
-                            />
-                            <span>I accept the terms and conditions</span>
-                        </label>
-                    </div>
-
-                    <div className="data">
-                        <label htmlFor="idphoto">Upload ID photo (Optional)</label>
-                        <div 
-                            className="filedrop" 
-                            id="file-drop-area"
-                            onClick={handleFileClick}
-                            onDrop={handleFileDrop}
-                            onDragOver={handleDragOver}
+                    <div className="form-container">
+                        {/* Login Form */}
+                        <form
+                            className={`login-form ${!isLogin ? 'hidden' : ''}`}
+                            onSubmit={handleLoginSubmit}
                         >
-                            <div className="file-upload-icon">
-                                <i className="fas fa-cloud-upload-alt"></i>
+                            <div className="welcome-text">
+                                <h1>Welcome Back!</h1>
+                                <span>Sign in to continue</span>
                             </div>
-                            <p>Drag & Drop your ID photo here, or click to browse</p>
-                            <small>Max file size: 5MB</small>
-                            {fileName && (
-                                <div className="file-name" id="file-name-display">
-                                    {fileName}
+
+                            {error && (
+                                <div className="error-message" style={{
+                                    color: 'red',
+                                    marginBottom: '1rem',
+                                    padding: '0.5rem',
+                                    backgroundColor: '#ffe6e6',
+                                    borderRadius: '4px'
+                                }}>
+                                    {error}
                                 </div>
                             )}
-                            <input 
-                                type="file" 
-                                id="idphoto" 
-                                accept="image/*" 
-                                style={{ display: 'none' }}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                    </div>
 
-                    <div className="form-foot">
-                        <button 
-                            className="form-btn" 
-                            type="submit"
-                            disabled={isSubmitting}
+                            <div className="data">
+                                <label htmlFor="user">Email</label>
+                                <input
+                                    type="email"
+                                    id="user"
+                                    placeholder="Enter your email"
+                                    value={formData.user}
+                                    onChange={handleInputChange}
+                                    required
+                                    disabled={isSubmitting}
+                                />
+                            </div>
+
+                            <div className="data">
+                                <label htmlFor="login-password">Password</label>
+                                <div className="password-container">
+                                    <input
+                                        type={showLoginPassword ? "text" : "password"}
+                                        id="login-password"
+                                        placeholder="Enter your password"
+                                        value={formData.loginPassword}
+                                        onChange={handleInputChange}
+                                        required
+                                        disabled={isSubmitting}
+                                    />
+                                    <button
+                                        type="button"
+                                        className="password-toggle"
+                                        onClick={() => setShowLoginPassword(!showLoginPassword)}
+                                    >
+                                        <i className={`far fa-eye${showLoginPassword ? '-slash' : ''}`}></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="data remember-me-container">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="rememberMe"
+                                        checked={formData.rememberMe}
+                                        onChange={(e) => setFormData(prev => ({ ...prev, rememberMe: e.target.checked }))}
+                                        disabled={isSubmitting}
+                                    />
+                                    <span>Remember Me</span>
+                                </label>
+                            </div>
+
+                            <a href="#" id="forgot">Forgot Password?</a>
+
+                            <div className="form-foot">
+                                <button
+                                    className="form-btn"
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? 'Logging in...' : 'Login'}
+                                </button>
+                                <span>OR CONTINUE WITH</span>
+                                <button
+                                    className="google-btn"
+                                    type="button"
+                                    onClick={handleGoogleAuth}
+                                >
+                                    <img
+                                        src={GoogleSvg}
+                                        style={{ backgroundColor: '#333' }}
+                                        alt="google-logo"
+                                    />
+                                    Log in with Google
+                                </button>
+                            </div>
+                        </form>
+
+                        {/* Sign Up Form */}
+                        <form
+                            className={`signup-form ${isLogin ? 'hidden' : ''}`}
+                            onSubmit={handleSignupSubmit}
                         >
-                            {isSubmitting ? 'Creating Account...' : 'Create Account'}
-                        </button>
-                        <span>OR CONTINUE WITH</span>
-                        <button 
-                            className="google-btn" 
-                            type="button"
-                            onClick={handleGoogleAuth}
-                        >
-                            <img 
-                                src={GoogleSvg}
-                                style={{ backgroundColor: '#333' }} 
-                                alt="google-logo"
-                            />
-                            Sign up with Google
-                        </button>
+                            <div className="welcome-text">
+                                <h1>Create Your Account</h1>
+                                <span>Sign up to access all CiviLink Services</span>
+                            </div>
+
+                            {error && (
+                                <div className="error-message" style={{
+                                    color: 'red',
+                                    marginBottom: '1rem',
+                                    padding: '0.5rem',
+                                    backgroundColor: '#ffe6e6',
+                                    borderRadius: '4px'
+                                }}>
+                                    {error}
+                                </div>
+                            )}
+
+                            <div className="data">
+                                <label htmlFor="name">Full Name</label>
+                                <input
+                                    id="name"
+                                    type="text"
+                                    placeholder="Enter your name"
+                                    value={formData.name}
+                                    onChange={handleInputChange}
+                                    required
+                                    disabled={isSubmitting}
+                                />
+                            </div>
+
+                            <div className="data">
+                                <label htmlFor="email">Email</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    placeholder="Enter your email"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    required
+                                    disabled={isSubmitting}
+                                />
+                            </div>
+
+                            <div className="data">
+                                <label htmlFor="signup-password">Password</label>
+                                <div className="password-container">
+                                    <input
+                                        type={showSignupPassword ? "text" : "password"}
+                                        id="signup-password"
+                                        placeholder="Enter your password"
+                                        value={formData.signupPassword}
+                                        onChange={handleInputChange}
+                                        required
+                                        disabled={isSubmitting}
+                                    />
+                                    <button
+                                        type="button"
+                                        className="password-toggle"
+                                        onClick={() => setShowSignupPassword(!showSignupPassword)}
+                                    >
+                                        <i className={`far fa-eye${showSignupPassword ? '-slash' : ''}`}></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="data">
+                                <label htmlFor="confirm">Confirm Password</label>
+                                <div className="password-container">
+                                    <input
+                                        type={showConfirmPassword ? "text" : "password"}
+                                        id="confirm"
+                                        placeholder="Confirm password"
+                                        value={formData.confirmPassword}
+                                        onChange={handleInputChange}
+                                        required
+                                        disabled={isSubmitting}
+                                    />
+                                    <button
+                                        type="button"
+                                        className="password-toggle"
+                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    >
+                                        <i className={`far fa-eye${showConfirmPassword ? '-slash' : ''}`}></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="data">
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        id="acceptTerms"
+                                        checked={formData.acceptTerms}
+                                        onChange={(e) => setFormData(prev => ({ ...prev, acceptTerms: e.target.checked }))}
+                                        required
+                                        disabled={isSubmitting}
+                                    />
+                                    <span>I accept the terms and conditions</span>
+                                </label>
+                            </div>
+
+                            <div className="data">
+                                <label htmlFor="idphoto">Upload ID photo (Optional)</label>
+                                <div
+                                    className="filedrop"
+                                    id="file-drop-area"
+                                    onClick={handleFileClick}
+                                    onDrop={handleFileDrop}
+                                    onDragOver={handleDragOver}
+                                >
+                                    <div className="file-upload-icon">
+                                        <i className="fas fa-cloud-upload-alt"></i>
+                                    </div>
+                                    <p>Drag & Drop your ID photo here, or click to browse</p>
+                                    <small>Max file size: 5MB</small>
+                                    {fileName && (
+                                        <div className="file-name" id="file-name-display">
+                                            {fileName}
+                                        </div>
+                                    )}
+                                    <input
+                                        type="file"
+                                        id="idphoto"
+                                        accept="image/*"
+                                        style={{ display: 'none' }}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="form-foot">
+                                <button
+                                    className="form-btn"
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? 'Creating Account...' : 'Create Account'}
+                                </button>
+                                <span>OR CONTINUE WITH</span>
+                                <button
+                                    className="google-btn"
+                                    type="button"
+                                    onClick={handleGoogleAuth}
+                                >
+                                    <img
+                                        src={GoogleSvg}
+                                        style={{ backgroundColor: '#333' }}
+                                        alt="google-logo"
+                                    />
+                                    Sign up with Google
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </section>
             </div>
-        </section>
-        </div>
-        <Footer></Footer>
+            <Footer></Footer>
         </>
     );
 }

@@ -12,9 +12,6 @@ import OAuthCallback from '../pages/common/OAuthCallback';
 
 function CommonRoutes(){
     return (
-        <>
-        <div className='common-routes'>
-       
         <Routes>
             {/*common pages*/}
             <Route path='/' element={<Landing/>}></Route>
@@ -25,13 +22,6 @@ function CommonRoutes(){
             <Route path='/notifications' element={<Notifications/>}></Route>
             <Route path='/auth/google/callback' element={<OAuthCallback/>}></Route>
         </Routes>
-      
-        </div>
-
-        
-
-         
-        </>
     )
 }
 
