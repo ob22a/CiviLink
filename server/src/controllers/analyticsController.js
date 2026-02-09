@@ -8,8 +8,11 @@ export async function getPerformanceMetrics(req, res) {
 
     const stats = data.globalStats[0] || {
       totalRequestsProcessed: 0,
+      totalAssigned: 0,
       avgResponseTimeMs: 0,
-      communicationResponseRate: 0
+      communicationResponseRate: 0,
+      applicationResponseRate: 0,
+      combinedResponseRate: 0
     };
 
     let officerPerformanceData = [];
@@ -39,8 +42,11 @@ export async function getPerformanceMetrics(req, res) {
       data: {
         summary: {
           totalRequestsProcessed: stats.totalRequestsProcessed,
+          totalTasksAssigned: stats.totalAssigned,
           averageResponseTimeMs: stats.avgResponseTimeMs || 0,
-          communicationResponseRate: stats.communicationResponseRate || 0
+          communicationResponseRate: stats.communicationResponseRate || 0,
+          applicationResponseRate: stats.applicationResponseRate || 0,
+          combinedResponseRate: stats.combinedResponseRate || 0
         },
         // return copies so further sorting won't mutate the original array
         topPerformers: [...officerPerformanceData], // Full list sorted desc in service

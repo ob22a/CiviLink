@@ -8,13 +8,13 @@ export async function calculateOfficerStats(month) {
   // Group conversations by officer and the month of the event (updatedAt)
   const conversationStats = await Conversation.aggregate([
     {
-      $match: {
+      $match: { // Get conversations that were assigned to an officer and updated within the month
         officerId: { $ne: null },
         updatedAt: { $gte: start, $lte: end }
       }
     },
     {
-      $addFields: {
+      $addFields: { // Create a 'period' field in YYYY-MM format for grouping
         period: { $dateToString: { format: '%Y-%m', date: '$updatedAt' } }
       }
     },
@@ -47,7 +47,7 @@ export async function calculateOfficerStats(month) {
       }
     },
     { $unwind: '$officer' },
-    { $match: { 'officer.department': 'customer_support' } },
+    { $match: { 'officer.department': 'customer_support' } }, // Safety nets to ensure we only include relevant officers but it is kinda redundant
     {
       $addFields: {
         communicationResponseRate: {

@@ -8,8 +8,11 @@ export async function generatePerformanceExcel(data, { from, to, department, sub
     // Fallbacks for global stats to prevent "toFixed" crashes
     const stats = (data.globalStats && data.globalStats[0]) || {
         totalRequestsProcessed: 0,
+        totalAssigned: 0,
         avgResponseTimeMs: 0,
-        communicationResponseRate: 0
+        communicationResponseRate: 0,
+        applicationResponseRate: 0,
+        combinedResponseRate: 0
     };
 
     const allOfficers = data.officerPerformance || [];
@@ -26,9 +29,12 @@ export async function generatePerformanceExcel(data, { from, to, department, sub
         { metric: 'Report Period', value: `${from || 'All'} to ${to || 'All'}` },
         { metric: 'Department Filter', value: department || 'All' },
         { metric: 'Subcity Filter', value: subcity || 'All' },
-        { metric: 'Total Requests Processed', value: stats.totalRequestsProcessed },
+        { metric: 'Total Tasks Assigned', value: stats.totalAssigned },
+        { metric: 'Total Tasks Processed', value: stats.totalRequestsProcessed },
         { metric: 'Avg Response Time', value: `${((stats.avgResponseTimeMs || 0) / 1000).toFixed(2)}s` },
-        { metric: 'Response Rate', value: `${((stats.communicationResponseRate || 0) * 100).toFixed(1)}%` },
+        { metric: 'Combined Response Rate', value: `${((stats.combinedResponseRate || 0) * 100).toFixed(1)}%` },
+        { metric: 'Comm. Response Rate', value: `${((stats.communicationResponseRate || 0) * 100).toFixed(1)}%` },
+        { metric: 'App. Response Rate', value: `${((stats.applicationResponseRate || 0) * 100).toFixed(1)}%` },
     ]);
 
     // Formatting: Bold the first column

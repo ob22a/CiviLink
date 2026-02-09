@@ -19,6 +19,14 @@ const OfficerStatsSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    processedConversations: {
+        type: Number,
+        default: 0,
+    },
+    processedApplications: {
+        type: Number,
+        default: 0,
+    },
     averageResponseTimeMs: {
         type: Number,
         default: 0,

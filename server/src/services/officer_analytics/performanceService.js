@@ -82,10 +82,34 @@ export async function getAggregatedPerformance({ from, to, officerId, department
                     {
                         $group: {
                             _id: null,
-                            totalRequestsProcessed: { $sum: { $add: ['$totalConversations', '$totalApplications'] } },
-                            avgResponseTimeMs: { $avg: '$averageResponseTimeMs' },
-                            communicationResponseRate: { $avg: '$communicationResponseRate' },
-                            applicationResponseRate: { $avg: '$applicationResponseRate' }
+                            totalAssigned: { $sum: { $add: ['$totalConversations', '$totalApplications'] } },
+                            sumProcessedComm: { $sum: { $ifNull: ['$processedConversations', { $multiply: ['$communicationResponseRate', '$totalConversations'] }] } },
+                            sumProcessedApp: { $sum: { $ifNull: ['$processedApplications', { $multiply: ['$applicationResponseRate', '$totalApplications'] }] } },
+                            // For domain rates, we only average documents that have actual activity in that domain (No Ghost Zeros)
+                            commDocsCount: { $sum: { $cond: [{ $gt: ['$totalConversations', 0] }, 1, 0] } },
+                            appDocsCount: { $sum: { $cond: [{ $gt: ['$totalApplications', 0] }, 1, 0] } },
+                            sumCommRates: { $sum: { $cond: [{ $gt: ['$totalConversations', 0] }, '$communicationResponseRate', 0] } },
+                            sumAppRates: { $sum: { $cond: [{ $gt: ['$totalApplications', 0] }, '$applicationResponseRate', 0] } },
+                            avgResponseTimeMs: { $avg: '$averageResponseTimeMs' }
+                        }
+                    },
+                    {
+                        $addFields: {
+                            totalRequestsProcessed: { $add: ['$sumProcessedComm', '$sumProcessedApp'] },
+                            communicationResponseRate: {
+                                $cond: [{ $gt: ['$commDocsCount', 0] }, { $divide: ['$sumCommRates', '$commDocsCount'] }, 0]
+                            },
+                            applicationResponseRate: {
+                                $cond: [{ $gt: ['$appDocsCount', 0] }, { $divide: ['$sumAppRates', '$appDocsCount'] }, 0]
+                            }
+                        }
+                    },
+                    {
+                        $addFields: {
+                            // Org-wide combined rate (Weighted)
+                            combinedResponseRate: {
+                                $cond: [{ $gt: ['$totalAssigned', 0] }, { $divide: ['$totalRequestsProcessed', '$totalAssigned'] }, 0]
+                            }
                         }
                     }
                 ],
