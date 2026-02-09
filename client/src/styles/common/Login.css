@@ -1,310 +1,321 @@
-    .login-container {
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        padding: 120px;
-        color: #333;
-    }
+.login-container {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 120px auto;
+    width: 100%;
+    background-color: white;
+}
 
-    .login-container .login-signup {
-        width: 100%;
-        max-width: 480px;
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
-        overflow: hidden;
-        position: relative;
-    }
+.login-container .login-signup {
+    width: 100%;
+    max-width: 480px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+    position: relative;
+}
 
-    .login-container .switch-btn {
-        display: flex;
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #eaeaea;
-        padding: 5px;
-        margin: 10px;
-        border-radius: 12px;
-    }
+.login-container .switch-btn {
+    display: flex;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eaeaea;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 12px;
+}
 
-    .login-container .switch-btn button {
-        flex: 1;
-        padding: 16px 20px;
-        border: none;
-        background: transparent;
-        font-size: 17px;
-        font-weight: 600;
-        color: #666;
-        cursor: pointer;
-        border-radius: 10px;
-        transition: all 0.3s ease;
-        position: relative;
-        z-index: 1;
-    }
+.login-container .switch-btn button {
+    flex: 1;
+    padding: 16px 20px;
+    border: none;
+    background: transparent;
+    font-size: 17px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
 
-    .login-container .switch-btn button.active {
-        color: #4361ee;
-        background-color: white;
-        box-shadow: 0 4px 12px rgba(67, 97, 238, 0.15);
-    }
+.login-container .switch-btn button.active {
+    color: #4361ee;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.15);
+}
 
-    .login-container .switch-btn button:hover:not(.active) {
-        color: #4361ee;
-        background-color: rgba(67, 97, 238, 0.05);
-    }
+.login-container .switch-btn button:hover:not(.active) {
+    color: #4361ee;
+    background-color: rgba(67, 97, 238, 0.05);
+}
 
-    .login-container .form-container {
-        position: relative;
-        padding: 30px;
-        overflow: hidden;
-    }
+.login-container .form-container {
+    position: relative;
+    padding: 30px;
+    overflow: hidden;
+}
 
-    .login-container .login-form, .login-container .signup-form {
-        transition: transform 0.4s ease, opacity 0.4s ease;
-    }
+.login-container .login-form, .login-container .signup-form {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
 
- .login-container .login-form.hidden, 
+.login-container .login-form.hidden, 
 .login-container .signup-form.hidden {
-    display: none;
+display: none;
 }
 
 .login-container .login-form:not(.hidden), 
 .login-container .signup-form:not(.hidden) {
+display: block;
+animation: fadeIn 0.5s ease forwards;
+}
+
+.login-container .welcome-text {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-container .welcome-text h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.login-container .welcome-text span {
+    font-size: 15px;
+    color: #718096;
+    font-weight: 400;
+}
+
+.login-container .data {
+    margin-bottom: 22px;
+}
+
+.login-container .data label {
+    display: flex;
+    font-size: 14px;
+    font-weight: 500;
+    color: #4a5568;
+    margin-bottom: 8px;
+}
+
+.login-container .data input {
+    width: 100%;
+    padding: 15px 18px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s;
+    outline: none;
+}
+
+.login-container .data input:focus {
+    border-color: #4361ee;
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.login-container .data input::placeholder {
+    color: #a0aec0;
+}
+
+.login-container .password-container {
+    position: relative;
+}
+
+.login-container .password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #a0aec0;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.login-container #forgot {
     display: block;
+    text-align: right;
+    color: #4361ee;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: -10px;
+    margin-bottom: 25px;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.login-container #forgot:hover {
+    color: #3a56d4;
+    text-decoration: underline;
+}
+
+.login-container .form-foot {
+    margin-top: 10px;
+}
+
+.login-container .form-btn {
+    width: 100%;
+    padding: 17px;
+    background: linear-gradient(to right, #4361ee, #3a56d4);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+    margin-bottom: 25px;
+}
+
+.login-container .form-btn:hover {
+    background: linear-gradient(to right, #3a56d4, #2e49c4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+}
+
+.login-container .form-btn:active {
+    transform: translateY(0);
+}
+
+.login-container .form-foot span {
+    display: block;
+    text-align: center;
+    color: #a0aec0;
+    font-size: 14px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.login-container .form-foot span::before, .login-container .form-foot span::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background-color: #e2e8f0;
+}
+
+.login-container .form-foot span::before {
+    left: 0;
+}
+
+.login-container .form-foot span::after {
+    right: 0;
+}
+
+.login-container .google-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: white;
+    color: #4a5568;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.login-container .google-btn:hover {
+    background-color: #f8f9fa;
+    border-color: #cbd5e0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.login-container .google-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.login-container .filedrop {
+    border: 2px dashed #cbd5e0;
+    border-radius: 10px;
+    padding: 25px 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: #f8f9fa;
+}
+
+.login-container .filedrop:hover {
+    border-color: #4361ee;
+    background-color: rgba(67, 97, 238, 0.03);
+}
+
+.login-container .filedrop p {
+    color: #4a5568;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.login-container .filedrop small {
+    color: #a0aec0;
+    font-size: 13px;
+}
+
+.login-container .file-upload-icon {
+    font-size: 40px;
+    color: #4361ee;
+    margin-bottom: 15px;
+}
+
+.login-container .file-name {
+    font-size: 14px;
+    color: #4a5568;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.data label #acceptTerms, .data label #rememberMe {
+    width: 20px;
+    margin-right: 10px;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+}
+
+.remember-me-container {
+    margin-bottom: 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.login-container .login-form, .login-container .signup-form {
     animation: fadeIn 0.5s ease forwards;
 }
 
-    .login-container .welcome-text {
-        text-align: center;
-        margin-bottom: 30px;
+@media (max-width: 576px) {
+    .login-container .login-signup {
+        max-width: 90%;
     }
-
+    
+    .login-container .form-container {
+        padding: 20px;
+    }
+    
+    .login-container .switch-btn {
+        margin: 10px 10px 0;
+    }
+    
     .login-container .welcome-text h1 {
-        font-size: 28px;
-        font-weight: 700;
-        color: #2d3748;
-        margin-bottom: 8px;
+        font-size: 24px;
     }
-
-    .login-container .welcome-text span {
-        font-size: 15px;
-        color: #718096;
-        font-weight: 400;
-    }
-
-    .login-container .data {
-        margin-bottom: 22px;
-    }
-
-    .login-container .data label {
-        display: block;
-        font-size: 14px;
-        font-weight: 500;
-        color: #4a5568;
-        margin-bottom: 8px;
-    }
-
-    .login-container .data input {
-        width: 100%;
-        padding: 15px 18px;
-        border: 2px solid #e2e8f0;
-        border-radius: 10px;
-        font-size: 16px;
-        font-family: 'Poppins', sans-serif;
-        transition: all 0.3s;
-        outline: none;
-    }
-
-    .login-container .data input:focus {
-        border-color: #4361ee;
-        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-    }
-
-    .login-container .data input::placeholder {
-        color: #a0aec0;
-    }
-
-    .login-container .password-container {
-        position: relative;
-    }
-
-    .login-container .password-toggle {
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        color: #a0aec0;
-        cursor: pointer;
-        font-size: 18px;
-    }
-
-    .login-container #forgot {
-        display: block;
-        text-align: right;
-        color: #4361ee;
-        font-size: 14px;
-        font-weight: 500;
-        margin-top: -10px;
-        margin-bottom: 25px;
-        text-decoration: none;
-        transition: color 0.2s;
-    }
-
-    .login-container #forgot:hover {
-        color: #3a56d4;
-        text-decoration: underline;
-    }
-
-    .login-container .form-foot {
-        margin-top: 10px;
-    }
-
-    .login-container .form-btn {
-        width: 100%;
-        padding: 17px;
-        background: linear-gradient(to right, #4361ee, #3a56d4);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s;
-        box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
-        margin-bottom: 25px;
-    }
-
-    .login-container .form-btn:hover {
-        background: linear-gradient(to right, #3a56d4, #2e49c4);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
-    }
-
-    .login-container .form-btn:active {
-        transform: translateY(0);
-    }
-
-    .login-container .form-foot span {
-        display: block;
-        text-align: center;
-        color: #a0aec0;
-        font-size: 14px;
-        margin-bottom: 20px;
-        position: relative;
-    }
-
-    .login-container .form-foot span::before, .login-container .form-foot span::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        width: 40%;
-        height: 1px;
-        background-color: #e2e8f0;
-    }
-
-    .login-container .form-foot span::before {
-        left: 0;
-    }
-
-    .login-container .form-foot span::after {
-        right: 0;
-    }
-
-    .login-container .google-btn {
-        width: 100%;
-        padding: 16px;
-        background-color: white;
-        color: #4a5568;
-        border: 2px solid #e2e8f0;
-        border-radius: 10px;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .login-container .google-btn:hover {
-        background-color: #f8f9fa;
-        border-color: #cbd5e0;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-
-    .login-container .google-btn img {
-        width: 20px;
-        height: 20px;
-    }
-
-    .login-container .filedrop {
-        border: 2px dashed #cbd5e0;
-        border-radius: 10px;
-        padding: 25px 15px;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.3s;
-        background-color: #f8f9fa;
-    }
-
-    .login-container .filedrop:hover {
-        border-color: #4361ee;
-        background-color: rgba(67, 97, 238, 0.03);
-    }
-
-    .login-container .filedrop p {
-        color: #4a5568;
-        font-weight: 500;
-        margin-bottom: 8px;
-    }
-
-    .login-container .filedrop small {
-        color: #a0aec0;
-        font-size: 13px;
-    }
-
-    .login-container .file-upload-icon {
-        font-size: 40px;
-        color: #4361ee;
-        margin-bottom: 15px;
-    }
-
-    .login-container .file-name {
-        font-size: 14px;
-        color: #4a5568;
-        margin-top: 10px;
-        font-weight: 500;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    .login-container .login-form, .login-container .signup-form {
-        animation: fadeIn 0.5s ease forwards;
-    }
-
-    @media (max-width: 576px) {
-        .login-container .login-signup {
-            max-width: 100%;
-        }
-        
-        .login-container .form-container {
-            padding: 20px;
-        }
-        
-        .login-container .switch-btn {
-            margin: 10px 10px 0;
-        }
-        
-        .login-container .welcome-text h1 {
-            font-size: 24px;
-        }
-    }
+}

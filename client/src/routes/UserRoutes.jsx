@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import { AuthGuard } from '../auth/guards/AuthGuard.jsx';
-import { RoleGuard } from '../auth/guards/RoleGuard.jsx';
-import { IDGuard } from '../auth/guards/IDGuard.jsx';
+import { AuthGuard } from '../guards/AuthGuard.jsx';
+import { RoleGuard } from '../guards/RoleGuard.jsx';
+import { IDGuard } from '../guards/IDGuard.jsx';
 import UserDashboard from '../pages/user/UserDashboard';
 import Tracking from '../pages/user/Tracking';
 import MarriageForm from '../pages/user/MarriageForm';
@@ -13,7 +13,6 @@ import PaymentResult from '../pages/user/PaymentResult';
 
 function UserRoutes() {
     return (
-        <div className="user-routes">
             <Routes>
                 {/* ... existing routes ... */}
                 <Route
@@ -102,7 +101,6 @@ function UserRoutes() {
                     }
                 />
             </Routes>
-        </div>
     )
 };
 

@@ -32,7 +32,7 @@ function AdminDashboard() {
   const dashboardData = {
     stats: {
       totalOfficers: officerStats?.counts?.total || officerStats?.data?.totalDocs || 0,
-      activeRequests: metrics?.data?.summary?.totalRequestsProcessed || 0,
+      activeRequests: metrics?.data?.summary?.totalTasksAssigned || metrics?.data?.summary?.totalRequestsProcessed || 0,
       avgResponseTime: metrics?.data?.summary?.averageResponseTimeMs ? formatDuration(metrics.data.summary.averageResponseTimeMs) : 'N/A',
       securityAlerts: logs?.totalDocs || 0
     },
@@ -44,7 +44,7 @@ function AdminDashboard() {
     performanceMetrics: {
       requestsProcessed: metrics?.data?.summary?.totalRequestsProcessed || 0,
       avgResponseTime: metrics?.data?.summary?.averageResponseTimeMs ? formatDuration(metrics.data.summary.averageResponseTimeMs) : 'N/A',
-      responseRate: metrics?.data?.summary?.communicationResponseRate ? `${(metrics.data.summary.communicationResponseRate * 100).toFixed(2)}%` : 'N/A'
+      responseRate: metrics?.data?.summary?.combinedResponseRate ? `${(metrics.data.summary.combinedResponseRate * 100).toFixed(1)}%` : 'N/A'
     },
     securityIssues: {
       failedLogins: 0,

@@ -2,13 +2,9 @@ import React, { createContext, useContext, useReducer, useCallback } from 'react
 import { chatReducer, chatActions } from '../reducers/chatReducer.js';
 import * as chatAPI from '../api/chat.api.js';
 
-const ChatContext = createContext(null);
+export const ChatContext = createContext(null);
 
-export const useChat = () => {
-    const context = useContext(ChatContext);
-    if (!context) throw new Error('useChat must be used within a ChatProvider');
-    return context;
-};
+// Hook removed and moved to src/hooks/useChat.js
 
 export const ChatProvider = ({ children }) => {
     const [state, dispatch] = useReducer(chatReducer, {
@@ -140,6 +136,11 @@ export const ChatProvider = ({ children }) => {
 
     const value = {
         ...state,
+        // Derived Logic (Merged from useChatState standalone)
+        hasConversations: state.conversations.length > 0,
+        unreadConversations: state.conversations.filter(c => !c.read),
+
+        // Actions
         fetchConversations,
         fetchCitizenConversations,
         fetchConversationDetails,

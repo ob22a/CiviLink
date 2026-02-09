@@ -9,15 +9,9 @@ import React, { createContext, useContext, useReducer, useCallback } from 'react
 import { profileAssetsReducer, profileAssetsActions } from '../reducers/profileAssetsReducer.js';
 import * as idUploadAPI from '../api/idUpload.api.js';
 
-const ProfileAssetsContext = createContext(null);
+export const ProfileAssetsContext = createContext(null);
 
-export const useProfileAssets = () => {
-    const context = useContext(ProfileAssetsContext);
-    if (!context) {
-        throw new Error('useProfileAssets must be used within a ProfileAssetsProvider');
-    }
-    return context;
-};
+// Hook removed and moved to src/hooks/useProfileAssets.js
 
 export const ProfileAssetsProvider = ({ children }) => {
     const [state, dispatch] = useReducer(profileAssetsReducer, {
@@ -104,6 +98,17 @@ export const ProfileAssetsProvider = ({ children }) => {
         isLoading: state.isLoading,
         error: state.error,
         idStatus, // derived helper
+
+        // Derived Logic (Merged from useProfileAssets standalone)
+        hasFaydaId: state.faydaId.exists,
+        hasKebeleId: state.kebeleId.exists,
+        hasBothIds: state.faydaId.exists && state.kebeleId.exists,
+        canSubmitApplications: state.faydaId.exists && state.kebeleId.exists,
+        isUploading: state.faydaId.uploadStatus === 'uploading' || state.kebeleId.uploadStatus === 'uploading',
+        uploadStatus: {
+            fayda: state.faydaId.uploadStatus,
+            kebele: state.kebeleId.uploadStatus,
+        },
 
         // Actions
         fetchIdData,

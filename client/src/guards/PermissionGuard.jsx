@@ -6,8 +6,8 @@
  */
 
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext.jsx';
-import { usePermissions } from '../../hooks/usePermissions.js';
+import { useAuth } from '../hooks/useAuth';
+import { usePermissions } from '../hooks/usePermissions.js';
 
 /**
  * PermissionGuard - Protects routes by permission
@@ -16,10 +16,10 @@ import { usePermissions } from '../../hooks/usePermissions.js';
  * @param {string|string[]} props.requiredPermissions - Permission(s) required to access
  * @param {ReactNode} props.fallback - Optional fallback component (default: redirect to officer dashboard)
  */
-export const PermissionGuard = ({ 
-  children, 
-  requiredPermissions, 
-  fallback = null 
+export const PermissionGuard = ({
+  children,
+  requiredPermissions,
+  fallback = null
 }) => {
   const { isAuthenticated, isOfficer } = useAuth();
   const { hasPermission } = usePermissions();
@@ -33,10 +33,10 @@ export const PermissionGuard = ({
     return <Navigate to="/login" replace />;
   }
 
-  const permissionsArray = Array.isArray(requiredPermissions) 
-    ? requiredPermissions 
+  const permissionsArray = Array.isArray(requiredPermissions)
+    ? requiredPermissions
     : [requiredPermissions];
-  
+
   const hasRequiredPermission = permissionsArray.some(perm => hasPermission(perm));
 
   if (!hasRequiredPermission) {

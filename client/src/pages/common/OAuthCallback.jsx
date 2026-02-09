@@ -12,7 +12,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useAuth } from '../../auth/AuthContext.jsx';
+import { useAuth } from '../../hooks/useAuth';
 import * as userAPI from '../../api/user.api.js';
 import '../../styles/common/OAuthCallback.css';
 
@@ -38,7 +38,7 @@ const OAuthCallback = () => {
         // Backend sets cookies, so we need to load user profile
         // This will verify the cookies and update auth state
         const result = await loadUser();
-        
+
         if (result.success && result.data) {
           // Auth state is now updated via loadUser
           // The second useEffect will handle redirect based on auth state

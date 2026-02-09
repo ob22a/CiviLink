@@ -1,27 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import * as newsAPI from '../api/news.api';
+import { useNews } from '../hooks/useNews';
 import '../styles/components/NewsSlider.css';
 
 const NewsSlider = () => {
-    const [news, setNews] = useState([]);
+    const { news, loading, fetchNews, hasInitialData } = useNews();
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchNews = async () => {
-            try {
-                const response = await newsAPI.getLatestNews();
-                if (response.success) {
-                    setNews(response.data || []);
-                }
-            } catch (err) {
-                console.error('Failed to fetch news:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchNews();
-    }, []);
+        // Only fetch if we don't have data yet (initial load)
+        if (!hasInitialData) {
+            fetchNews();
+        }
+    }, [hasInitialData, fetchNews]);
 
     useEffect(() => {
         if (news.length > 1) {
@@ -32,7 +22,8 @@ const NewsSlider = () => {
         }
     }, [news]);
 
-    if (loading) return <div className="news-slider-loading">Loading latest news...</div>;
+    // Only show loading state if it's the VERY FIRST fetch
+    if (loading && !hasInitialData) return <div className="news-slider-loading">Loading latest news...</div>;
     if (news.length === 0) return null;
 
     return (

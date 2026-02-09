@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../auth/AuthContext.jsx';
-import { useChat } from '../../auth/ChatContext.jsx';
+import { useAuth } from '../../hooks/useAuth';
+import { useChat } from '../../hooks/useChat';
 import AuthenticatedLayout from '../../components/layout/AuthenticatedLayout.jsx';
 import '../../styles/user/CitizenMessages.css';
 

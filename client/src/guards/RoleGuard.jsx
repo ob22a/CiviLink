@@ -6,8 +6,8 @@
  */
 
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext.jsx';
-import { usePermissions } from '../../hooks/usePermissions.js';
+import { useAuth } from '../hooks/useAuth';
+import { usePermissions } from '../hooks/usePermissions.js';
 
 /**
  * RoleGuard - Protects routes by role
