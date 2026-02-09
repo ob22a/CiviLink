@@ -13,7 +13,6 @@ import PaymentResult from '../pages/user/PaymentResult';
 
 function UserRoutes() {
     return (
-        <div className="user-routes">
             <Routes>
                 {/* ... existing routes ... */}
                 <Route
@@ -102,7 +101,6 @@ function UserRoutes() {
                     }
                 />
             </Routes>
-        </div>
     )
 };
 
