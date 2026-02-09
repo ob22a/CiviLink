@@ -90,8 +90,8 @@ function ManageOfficers() {
           hasNextPage: response.hasNextPage,
           hasPrevPage: response.hasPrevPage
         }));
-        if (response.data?.counts) {
-          setCounts(response.data?.counts);
+        if (response.counts || response.data?.counts) {
+          setCounts(response.data?.counts || response.counts);
         }
       } else {
         setOfficers([]);
