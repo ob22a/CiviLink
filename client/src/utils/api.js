@@ -38,7 +38,7 @@ let refreshPromise = null;
  * @returns {Promise<Object>} Response data
  */
 export const apiRequest = async (endpoint, options = {}) => {
-  const url = `api${endpoint}`;
+  const url = `/api${endpoint}`;
 
   const config = {
     ...options,
