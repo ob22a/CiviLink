@@ -166,8 +166,6 @@ npm install
 
 # 🔐 **Environment Variables**
 
-### Frontend (`/client/.env.example`)
-
 ### Backend (`/server/.env.example`)
 
 Copy each `.env.example` file and rename it to `.env` and fill it with the appropriate values.

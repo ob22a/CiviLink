@@ -3,7 +3,6 @@
  */
 
 import { apiRequest } from '../utils/api.js';
-import { API_BASE_URL } from '../config/backend.js';
 
 /**
  * Get ID upload status
@@ -21,7 +20,7 @@ export const uploadFaydaID = async (file) => {
   const formData = new FormData();
   formData.append('id_image', file);
 
-  const response = await fetch(`${API_BASE_URL}/user/id/upload/fayda`, {
+  const response = await fetch(`api/user/id/upload/fayda`, {
     method: 'POST',
     body: formData,
     // credentials 'include' is required if your backend uses cookies/sessions
@@ -44,7 +43,7 @@ export const uploadKebeleID = async (file) => {
   const formData = new FormData();
   formData.append('id_image', file);
 
-  const response = await fetch(`${API_BASE_URL}/user/id/upload/kebele`, {
+  const response = await fetch(`api/user/id/upload/kebele`, {
     method: 'POST',
     body: formData,
     credentials: 'include',
