@@ -1,5 +1,3 @@
-import { API_BASE_URL } from '../config/backend.js';
-
 /**
  * Normalizes API errors to a consistent format
  * @param {Error|Response} error - The error object or response
@@ -40,7 +38,7 @@ let refreshPromise = null;
  * @returns {Promise<Object>} Response data
  */
 export const apiRequest = async (endpoint, options = {}) => {
-  const url = `${API_BASE_URL}${endpoint}`;
+  const url = `api${endpoint}`;
 
   const config = {
     ...options,
