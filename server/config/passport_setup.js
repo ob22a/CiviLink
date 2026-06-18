@@ -9,7 +9,7 @@ if (process.env.clientID && process.env.clientSecret) {
   passport.use(
     new GoogleStrategy(
       {
-        callbackURL: "/api/v1/auth/google/callback",
+        callbackURL: process.env.CALLBACK_URL,
         clientID: process.env.clientID,
         clientSecret: process.env.clientSecret,
         proxy: true, // To handle proxy issues in some environments
