@@ -20,7 +20,7 @@ export const uploadFaydaID = async (file) => {
   const formData = new FormData();
   formData.append('id_image', file);
 
-  const response = await fetch(`api/user/id/upload/fayda`, {
+  const response = await fetch(`/api/user/id/upload/fayda`, {
     method: 'POST',
     body: formData,
     // credentials 'include' is required if your backend uses cookies/sessions
@@ -30,7 +30,6 @@ export const uploadFaydaID = async (file) => {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    console.error("Uploading Fayda ID Failed");
     throw new Error(errorData.message || `Upload failed with status ${response.status}`);
   }
 
@@ -44,7 +43,7 @@ export const uploadKebeleID = async (file) => {
   const formData = new FormData();
   formData.append('id_image', file);
 
-  const response = await fetch(`api/user/id/upload/kebele`, {
+  const response = await fetch(`/api/user/id/upload/kebele`, {
     method: 'POST',
     body: formData,
     credentials: 'include',
@@ -52,7 +51,6 @@ export const uploadKebeleID = async (file) => {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    console.error("Uploading Kebele ID Failed");
     throw new Error(errorData.message || `Upload failed with status ${response.status}`);
   }
 
