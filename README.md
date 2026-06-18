@@ -5,6 +5,9 @@
 🔗 **Live Deployment:** [https://civilink.onrender.com/](https://civilink.onrender.com/)
 <br/>
 📧 **Additional Contact:** [ob22adegefu123@gmail.com](mailto:ob22adegefu123@gmail.com)
+<br/>
+<br/>
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/47655958-86a5ddce-49f1-41fe-a3e9-27225e9be307)
 
 ---
 
@@ -32,6 +35,23 @@ CiviLink is a role-based government service automation system that allows:
 * Assign and remove roles
 * View system metrics
 * Monitor system activity
+
+---
+
+## 🧪 API Testing (Postman)
+
+You can test all backend endpoints directly using the included Postman collection:
+
+👉 Click the button below to open in Postman:
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/47655958-86a5ddce-49f1-41fe-a3e9-27225e9be307)
+
+### 📌 Includes:
+- Authentication routes (login/register)
+- User management endpoints
+- Service request workflows
+- Admin-level operations
+- Officer-level operations
 
 ---
 
