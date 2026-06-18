@@ -30,6 +30,7 @@ export const uploadFaydaID = async (file) => {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
+    console.error("Uploading Fayda ID Failed");
     throw new Error(errorData.message || `Upload failed with status ${response.status}`);
   }
 
@@ -51,6 +52,7 @@ export const uploadKebeleID = async (file) => {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
+    console.error("Uploading Kebele ID Failed");
     throw new Error(errorData.message || `Upload failed with status ${response.status}`);
   }
 
