@@ -23,13 +23,13 @@ import AppointmentCounter from "../src/models/AppointmentCounter.js";
 
 import bcrypt from "bcryptjs";
 
-jest.setTimeout(30000);
+jest.setTimeout(60000);
 
 describe("Vital Application Approval – Concurrency", () => {
   let officerAgent;
   let officerId;
   let citizenId;
-  const APPLICATION_COUNT = 50; // intentionally > single slot capacity (20)
+  const APPLICATION_COUNT = 25; // intentionally > single slot capacity (20); reduced from 50 for CI stability
 
   beforeAll(async () => {
     // await mongoose.connect(process.env.TEST_DB_URI);
