@@ -30,12 +30,8 @@ export const connectTestDB = async () => {
 
 export const disconnectTestDB = async () => {
   if (mongoose.connection.readyState !== 0) {
-    try {
-      await mongoose.connection.dropDatabase();
-    } catch (e) {
-      // ignore if not connected
-    }
-    await mongoose.connection.close();
+    // dropDatabase removed to avoid hanging. mongoServer.stop() handles data wiping.
+    await mongoose.disconnect();
   }
   if (mongoServer) await mongoServer.stop();
 };
