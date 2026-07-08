@@ -136,12 +136,12 @@ const marriageFormData = {
 
 describe("VITAL Approval API", () => {
   beforeAll(async () => {
-    await mongoose.connect(process.env.TEST_DB_URI);
+    // await mongoose.connect(process.env.TEST_DB_URI);
     // await mongoose.connection.dropDatabase();
   });
 
   afterAll(async () => {
-    await mongoose.connection.close();
+    // await mongoose.connection.close();
   });
 
   beforeEach(async () => {

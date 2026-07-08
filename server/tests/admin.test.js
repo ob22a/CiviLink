@@ -30,7 +30,7 @@ describe("Admin Routes (Cookie-Based Auth)", () => {
             console.log("Setting up test environment...");
 
             // Connect to test database
-            await mongoose.connect(process.env.TEST_DB_URI);
+            // await mongoose.connect(process.env.TEST_DB_URI);
             console.log("Connected to test database");
 
             // Clear existing data
@@ -44,7 +44,7 @@ describe("Admin Routes (Cookie-Based Auth)", () => {
     });
 
     afterAll(async () => {
-    await mongoose.connection.close();
+    // await mongoose.connection.close();
     console.log("Admin Routes Tests Completed.");
     });
 

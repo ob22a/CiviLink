@@ -153,9 +153,9 @@ beforeAll(async () => {
   try {
     console.log("🚀 Setting up test environment...");
 
-    // Connect to test database
-    await mongoose.connect(process.env.TEST_DB_URI);
-    console.log("✅ Connected to test database");
+    if (mongoose.connection.readyState === 0) {
+      // await mongoose.connect(process.env.TEST_DB_URI);
+    }
 
     // Clear existing data
     // await mongoose.connection.dropDatabase();

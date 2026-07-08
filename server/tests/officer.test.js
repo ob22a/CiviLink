@@ -65,11 +65,13 @@ describe("Officer Routes 👮 (Cookie-Based Auth)", () => {
 
   beforeAll(async () => {
     console.log("🚀 Starting Officer Routes Tests...");
-    await mongoose.connect(process.env.TEST_DB_URI);
+    if (mongoose.connection.readyState === 0) {
+      // await mongoose.connect(process.env.TEST_DB_URI);
+    }
   });
 
   afterAll(async () => {
-    await mongoose.connection.close();
+    // Teardown handled by jestSetup.js
     console.log("🏁 Officer Routes Tests Completed.");
   });
 

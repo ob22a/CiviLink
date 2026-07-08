@@ -22,7 +22,7 @@ describe("User Controller Tests with Agent", () => {
   beforeAll(async () => {
     console.log("Setting up test environment...");
     
-    await mongoose.connect(process.env.TEST_DB_URI);
+    // await mongoose.connect(process.env.TEST_DB_URI);
     console.log("Connected to test database");
 
     // await mongoose.connection.dropDatabase();
@@ -54,7 +54,7 @@ describe("User Controller Tests with Agent", () => {
   afterAll(async () => {
     await User.deleteMany({});
     await FaydaId.deleteMany({});
-    await mongoose.connection.close();
+    // await mongoose.connection.close();
   });
 
   describe("GET /info", () => {

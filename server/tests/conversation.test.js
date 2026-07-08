@@ -67,7 +67,7 @@ const otherOfficerData = {
 };
 
 beforeAll(async () => {
-    await mongoose.connect(process.env.TEST_DB_URI);
+    // await mongoose.connect(process.env.TEST_DB_URI);
     console.log('Connected to test database');
 
     // await mongoose.connection.dropDatabase();
@@ -112,7 +112,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    await mongoose.connection.close();
+    // await mongoose.connection.close();
 });
 
 describe('Conversation System', () => {

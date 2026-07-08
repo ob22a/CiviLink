@@ -28,7 +28,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
   // await mongoose.connection.dropDatabase(); // clean test DB
-  await mongoose.connection.close(); // close connection
+  // await mongoose.connection.close(); // close connection
 });
 
 // Clean users collection before each test

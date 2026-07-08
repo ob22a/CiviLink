@@ -62,7 +62,7 @@ const mockChapaSuccess = {
 };
 
 beforeAll(async () => {
-  await mongoose.connect(process.env.TEST_DB_URI);
+  // await mongoose.connect(process.env.TEST_DB_URI);
   // await mongoose.connection.dropDatabase();
 
   const salt = await bcrypt.genSalt(10);

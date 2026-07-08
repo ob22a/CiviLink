@@ -32,12 +32,12 @@ describe("Vital Application Approval – Concurrency", () => {
   const APPLICATION_COUNT = 50; // intentionally > single slot capacity (20)
 
   beforeAll(async () => {
-    await mongoose.connect(process.env.TEST_DB_URI);
+    // await mongoose.connect(process.env.TEST_DB_URI);
     // await mongoose.connection.dropDatabase();
   });
 
   afterAll(async () => {
-    await mongoose.connection.close();
+    // await mongoose.connection.close();
   });
 
   beforeEach(async () => {
