@@ -77,6 +77,8 @@ export async function getAggregatedPerformance({ from, to, officerId, department
                             totalApplications: { $sum: '$totalApplications' },
                             requestsProcessed: { $sum: '$requestsProcessed' },
                             requestsTotal: { $sum: '$requestsTotal' },
+                            processedConversations: { $sum: '$processedConversations' },
+                            processedApplications: { $sum: '$processedApplications' },
                             sumWeightedTime: { $sum: { $multiply: ['$averageResponseTimeMs', '$requestsProcessed'] } }
                         }
                     },

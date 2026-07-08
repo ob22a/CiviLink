@@ -29,8 +29,10 @@ export async function getPerformanceMetrics(req, res) {
           totalConversations: officerData.totalConversations,
           avgResponseTimeMs: officerData.avgResponseTimeMs,
           requestsProcessed: officerData.requestsProcessed,
+          requestsTotal: officerData.requestsTotal,
           applicationResponseRate: officerData.applicationResponseRate,
           communicationResponseRate: officerData.communicationResponseRate,
+          combinedResponseRate: officerData.combinedResponseRate,
           rankScore: officerData.rankScore,
           normalizedScore: officerData.normalizedScore
         })
