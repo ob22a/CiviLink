@@ -30,7 +30,7 @@ jobs:
           cache-dependency-path: ./client/package-lock.json   
 
       - name: Install client dependencies
-        run: npm ci
+        run: npm i
         working-directory: ./client
 
       - name: Run frontend tests
