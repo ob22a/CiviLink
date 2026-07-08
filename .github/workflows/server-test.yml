@@ -68,7 +68,7 @@ jobs:
           [ $missing -eq 0 ] || (echo "Some required vars are missing" && exit 1)
 
       - name: Install server dependencies
-        run: npm i
+        run: npm install --include=dev
         working-directory: ./server
 
       - name: Run backend tests
