@@ -11,7 +11,7 @@ on:
 jobs:
   run-tests:
     runs-on: ubuntu-latest
-    environment: "Server env"
+    environment: Server env
     services:
       mongodb:
         image: mongo:6.0
@@ -32,10 +32,17 @@ jobs:
       ADMIN_EMAIL: ${{ vars.ADMIN_EMAIL }}
       ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
       NODE_ENV: ${{ vars.NODE_ENV }}
-      clientID: ${{ secrets.CLIENTID }}
-      clientSecret: ${{ secrets.CLIENTSECRET }}
+      CLIENTID: ${{ secrets.CLIENTID }}
+      CLIENTSECRET: ${{ secrets.CLIENTSECRET }}
       TEST_DB_URI: ${{ vars.TEST_DB_URI }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      CALLBACK_URL: ${{secrets.CALLBACK_URL}}
+      CHAPA_BASE_URL: ${{secrets.CHAPA_BASE_URL}}
+      CHAPA_SECRET_KEY: ${{secrets.CHAPA_SECRET_KEY}}
+      FRONTEND_URL: ${{secrets.FRONTEND_URL}}
+      PAYMENT_CALLBACK_URL: ${{secrets.PAYMENT_CALLBACK_URL}}
+      PAYMENT_RETURN_URL: ${{secrets.PAYMENT_RETURN_URL}}
+      SUPABASE_URL: ${{secrets.SUPABASE_URL}}
 
     steps:
       - name: Checkout repository
