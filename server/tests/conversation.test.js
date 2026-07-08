@@ -70,7 +70,7 @@ beforeAll(async () => {
     await mongoose.connect(process.env.TEST_DB_URI);
     console.log('Connected to test database');
 
-    await mongoose.connection.dropDatabase();
+    // await mongoose.connection.dropDatabase();
     console.log("Cleared database");
 
     // 3. Create Agents

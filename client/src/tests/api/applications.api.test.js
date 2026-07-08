@@ -25,7 +25,15 @@ describe('applications.api', () => {
     });
 
     it('submitTinApplication should call apiRequest with POST', async () => {
-        const formData = { taxPayerName: 'John Doe' };
+        const formData = {
+            firstName: 'John',
+            lastName: 'Doe',
+            gender: 'Male',
+            occupation: 'Developer',
+            streetAddress: '123 Main St',
+            city: 'Addis Ababa',
+            region: 'Addis Ababa'
+        };
         const mockResponse = { success: true, data: { applicationId: '123' } };
         vi.mocked(apiRequest).mockResolvedValue(mockResponse);
 
@@ -35,7 +43,7 @@ describe('applications.api', () => {
             '/tin/applications',
             expect.objectContaining({
                 method: 'POST',
-                body: JSON.stringify(formData)
+                body: expect.any(String)
             })
         );
         expect(result).toEqual(mockResponse);

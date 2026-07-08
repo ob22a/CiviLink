@@ -1,19 +1,15 @@
+import React from 'react';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useProfileAssets } from '../../hooks/useProfileAssets';
+import { ProfileAssetsProvider } from '../../context/ProfileAssetsContext';
 import * as api from '../../api/idUpload.api';
-import * as userApi from '../../api/user.api';
 
 vi.mock('../../api/idUpload.api', () => ({
     uploadFaydaID: vi.fn(),
     uploadKebeleID: vi.fn(),
     deleteIDInfo: vi.fn(),
-}));
-
-vi.mock('../../api/user.api', () => ({
-    getIDData: vi.fn(),
-    getUserProfile: vi.fn(),
-    changePassword: vi.fn(),
+    getIDUploadStatus: vi.fn(),
 }));
 
 describe('useProfileAssets Hook', () => {
@@ -21,8 +17,10 @@ describe('useProfileAssets Hook', () => {
         vi.clearAllMocks();
     });
 
+    const wrapper = ({ children }) => React.createElement(ProfileAssetsProvider, null, children);
+
     it('should initialize with initial state', () => {
-        const { result } = renderHook(() => useProfileAssets());
+        const { result } = renderHook(() => useProfileAssets(), { wrapper });
         expect(result.current.isLoading).toBe(false);
         expect(result.current.faydaId.exists).toBe(false);
     });
@@ -31,16 +29,16 @@ describe('useProfileAssets Hook', () => {
         const mockData = {
             success: true,
             data: {
-                faydaData: { fullName: 'Fayda User' },
-                kebeleData: null
+                fayda: { fullName: 'Fayda User' },
+                kebele: null
             }
         };
-        vi.mocked(userApi.getIDData).mockResolvedValue(mockData);
+        vi.mocked(api.getIDUploadStatus).mockResolvedValue(mockData);
 
-        const { result } = renderHook(() => useProfileAssets());
+        const { result } = renderHook(() => useProfileAssets(), { wrapper });
 
         await act(async () => {
-            result.current.fetchIdData();
+            await result.current.fetchIdData();
         });
 
         await waitFor(() => {
@@ -57,10 +55,10 @@ describe('useProfileAssets Hook', () => {
         };
         vi.mocked(api.uploadFaydaID).mockResolvedValue(mockUpload);
 
-        const { result } = renderHook(() => useProfileAssets());
+        const { result } = renderHook(() => useProfileAssets(), { wrapper });
 
         await act(async () => {
-            result.current.uploadFaydaId({ name: 'fayda.jpg' });
+            await result.current.uploadFayda({ name: 'fayda.jpg' });
         });
 
         await waitFor(() => {
@@ -72,10 +70,10 @@ describe('useProfileAssets Hook', () => {
     it('should delete ID successfully', async () => {
         vi.mocked(api.deleteIDInfo).mockResolvedValue({ success: true });
 
-        const { result } = renderHook(() => useProfileAssets());
+        const { result } = renderHook(() => useProfileAssets(), { wrapper });
 
         await act(async () => {
-            result.current.deleteId('fayda');
+            await result.current.deleteId('fayda');
         });
 
         await waitFor(() => {

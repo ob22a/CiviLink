@@ -63,7 +63,7 @@ const mockChapaSuccess = {
 
 beforeAll(async () => {
   await mongoose.connect(process.env.TEST_DB_URI);
-  await mongoose.connection.dropDatabase();
+  // await mongoose.connection.dropDatabase();
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash("Test@1234", salt);
@@ -109,8 +109,7 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  await mongoose.connection.dropDatabase();
-  await mongoose.connection.close();
+  // Database teardown is handled by jestSetup.js and MongoMemoryServer
 });
 
 // Login helper using your auth system (returns accessToken if present)

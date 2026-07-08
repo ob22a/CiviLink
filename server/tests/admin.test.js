@@ -34,7 +34,7 @@ describe("Admin Routes (Cookie-Based Auth)", () => {
             console.log("Connected to test database");
 
             // Clear existing data
-            await mongoose.connection.dropDatabase();
+            // await mongoose.connection.dropDatabase();
             console.log("Test database cleared");
 
         } catch (error) {

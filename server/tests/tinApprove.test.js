@@ -61,7 +61,7 @@ describe("TIN Approval API", () => {
 
   beforeAll(async () => {
     await mongoose.connect(process.env.TEST_DB_URI);
-    await mongoose.connection.dropDatabase();
+    // await mongoose.connection.dropDatabase();
   });
 
   afterAll(async () => {

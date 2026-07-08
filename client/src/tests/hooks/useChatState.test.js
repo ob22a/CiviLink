@@ -1,6 +1,8 @@
+import React from 'react';
 import { renderHook, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { useChatState } from '../../hooks/useChatState';
+import { useChat } from '../../hooks/useChat';
+import { ChatProvider } from '../../context/ChatContext';
 import * as api from '../../api/chat.api';
 
 vi.mock('../../api/chat.api', () => ({
@@ -12,13 +14,15 @@ vi.mock('../../api/chat.api', () => ({
     submitInquiry: vi.fn(),
 }));
 
-describe('useChatState Hook', () => {
+describe('useChat Hook', () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
 
+    const wrapper = ({ children }) => React.createElement(ChatProvider, null, children);
+
     it('should initialize with initial state', () => {
-        const { result } = renderHook(() => useChatState());
+        const { result } = renderHook(() => useChat(), { wrapper });
         expect(result.current.isLoading).toBe(false);
         expect(result.current.conversations).toEqual([]);
         expect(result.current.unreadCount).toBe(0);
@@ -33,7 +37,7 @@ describe('useChatState Hook', () => {
         };
         vi.mocked(api.getConversations).mockResolvedValue(mockResponse);
 
-        const { result } = renderHook(() => useChatState());
+        const { result } = renderHook(() => useChat(), { wrapper });
 
         result.current.fetchConversations(1, 10);
 
@@ -51,7 +55,7 @@ describe('useChatState Hook', () => {
         const mockResponse = { success: true, data: { message: 'Read' } };
         vi.mocked(api.markConversationAsRead).mockResolvedValue(mockResponse);
 
-        const { result } = renderHook(() => useChatState());
+        const { result } = renderHook(() => useChat(), { wrapper });
 
         result.current.markAsRead('1');
 

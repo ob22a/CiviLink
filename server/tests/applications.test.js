@@ -158,7 +158,7 @@ beforeAll(async () => {
     console.log("✅ Connected to test database");
 
     // Clear existing data
-    await mongoose.connection.dropDatabase();
+    // await mongoose.connection.dropDatabase();
     console.log("✅ Test database cleared");
 
     // Create test citizen user
@@ -256,18 +256,7 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  try {
-    await User.deleteMany({});
-    await Application.deleteMany({});
-    await Officer.deleteMany({});
-    // await UploadedID.deleteMany({});
-    await FaydaId.deleteMany({});
-    await KebeleId.deleteMany({});
-    await mongoose.connection.close();
-    console.log("✅ Database cleaned up");
-  } catch (error) {
-    console.error("❌ Error in afterAll:", error);
-  }
+  // Teardown handled by jestSetup.js
 });
 
 // Helper to login user

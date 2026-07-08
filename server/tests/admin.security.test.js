@@ -32,7 +32,7 @@ if (!fs.existsSync(exportsDir)) {
 
 beforeAll(async () => {
   await mongoose.connect(process.env.TEST_DB_URI);
-  await mongoose.connection.dropDatabase();
+  // await mongoose.connection.dropDatabase();
 
   // Create admin user
   const salt = await bcrypt.genSalt(10);
@@ -79,7 +79,7 @@ afterAll(async () => {
     });
   }
 
-  await mongoose.connection.dropDatabase();
+  // await mongoose.connection.dropDatabase();
   await mongoose.connection.close();
 });
 

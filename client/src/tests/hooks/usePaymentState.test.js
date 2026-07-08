@@ -1,6 +1,8 @@
+import React from 'react';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { usePaymentState } from '../../hooks/usePaymentState';
+import { usePayment } from '../../hooks/usePayment';
+import { PaymentProvider } from '../../context/PaymentContext';
 import * as api from '../../api/payment.api';
 
 vi.mock('../../api/payment.api', () => ({
@@ -11,13 +13,15 @@ vi.mock('../../api/payment.api', () => ({
     downloadReceipt: vi.fn(),
 }));
 
-describe('usePaymentState Hook', () => {
+describe('usePayment Hook', () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
 
+    const wrapper = ({ children }) => React.createElement(PaymentProvider, null, children);
+
     it('should initialize with initial state', () => {
-        const { result } = renderHook(() => usePaymentState());
+        const { result } = renderHook(() => usePayment(), { wrapper });
         expect(result.current.isLoading).toBe(false);
         expect(result.current.payments).toEqual([]);
         expect(result.current.isCurrentPaymentSuccessful).toBe(false);
@@ -31,10 +35,10 @@ describe('usePaymentState Hook', () => {
         };
         vi.mocked(api.getPaymentHistory).mockResolvedValue(mockHistory);
 
-        const { result } = renderHook(() => usePaymentState());
+        const { result } = renderHook(() => usePayment(), { wrapper });
 
         await act(async () => {
-            result.current.fetchPaymentHistory(1, 10);
+            await result.current.fetchPaymentHistory(1, 10);
         });
 
         await waitFor(() => {
@@ -51,10 +55,10 @@ describe('usePaymentState Hook', () => {
         };
         vi.mocked(api.processPayment).mockResolvedValue(mockInit);
 
-        const { result } = renderHook(() => usePaymentState());
+        const { result } = renderHook(() => usePayment(), { wrapper });
 
         await act(async () => {
-            result.current.processPayment({ amount: 50, serviceType: 'tin' });
+            await result.current.processPayment({ amount: 50, serviceType: 'tin' });
         });
 
         await waitFor(() => {

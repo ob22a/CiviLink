@@ -19,8 +19,8 @@ describe('profileAssetsReducer', () => {
 
     it('should handle FETCH_ID_DATA_SUCCESS with both IDs', () => {
         const mockPayload = {
-            faydaData: { fullName: 'User A' },
-            kebeleData: { fullName: 'User B' }
+            fayda: { fullName: 'User A' },
+            kebele: { fullName: 'User B' }
         };
         const action = { type: profileAssetsActions.FETCH_ID_DATA_SUCCESS, payload: mockPayload };
         const state = profileAssetsReducer(initialState, action);
