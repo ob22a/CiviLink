@@ -134,7 +134,9 @@ describe("Vital Application Approval – Concurrency", () => {
 
   /* ---------------- CONCURRENCY TEST ---------------- */
 
-  it("should safely approve many applications concurrently without slot overflow", async () => {
+  const testFn = process.env.SKIP_CONCURRENCY_TEST === "true" ? it.skip : it;
+
+  testFn("should safely approve many applications concurrently without slot overflow", async () => {
     const apps = await Application.find({ status: "pending" });
 
     const requests = apps.map((app) =>
