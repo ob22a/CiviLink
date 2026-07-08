@@ -136,69 +136,7 @@ git push -u origin feature/your-branch-name
 
 ---
 
-# **7. Responsibilities of the Reviewer (PR Acceptance Rules)**
-
-The reviewer (usually the Scrum Master) must:
-
-### **7.1 Code Quality Checks**
-
-* Code style follows project standards
-* No duplicated logic
-* No hardcoded secrets
-* Component/service structure is correct
-* Naming and modularization are good
-
-### **7.2 Security Checks**
-
-* All API calls validated
-* User input sanitized
-* No exposed internal logic
-* Authentication & authorization respected
-
-### **7.3 Functional Checks**
-
-* Does the feature work as intended?
-* Does it break any other part of the system?
-* Are edge cases handled?
-
-### **7.4 Documentation Checks**
-
-* New endpoints documented
-* UI components explained (if needed)
-* Comments added where logic is complex
-
-### **7.5 Final Review Actions**
-
-1. Approve, request changes, or reject
-2. Ensure the branch is up-to-date with **dev**
-3. Merge using **Squash and Merge** (standardize commit history)
-4. NEVER merge directly into `main`
-5. After merge, delete the branch
-
----
-
-# **8. Dev Branch Management**
-
-The **Scrum Master** is responsible for:
-
-* Keeping `dev` stable
-* Ensuring `dev` only contains reviewed PRs
-* Coordinating weekly merges of **dev → main** after:
-
-  * Testing
-  * Security review
-  * QA sign-off
-
-### **Rules for Dev Branch**
-
-* No direct commits
-* All merges must be PR-based
-* Always run tests on `dev` after merging
-* Feature freeze before merging into `main`
-
----
-
-# **9. Issue Tracking & Tickets**
+# **7. Issue Tracking & Tickets**
 
 Every task should have:
 
@@ -217,7 +155,7 @@ Closes #123
 
 ---
 
-# **10. Communication Rules**
+# **8. Communication Rules**
 
 * Document all architectural decisions in `/docs/architecture/`
 * Large changes require a Design Proposal
@@ -226,7 +164,7 @@ Closes #123
 
 ---
 
-# **11. Security & Sensitive Data Rules**
+# **9. Security & Sensitive Data Rules**
 
 **Do NOT commit:**
 
@@ -237,13 +175,3 @@ Closes #123
 
 Use `.env.example` instead of `.env`.
 
----
-
-# **12. Release Process (Dev → Main)**
-
-1. Scrum Master freezes dev
-2. CI tests run
-3. Manually check the whole workflow
-4. Scrum Master approves
-5. Merge into **main**
-6. Create a tagged release

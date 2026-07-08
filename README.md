@@ -212,6 +212,17 @@ npm run dev
 
 # 🧪 **Testing**
 
+**Robust Test Suite:** The project currently includes **194 passing tests** across both frontend and backend to ensure reliability.
+- **Backend:** 151 Jest & Supertest API tests
+- **Frontend:** 43 Vitest & React Testing Library tests
+
+### Frontend Tests (Vitest + React Testing Library)
+
+```sh
+cd client
+npm test
+```
+
 ### Backend Tests (Jest + Supertest)
 
 ```sh
