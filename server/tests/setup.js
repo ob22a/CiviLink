@@ -17,15 +17,17 @@ export const connectTestDB = async () => {
   }
 
   // Default: try mongodb-memory-server
-  mongoServer = await MongoMemoryServer.create();
-  const uri = mongoServer.getUri();
+  if (mongoose.connection.readyState === 0) {
+    mongoServer = await MongoMemoryServer.create();
+    const uri = mongoServer.getUri();
 
-  process.env.MONGO_URI = uri;
-  process.env.JWT_SECRET = process.env.JWT_SECRET || "testsecret";
-  process.env.ACCESS_TOKEN_EXPIRES = process.env.ACCESS_TOKEN_EXPIRES || "1h";
-  process.env.REFRESH_TOKEN_EXPIRES = process.env.REFRESH_TOKEN_EXPIRES || "7d";
+    process.env.MONGO_URI = uri;
+    process.env.JWT_SECRET = process.env.JWT_SECRET || "testsecret";
+    process.env.ACCESS_TOKEN_EXPIRES = process.env.ACCESS_TOKEN_EXPIRES || "1h";
+    process.env.REFRESH_TOKEN_EXPIRES = process.env.REFRESH_TOKEN_EXPIRES || "7d";
 
-  await mongoose.connect(uri);
+    await mongoose.connect(uri);
+  }
 };
 
 export const disconnectTestDB = async () => {
