@@ -43,6 +43,7 @@ jobs:
       PAYMENT_CALLBACK_URL: ${{secrets.PAYMENT_CALLBACK_URL}}
       PAYMENT_RETURN_URL: ${{secrets.PAYMENT_RETURN_URL}}
       SUPABASE_URL: ${{secrets.SUPABASE_URL}}
+      SUPABASE_SERVICE_KEY: ${{secrets.SUPABASE_SERVICE_KEY}}
 
     steps:
       - name: Checkout repository
